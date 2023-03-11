@@ -2,7 +2,7 @@ import { c as create_ssr_component, e as escape } from './index-a7b8a8e3.js';
 import { DateTime } from 'luxon';
 
 const css = {
-  code: "html{background-color:#1c1c1c;color:#fff}",
+  code: "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');html{background-color:#1c1c1c;color:#fff}",
   map: null
 };
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -29,4 +29,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-166647b2.js.map
+//# sourceMappingURL=_layout.svelte-fb8340df.js.map

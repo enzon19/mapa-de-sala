@@ -1,4 +1,4 @@
-/*
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');/*
 ! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -741,4 +741,5 @@ video {
 .hover\:text-light-grey:hover {
   --tw-text-opacity: 1;
   color: rgb(110 115 123 / var(--tw-text-opacity));
-}html{background-color:#1c1c1c;color:#fff}
+}
+html{background-color:#1c1c1c;color:#fff}
