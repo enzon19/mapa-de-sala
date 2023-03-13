@@ -1,3 +1,2 @@
-build/* linguist-vendored
-dist/* linguist-vendored
-build/client/_app/immutable/assets/_layout.34ea9e8e.css linguist-generated
+build/** linguist-vendored
+dist/** linguist-vendored
