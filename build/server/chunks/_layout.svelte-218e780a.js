@@ -16,7 +16,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const randomIndex = Math.floor(Math.random() * phrases.length);
   $$result.css.add(css);
   return `<header class="${"bg-darker-grey p-4 text-center"}"><a href="${"/"}"><h2 class="${"text-2xl font-bold"}">Mapa de Sala</h2></a>
-  <p class="${"text-sm mb-4"}">v0.1.0 • Feito por enzon19</p>
+  <p class="${"text-sm mb-4"}">v0.1.1 • Feito por enzon19</p>
   <p class="${"text-sm text-light-grey"}">${escape(phrases[randomIndex])}</p></header>
 <div class="${"flex-grow"}">${slots.default ? slots.default({}) : ``}</div>
 <footer class="${"bg-darker-grey text-center text-sm p-4 mt-4"}"><span>Agradecimentos: Antônio Pomarico, Davi Barcelos, Lívia Carnot e Lucas Castro.</span>
@@ -29,4 +29,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-fb8340df.js.map
+//# sourceMappingURL=_layout.svelte-218e780a.js.map

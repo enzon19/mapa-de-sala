@@ -4,10 +4,10 @@ const manifest = {
 	assets: new Set(["apple-touch-icon.png","favicon-16x16.png","favicon-32x32.png","favicon.ico"]),
 	mimeTypes: {".png":"image/png",".ico":"image/vnd.microsoft.icon"},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.45364cdb.js","imports":["_app/immutable/entry/start.45364cdb.js","_app/immutable/chunks/index.23c5746a.js","_app/immutable/chunks/singletons.b3f78a38.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.7faad630.js","imports":["_app/immutable/entry/app.7faad630.js","_app/immutable/chunks/index.23c5746a.js"],"stylesheets":[],"fonts":[]}},
+		client: {"start":{"file":"_app/immutable/entry/start.9fb98ad5.js","imports":["_app/immutable/entry/start.9fb98ad5.js","_app/immutable/chunks/index.23c5746a.js","_app/immutable/chunks/singletons.d4810c40.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.c0594d50.js","imports":["_app/immutable/entry/app.c0594d50.js","_app/immutable/chunks/index.23c5746a.js"],"stylesheets":[],"fonts":[]}},
 		nodes: [
-			() => import('./chunks/0-9c003547.js'),
-			() => import('./chunks/1-87c279bb.js'),
+			() => import('./chunks/0-59d9dbbf.js'),
+			() => import('./chunks/1-5a32ca94.js'),
 			() => import('./chunks/2-9d3a845a.js'),
 			() => import('./chunks/3-25d42972.js'),
 			() => import('./chunks/4-795c081f.js'),
