@@ -86,7 +86,7 @@
 
 <div class="container mx-auto max-w-4xl">
   <DateInput {requestedDate} route="editar"/>
-  <textarea class="font-mono bg-input-grey p-4 w-full rounded-xl" rows="3" readonly>{columnsAsString}</textarea>
+  <textarea class="font-mono bg-input-grey p-4 w-full rounded-xl" rows="3">{columnsAsString}</textarea>
   <div class="flex flex-row justify-center gap-2 py-2">
     <Button on:click={save}>Salvar</Button>
     <Button on:click={newColumn}>Adicionar coluna</Button>

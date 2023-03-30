@@ -22,6 +22,7 @@
         <Wrapper {editable}>
           <!-- <div class="flex flex-row gap-2 items-center"> -->
           {#if columnIndex == 0 && editable}
+            <span class="w-2">{studentIndex + 1}</span>
             <button on:click={() => dispatch('removeLine', {id: studentIndex})} class="w-7 inline-block text-light-grey"><CloseCircle size="1.7rem" class="text-light-grey"/></button>
           {/if}
           <Desk isNull={student.name == null && !editable}>
