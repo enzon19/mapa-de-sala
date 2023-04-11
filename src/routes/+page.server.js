@@ -2,7 +2,7 @@ import { supabase } from "$lib/supabaseClient";
 import { DateTime } from "luxon";
 
 export async function load() {
-	const requestedDate = DateTime.now().startOf('day');
+	const requestedDate = DateTime.now().setZone('America/Sao_Paulo').startOf('day');
 	const params = {day: requestedDate.day, month: requestedDate.month};
 	
 	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toString()).limit(1)).data[0] || [];

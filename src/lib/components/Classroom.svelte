@@ -12,9 +12,21 @@
   export let editable = false;
   export let classroomMapAsElement;
 
+  $: studentsPresent = columns.map(column => column.filter(student => student.id != "clssrmmp_space" && student.id != "clssrmmp_empty"));
+  $: studentsPresentAmount = studentsPresent.flat().length;
+  $: chairs = columns.map(column => column.filter(student => student.id != "clssrmmp_space"));
+  $: chairsAmount = chairs.flat().length;
+  $: spaces = columns.map(column => column.filter(student => student.id == "clssrmmp_space"));
+  $: spacesAmount = spaces.flat().length;
+  $: emptyChairs = columns.map(column => column.filter(student => student.id == "clssrmmp_empty"));
+  $: emptyChairsAmount = emptyChairs.flat().length;
+
   $: columnsAmount = columns.length == 0 ? 1 : columns.length;
 </script>
 
+{#if !editable}
+  <div class="text-center text-sm m-4">Alunos: {studentsPresentAmount} | Cadeiras: {chairsAmount} | Cadeiras vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
+{/if}
 <div bind:this={classroomMapAsElement} style="grid-template-columns: repeat({columnsAmount}, minmax(0, 1fr));" class="grid gap-4 grid-cols-5">
   {#each columns as column, columnIndex}
     <Column id={columnIndex} {editable} on:removeColumn>

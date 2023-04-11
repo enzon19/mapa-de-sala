@@ -13,7 +13,7 @@
   $: columnsAsString = JSON.stringify(classroomMapData.columns || [], null, 2);
   $: columnsToRender = JSON.parse(columnsAsString);
   let finalColumnsToSave = [];
-  let classroomMapAsElement, modal;
+  let classroomMapAsElement, saveModal;
 
   function transformNodeToArray(node) {
     let newClassroomMap = [];
@@ -46,8 +46,12 @@
   function save() {
     transformColumnAsStringToArray();
     finalColumnsToSave = JSON.stringify(columnsToRender.map(column => column.map(student => student.id)));
-    modal.showModal();
+    saveModal.showModal();
   }
+
+  // function addTags() {
+  //   tagsModal.showModal();
+  // }
 
   // Manage columns and lines
 
@@ -91,10 +95,12 @@
     <Button on:click={save}>Salvar</Button>
     <Button on:click={newColumn}>Adicionar coluna</Button>
     <Button on:click={newLine}>Adicionar linha</Button>
+    <!-- <Button on:click={addTags}>Adicionar tags</Button> -->
   </div>
   <Classroom on:changeStudent={refreshColumnsAsString} on:removeColumn={(event) => removeColumn(event.detail.id)} on:removeLine={(event) => removeLine(event.detail.id)} editable bind:classroomMapAsElement bind:columns={columnsToRender} students={data.studentsData}/>
-  <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-little transition-all p-4 rounded-xl bg-back-grey shadow-2xl text-white" bind:this={modal}>
-    <button class="absolute top-2 right-2 hover:text-light-grey transition-colors" on:click={() => modal.close()}>
+
+  <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-little transition-all p-4 rounded-xl bg-back-grey shadow-2xl text-white" bind:this={saveModal}>
+    <button class="absolute top-2 right-2 hover:text-light-grey transition-colors" on:click={() => saveModal.close()}>
       <CloseOutline size="24"/>
     </button>
     <form method="post">
@@ -103,7 +109,7 @@
       <input type="password" name="password" class="bg-input-grey p-2 mb-2 w-full rounded-xl">
       <input type="hidden" name="columns" value={finalColumnsToSave}>
       <input type="hidden" name="date" value={requestedDate.toString()}>
-      <input type="submit" value="Salvar" on:click={() => modal.close()} class="bg-input-grey p-2 cursor-pointer rounded-xl hover:bg-input-hover-grey transition-colors mt-2">
+      <input type="submit" value="Salvar" on:click={() => saveModal.close()} class="bg-input-grey p-2 cursor-pointer rounded-xl hover:bg-input-hover-grey transition-colors mt-2">
     </form>
   </dialog>
 </div>
