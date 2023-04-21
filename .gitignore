@@ -1,6 +1,7 @@
 # Replit
 .replit
 .replit.nix
+replit.nix
 
 # SvelteKit
 /.svelte-kit
