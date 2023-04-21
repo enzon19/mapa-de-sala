@@ -1,11 +1,16 @@
 <script>
+  import { setContext } from "svelte";
   import { DateTime } from "luxon";
   import Classroom from "$lib/components/Classroom.svelte";
   import DateInput from "$lib/components/DateInput.svelte";
+  import Warning from "$lib/components/Warning.svelte";
 
-  export let data;
+  setContext('editable', false);
+
+  export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
+  $: classroomMapData = data.classroomMapData; // do que veio do server, pegar só o banco de dados
+  $: classroomMapColumnsData = classroomMapData.columns || []; // pegar JSON do banco de dados
   $: requestedDate = DateTime.local(2023, Number(data.params.month), Number(data.params.day), 0, 0);
-  $: classroomMapData = data.classroomMapData;
 </script>
 
 <svelte:head>
@@ -14,10 +19,8 @@
 
 <div class="container mx-auto max-w-4xl">
   <DateInput {requestedDate}/>
-  {#if classroomMapData.inaccurate}
-    <div class="text-center m-4 bg-bad-warning-red/80 p-4 rounded-2xl">
-      <i><b>Dados imprecisos.</b> A representação abaixo pode não ser exatamente como foi originalmente no dia.</i>
-    </div>
-  {/if}
-  <Classroom columns={classroomMapData.columns || []}/>
+  {#each classroomMapData.tags || [] as tagType (tagType)}
+    <Warning {tagType} />
+  {/each}
+  <Classroom data={classroomMapColumnsData}/>
 </div>

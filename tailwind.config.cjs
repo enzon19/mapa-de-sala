@@ -17,7 +17,8 @@ module.exports = {
         'input-hover-grey': '#363636',
         'placeholder': '#9ca3ae',
         'good-warning-green': '#2a5f02',
-        'bad-warning-red': '#750802'
+        'bad-warning-red': '#750802',
+        'information-warning-grey': '#3a3a3a'
       },
       boxShadow: {
         'md': '0 0 10px',

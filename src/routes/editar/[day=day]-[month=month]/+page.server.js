@@ -18,12 +18,13 @@ export const actions = {
 		const data = await request.formData();
     const password = data.get('password');
     const columns = data.get('columns');
+    const tags = data.get('tags');
     const date = data.get('date');
 
 		if (password == import.meta.env.VITE_EDIT_PASSWORD) {
 			return (await supabase
 				.from('classroomMap')
-				.upsert({ day: date.toString(), columns: JSON.parse(columns) })
+				.upsert({ day: date.toString(), columns: JSON.parse(columns), tags: JSON.parse(tags) })
 				.select()
 			).status;
 		}
