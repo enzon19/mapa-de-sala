@@ -1,5 +1,13 @@
 <h1 class="text-center text-3xl font-bold m-4">Novidades</h1>
 <div class="container mx-auto max-w-4xl">
+  <!-- 0.3.1 -->
+  <h3 class="text-xl font-bold mt-2">Versão 0.3.1</h3>
+  <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>[EDITOR] Havia um pequeno bug que estava impedindo o salvamento.</li>
+    </ol>
+  </details>
   <!-- 0.3.0 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.3.0</h3>
   <details open>
@@ -10,7 +18,9 @@
         <li>Além da "Dados imprecisos", novas tags para dias especiais;</li>
         <li>Novas frases no cabeçalho (valeu, Lívia);</li>
         <li>Agradecimentos ao Moljo (mapa do dia 20/04);</li>
-        <li>Alteração de "Cadeiras Vazias" para apenas "Vazias".</li>
+        <li>Alteração de "Cadeiras Vazias" para apenas "Vazias";</li>
+        <li>[EDITOR] Reordenar colunas e linhas usando index;</li>
+        <li>[EDITOR] Melhorias no design.</li>
       </ol>
   </details>
   <details open>
@@ -39,7 +49,7 @@
   <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
-      <li>Index de cada linha no editor.</li>
+      <li>[EDITOR] Index de cada linha.</li>
     </ol>
   </details>
   <details>

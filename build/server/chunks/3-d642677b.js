@@ -2,9 +2,8 @@ import { s as supabase } from './supabaseClient-3a988c3e.js';
 import { DateTime } from 'luxon';
 import '@supabase/supabase-js';
 
-async function load() {
-  const requestedDate = DateTime.now().setZone("America/Sao_Paulo").startOf("day");
-  const params = { day: requestedDate.day, month: requestedDate.month };
+async function load({ params }) {
+  const requestedDate = DateTime.local(2023, Number(params.month), Number(params.day), 0, 0);
   let classroomMapData = (await supabase.from("classroomMap").select("*").eq("day", requestedDate.toString()).limit(1)).data[0] || [];
   const columns = classroomMapData.columns;
   if (!columns)
@@ -21,13 +20,13 @@ var _page_server = /*#__PURE__*/Object.freeze({
   load: load
 });
 
-const index = 2;
-const component = async () => (await import('./_page.svelte-0b1a6d56.js')).default;
-const file = '_app/immutable/entry/_page.svelte.a1fc74b7.js';
-const server_id = "src/routes/+page.server.js";
-const imports = ["_app/immutable/entry/_page.svelte.a1fc74b7.js","_app/immutable/chunks/index.19c244fc.js","_app/immutable/chunks/datetime.ecc857da.js","_app/immutable/chunks/tags.29b55d04.js","_app/immutable/chunks/singletons.be2167c6.js","_app/immutable/chunks/Warning.f184aaba.js"];
+const index = 3;
+const component = async () => (await import('./_page.svelte-5ef6d1e8.js')).default;
+const file = '_app/immutable/entry/dia-_day_day_-_month_month_-page.svelte.f7bd9288.js';
+const server_id = "src/routes/dia/[day=day]-[month=month]/+page.server.js";
+const imports = ["_app/immutable/entry/dia-_day_day_-_month_month_-page.svelte.f7bd9288.js","_app/immutable/chunks/index.19c244fc.js","_app/immutable/chunks/datetime.ecc857da.js","_app/immutable/chunks/tags.288e360d.js","_app/immutable/chunks/singletons.32fd1423.js","_app/immutable/chunks/Warning.7f989758.js"];
 const stylesheets = ["_app/immutable/assets/tags.a045f3e9.css"];
 const fonts = [];
 
 export { component, file, fonts, imports, index, _page_server as server, server_id, stylesheets };
-//# sourceMappingURL=2-de6e8fa1.js.map
+//# sourceMappingURL=3-d642677b.js.map

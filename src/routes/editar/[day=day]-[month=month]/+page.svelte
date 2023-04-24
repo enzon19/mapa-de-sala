@@ -24,13 +24,13 @@
   $: studentsPerColumnAmount = $classroomMapColumnsData[0]?.length || 1;
 
   function save() {
-    if (updatedTags.length == 0) updatedTags = currentTags;
+    if (updatedTags.length == 0 && currentTags) updatedTags = currentTags;
     finalClassroomMapColumnsDataToSave = JSON.stringify($classroomMapColumnsData.map(column => column.map(student => student.id)));
     saveModal.showModal();
   }
 
   function manageTags() {
-    if (updatedTags.length == 0) updatedTags = currentTags;
+    if (updatedTags.length == 0 && currentTags) updatedTags = currentTags;
     tagsModal.showModal();
   }
 

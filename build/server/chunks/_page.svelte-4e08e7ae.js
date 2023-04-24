@@ -3,6 +3,10 @@ import { c as create_ssr_component } from './index2-9a6413c1.js';
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `<h1 class="${"text-center text-3xl font-bold m-4"}">Novidades</h1>
 <div class="${"container mx-auto max-w-4xl"}">
+  <h3 class="${"text-xl font-bold mt-2"}">Versão 0.3.1</h3>
+  <details open><summary><span class="${"text-lg font-medium cursor-pointer"}">Correções de Bugs</span></summary>
+    <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>[EDITOR] Havia um pequeno bug que estava impedindo o salvamento.</li></ol></details>
+  
   <h3 class="${"text-xl font-bold mt-2"}">Versão 0.3.0</h3>
   <details open><summary><span class="${"text-lg font-medium cursor-pointer"}">Novidades e Mudanças</span></summary>
       <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>O site foi praticamente refeito internamente;</li>
@@ -10,7 +14,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         <li>Além da &quot;Dados imprecisos&quot;, novas tags para dias especiais;</li>
         <li>Novas frases no cabeçalho (valeu, Lívia);</li>
         <li>Agradecimentos ao Moljo (mapa do dia 20/04);</li>
-        <li>Alteração de &quot;Cadeiras Vazias&quot; para apenas &quot;Vazias&quot;.</li></ol></details>
+        <li>Alteração de &quot;Cadeiras Vazias&quot; para apenas &quot;Vazias&quot;;</li>
+        <li>[EDITOR] Reordenar colunas e linhas usando index;</li>
+        <li>[EDITOR] Melhorias no design.</li></ol></details>
   <details open><summary><span class="${"text-lg font-medium cursor-pointer"}">Correções de Bugs</span></summary>
     <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>Não vi nenhum bug 😨</li></ol></details>
   
@@ -23,7 +29,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   
   <h3 class="${"text-xl font-bold mt-2"}">Versão 0.1.2</h3>
   <details><summary><span class="${"text-lg font-medium cursor-pointer"}">Novidades e Mudanças</span></summary>
-    <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>Index de cada linha no editor.</li></ol></details>
+    <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>[EDITOR] Index de cada linha.</li></ol></details>
   <details><summary><span class="${"text-lg font-medium cursor-pointer"}">Correções de Bugs</span></summary>
     <ol class="${"text-base text-gray-300 list-disc list-inside"}"><li>Tag para evitar aparecer em mecanismos de busca.</li></ol></details>
   
@@ -35,4 +41,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-e7f2ad0e.js.map
+//# sourceMappingURL=_page.svelte-4e08e7ae.js.map
