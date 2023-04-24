@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Novidades</title>
+</svelte:head>
+
 <h1 class="text-center text-3xl font-bold m-4">Novidades</h1>
 <div class="container mx-auto max-w-4xl">
   <!-- 0.3.1 -->
@@ -5,6 +9,7 @@
   <details open>
     <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>Título na página de Novidades;</li>
       <li>[EDITOR] Havia um pequeno bug que estava impedindo o salvamento.</li>
     </ol>
   </details>

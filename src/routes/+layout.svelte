@@ -17,7 +17,7 @@
   <a href="/">
     <h2 class="text-2xl font-bold">Mapa de Sala</h2>
   </a>
-  <p class="text-sm mb-4"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.3.0</a> • Feito por enzon19</p>
+  <p class="text-sm mb-4"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.3.1</a> • Feito por enzon19</p>
   <p class="text-sm text-light-grey">{phrases[randomIndex]}</p>
 </header>
 <div class="flex-grow"><slot/></div>

@@ -4,14 +4,14 @@ const manifest = {
 	assets: new Set(["apple-touch-icon.png","favicon-16x16.png","favicon-32x32.png","favicon.ico","favicon.png"]),
 	mimeTypes: {".png":"image/png",".ico":"image/vnd.microsoft.icon"},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.79262147.js","imports":["_app/immutable/entry/start.79262147.js","_app/immutable/chunks/index.19c244fc.js","_app/immutable/chunks/singletons.32fd1423.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.3ebdc048.js","imports":["_app/immutable/entry/app.3ebdc048.js","_app/immutable/chunks/index.19c244fc.js"],"stylesheets":[],"fonts":[]}},
+		client: {"start":{"file":"_app/immutable/entry/start.1cf4a4e3.js","imports":["_app/immutable/entry/start.1cf4a4e3.js","_app/immutable/chunks/index.19c244fc.js","_app/immutable/chunks/singletons.22857072.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.d832fcbe.js","imports":["_app/immutable/entry/app.d832fcbe.js","_app/immutable/chunks/index.19c244fc.js"],"stylesheets":[],"fonts":[]}},
 		nodes: [
-			() => import('./chunks/0-13833245.js'),
-			() => import('./chunks/1-eadf385d.js'),
-			() => import('./chunks/2-b0969773.js'),
-			() => import('./chunks/3-d642677b.js'),
-			() => import('./chunks/4-a36aa1a9.js'),
-			() => import('./chunks/5-44775d14.js'),
+			() => import('./chunks/0-523f568a.js'),
+			() => import('./chunks/1-c860d5c2.js'),
+			() => import('./chunks/2-097ea903.js'),
+			() => import('./chunks/3-14f513da.js'),
+			() => import('./chunks/4-3b40af6f.js'),
+			() => import('./chunks/5-067bb3b9.js'),
 			() => import('./chunks/6-9ac130af.js')
 		],
 		routes: [
