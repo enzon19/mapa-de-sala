@@ -2,11 +2,29 @@
   <title>Novidades</title>
 </svelte:head>
 
-<h1 class="text-center text-3xl font-bold m-4">Novidades</h1>
+<h2 class="text-center text-3xl font-bold m-4">Novidades</h2>
 <div class="container mx-auto max-w-4xl">
+  <!-- 0.4.0 -->
+  <h3 class="text-xl font-bold mt-2">Versão 0.4.0</h3>
+  <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Uma página dedicada à cada pessoa!</li>
+        <li>Acompanhe suas faltas, presenças, datas, mapa de calor e outros dados bacanas;</li>
+        <li>Nova página "Dados" para mostrar estatísticas legais. Inicialmente, apenas as faltas e presenças;</li>
+        <li>Veja um ranking de faltas e presenças — depois de tantos pedidos;</li>
+        <li>Nova tag "Revolução das Cadeiras";</li>
+      </ol>
+  </details>
+  <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>[EDITOR] Não era possível remover tags por completo.</li>
+    </ol>
+  </details>
   <!-- 0.3.1 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.3.1</h3>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
       <li>Título na página de Novidades;</li>
@@ -15,7 +33,7 @@
   </details>
   <!-- 0.3.0 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.3.0</h3>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>O site foi praticamente refeito internamente;</li>
@@ -28,7 +46,7 @@
         <li>[EDITOR] Melhorias no design.</li>
       </ol>
   </details>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
       <li>Não vi nenhum bug 😨</li>

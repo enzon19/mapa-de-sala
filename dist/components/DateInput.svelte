@@ -50,7 +50,7 @@
 </script>
 
 <div class="flex items-center gap-2 m-4 justify-center">
-  <a class="inline-block cursor-pointer" href={`/${route}/` + yesterday.toFormat('dd-MM')}><ChevronBack size="2rem"/></a>
-  <div class="text-center px-2 py-1 cursor-pointer w-72" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</div>
-  <a class="inline-block cursor-pointer" href={`/${route}/` + tomorrow.toFormat('dd-MM')}><ChevronForward size="2rem"/></a>
+  <a class="inline-block cursor-pointer" href={`/${route}/` + yesterday.toFormat('dd-MM')}><ChevronBack size="2rem" class="focus:outline-none focus:text-neutral-400"/></a>
+  <button class="text-center px-2 py-1 cursor-pointer w-72" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</button>
+  <a class="inline-block cursor-pointer" href={`/${route}/` + tomorrow.toFormat('dd-MM')}><ChevronForward size="2rem" class="focus:outline-none focus:text-neutral-400"/></a>
 </div>

@@ -1,4 +1,4 @@
-import { Warning, Document, InformationCircle } from 'svelte-ionicons';
+import { Warning, Document, InformationCircle, Flag } from 'svelte-ionicons';
 
 export default {
   "inaccurate": {
@@ -15,5 +15,10 @@ export default {
     text: "<b>Ataques em escolas?</b> Nesse dia, havia rumores por conta do aniversário de Columbine.",
     color: "bg-information-warning-grey",
     icon: InformationCircle
+  },
+  "chairRevolution": {
+    text: "<b>Revolução das Cadeiras</b> O Davi e o Lucas inventaram de criar uma nova fileira e a galera apoiou.",
+    color: "bg-information-warning-grey",
+    icon: Flag
   }
 }

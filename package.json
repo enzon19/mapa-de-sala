@@ -1,6 +1,6 @@
 {
 	"name": "mapa-de-sala",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -21,6 +21,7 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
+		"@svelte-plugins/tooltips": "^0.1.6",
 		"@sveltejs/adapter-node": "^1.2.2",
 		"@sveltejs/kit": "^1.15.4",
 		"@sveltejs/package": "^2.0.0",
@@ -42,6 +43,7 @@
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
 		"flatpickr": "^4.6.13",
-		"luxon": "^3.2.1"
+		"luxon": "^3.2.1",
+		"simpleheat": "^0.4.0"
 	}
 }

@@ -18,8 +18,16 @@ declare namespace _default {
         export { color_2 as color };
         export { InformationCircle as icon };
     }
+    namespace chairRevolution {
+        const text_3: string;
+        export { text_3 as text };
+        const color_3: string;
+        export { color_3 as color };
+        export { Flag as icon };
+    }
 }
 export default _default;
 import { Warning } from "svelte-ionicons";
 import { Document } from "svelte-ionicons";
 import { InformationCircle } from "svelte-ionicons";
+import { Flag } from "svelte-ionicons";
