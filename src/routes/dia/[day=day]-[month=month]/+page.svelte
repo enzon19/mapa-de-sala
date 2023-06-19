@@ -15,6 +15,7 @@
 
 <svelte:head>
   <title>Mapa de Sala em {requestedDate.toFormat('dd/MM')}</title>
+  <meta name="description" content="Mapa de Sala é um site que reúne dados sobre a posição de cada aluno na sala de aula. Projeto pessoal.">
 </svelte:head>
 
 <div class="container mx-auto max-w-4xl">

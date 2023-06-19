@@ -18,6 +18,7 @@
 
 <svelte:head>
   <title>Dados</title>
+  <meta name="description" content="Estatísticas bacanas com base nos dados coletados pelo site Mapa de Sala.">
 </svelte:head>
 
 <div class="container mx-auto max-w-7xl p-4 grid md:grid-cols-2 gap-4">

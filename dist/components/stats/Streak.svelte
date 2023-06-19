@@ -29,7 +29,7 @@
 <div class="grid grid-rows-5 grid-flow-col justify-items-center gap-1">
   {#each daysPossible as day, index}
     <a href={getDayURL(day)}>
-      <div class='w-4 h-4 rounded-sm bg-neutral-600' {index} class:bg-neutral-300={daysTracked.includes(day)} use:tooltip={{ style, content: getTooltipLabel(day), maxWidth: 1000, position: index >= 65 ? 'left' : 'right'}}></div>
+      <div class='w-4 h-4 rounded-sm bg-neutral-600' {index} class:streakTracked={daysTracked.includes(day)} use:tooltip={{ style, content: getTooltipLabel(day), maxWidth: 1000, position: index >= 65 ? 'left' : 'right'}}></div>
     </a>
   {/each}
 </div>
@@ -37,5 +37,10 @@
 <style>
   :global(.tooltip.show) {
     white-space: nowrap !important;
+  }
+
+  .streakTracked {
+    --tw-bg-opacity: 1;
+    background-color: #d4d4d4;
   }
 </style>

@@ -103,7 +103,7 @@ const options = {
   root: Root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n\n		<link rel="icon" type="image/x-icon" href="' + assets2 + '/favicon.ico">\n		<link rel="icon" type="image/x-icon" href="' + assets2 + '/favicon.png">\n		<link rel="apple-touch-icon" sizes="180x180" href="' + assets2 + '/apple-touch-icon.png">\n		<link rel="icon" type="image/png" sizes="32x32" href="' + assets2 + '/favicon-32x32.png">\n		<link rel="icon" type="image/png" sizes="16x16" href="' + assets2 + '/favicon-16x16.png">\n\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<meta name="description" content="Editor e visualizador de mapa de sala. Atualmente é um projeto pessoal.">\n		<meta name="robots" content="NOINDEX, NOFOLLOW">\n		\n		' + head + '\n	</head>\n	<body>\n		<div class="flex flex-col h-screen">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n\n		<link rel="icon" type="image/x-icon" href="' + assets2 + '/favicon.ico">\n		<link rel="icon" type="image/x-icon" href="' + assets2 + '/favicon.png">\n		<link rel="apple-touch-icon" sizes="180x180" href="' + assets2 + '/apple-touch-icon.png">\n		<link rel="icon" type="image/png" sizes="32x32" href="' + assets2 + '/favicon-32x32.png">\n		<link rel="icon" type="image/png" sizes="16x16" href="' + assets2 + '/favicon-16x16.png">\n\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<meta name="robots" content="NOINDEX, NOFOLLOW">\n		\n		' + head + '\n	</head>\n	<body>\n		<div class="flex flex-col h-screen">' + body + "</div>\n	</body>\n</html>\n",
     error: ({ status, message }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -165,7 +165,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1r33wwo"
+  version_hash: "o6nb5f"
 };
 function get_hooks() {
   return {};

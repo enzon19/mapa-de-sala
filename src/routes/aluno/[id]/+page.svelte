@@ -51,7 +51,8 @@
 </script>
 
 <svelte:head>
-  <title>{data.student.name}</title>
+  <title>{data.student.name} no Mapa de Sala</title>
+  <meta name="description" content={`Veja dados interessantes sobre ${data.student.name}! Tem a primeira e última aparição, presenças, faltas, mapa de calor e outras bobagens.`}>
 </svelte:head>
 
 <div class="container mx-auto max-w-7xl px-4">

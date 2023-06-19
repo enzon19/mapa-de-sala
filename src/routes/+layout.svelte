@@ -41,6 +41,11 @@
 		background-color: theme(colors.back-grey);
 		color: theme(colors.white);
 	}
+
+  .menuCurrentPage {
+    --tw-bg-opacity: 1;
+    background-color: #525252;
+  }
 </style>
 
 <header class="bg-darker-grey p-4 text-center flex flex-col items-center gap-4">
@@ -48,12 +53,12 @@
     <a href="/">
       <h1 class="text-2xl font-bold">Mapa de Sala</h1>
     </a>
-    <p class="text-sm"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.4.0</a> • Feito por enzon19</p>
+    <p class="text-sm"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.4.1</a> • Feito por enzon19</p>
   </div>
   <p class="text-sm text-light-grey">{phrases[randomIndex]}</p>
   <nav class="grid grid-flow-col grid-cols-3 gap-3 text-center">
     {#each pages as page}
-      <a class="flex flex-row gap-2 justify-center items-center p-2 rounded-xl cursor-pointer transition-colors bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600" class:bg-neutral-600={currentURL.match(page.pattern)} href={page.href} tabindex="0">
+      <a class="flex flex-row gap-2 justify-center items-center p-2 rounded-xl cursor-pointer transition-colors bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600" class:menuCurrentPage={currentURL.match(page.pattern)} href={page.href} tabindex="0">
         <svelte:component this={page.icon} tabindex="-1" class="inline-block w-5 h-5 focus:outline-none"/>
         {page.label}
       </a>
