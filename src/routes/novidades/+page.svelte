@@ -5,6 +5,14 @@
 
 <h2 class="text-center text-3xl font-bold m-4">Novidades</h2>
 <div class="container mx-auto max-w-4xl">
+  <!-- 0.4.2 -->
+  <h3 class="text-xl font-bold mt-2">Versão 0.4.2</h3>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>O idioma do site estava descrito como "Inglês", fazendo com que o Google Tradutor traduzisse a página sem necessidade.</li>
+    </ol>
+  </details>
   <!-- 0.4.1 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.4.1</h3>
   <details>

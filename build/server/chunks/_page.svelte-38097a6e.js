@@ -5,6 +5,10 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 <h2 class="text-center text-3xl font-bold m-4">Novidades</h2>
 <div class="container mx-auto max-w-4xl">
+  <h3 class="text-xl font-bold mt-2">Versão 0.4.2</h3>
+  <details><summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside"><li>O idioma do site estava descrito como &quot;Inglês&quot;, fazendo com que o Google Tradutor traduzisse a página sem necessidade.</li></ol></details>
+  
   <h3 class="text-xl font-bold mt-2">Versão 0.4.1</h3>
   <details><summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside"><li>Erros de exibição das cores da sequência de presença e do menu de páginas do site;</li>
@@ -60,4 +64,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-ff85ef19.js.map
+//# sourceMappingURL=_page.svelte-38097a6e.js.map

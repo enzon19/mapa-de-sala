@@ -105,7 +105,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   currentURL = $page.url.pathname;
   $$unsubscribe_page();
   return `<header class="bg-darker-grey p-4 text-center flex flex-col items-center gap-4"><div><a href="/"><h1 class="text-2xl font-bold">Mapa de Sala</h1></a>
-    <p class="text-sm"><a class="hover:text-light-grey transition-colors" href="/novidades">v0.4.1</a> • Feito por enzon19</p></div>
+    <p class="text-sm"><a class="hover:text-light-grey transition-colors" href="/novidades">v0.4.2</a> • Feito por enzon19</p></div>
   <p class="text-sm text-light-grey">${escape(phrases[randomIndex])}</p>
   <nav class="grid grid-flow-col grid-cols-3 gap-3 text-center">${each(pages, (page2) => {
     return `<a class="${[
@@ -134,4 +134,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-56a455ef.js.map
+//# sourceMappingURL=_layout.svelte-7e338e9b.js.map

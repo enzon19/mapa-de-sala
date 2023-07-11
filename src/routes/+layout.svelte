@@ -53,7 +53,7 @@
     <a href="/">
       <h1 class="text-2xl font-bold">Mapa de Sala</h1>
     </a>
-    <p class="text-sm"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.4.1</a> • Feito por enzon19</p>
+    <p class="text-sm"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.4.2</a> • Feito por enzon19</p>
   </div>
   <p class="text-sm text-light-grey">{phrases[randomIndex]}</p>
   <nav class="grid grid-flow-col grid-cols-3 gap-3 text-center">
