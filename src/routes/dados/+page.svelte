@@ -1,11 +1,26 @@
 <script>
-  import List from '$lib/components/stats/List.svelte'
+  import { supabase } from "$lib/supabaseClient";
+  import { generateDatasetsOfStudentsAttendanceAndChairs, generateDatasetsOfSpacesAndEmptyChairs, getAttendancesAndAbsencesFixedAndWithStudentData } from '$lib/getStats.js';
+
+  // icons
+  import Sort from 'svelte-ionicons/Filter.svelte';
+  import Filter from 'svelte-ionicons/Funnel.svelte';
+
+  // components
+  import List from '$lib/components/stats/List.svelte';
+  import Chart from '$lib/components/stats/Chart.svelte';
+  import Button from '$lib/components/Button.svelte';
+  import FilterController from '$lib/components/stats/controllers/FilterController.svelte';
+  import SortController from '$lib/components/stats/controllers/SortController.svelte';
 
   export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
-  let {attendancesAndAbsencesWithStudentData} = data;
-
-  let absencesRanking = [...attendancesAndAbsencesWithStudentData].sort((a, b) => b.absences.number - a.absences.number);
-  let attendancesRanking = [...attendancesAndAbsencesWithStudentData].sort((a, b) => b.attendances.number - a.attendances.number);
+  let {studentsData, allClassroomMapData} = data;
+  let dataForComponents = {
+    absencesRanking: allClassroomMapData,
+    attendancesRanking: allClassroomMapData,
+    studentsAndChairsDataset: allClassroomMapData,
+    spacesAndEmptyChairsDataset: allClassroomMapData 
+  };
 
   function absencesContentTemplate(item) {
     return `<a href="/aluno/${item.id}">${item.name}</a>: ${item.absences.number} ${item.absences.number < 2 ? 'falta' : 'faltas'} (${item.absences.percentage}%)`
@@ -14,6 +29,63 @@
   function attendancesContentTemplate(item) {
     return `<a href="/aluno/${item.id}">${item.name}</a>: ${item.attendances.number} ${item.attendances.number < 2 ? 'presença' : 'presenças'} (${item.attendances.percentage}%)`
   }
+
+  $: studentsAndChairsDataset = generateDatasetsOfStudentsAttendanceAndChairs(dataForComponents.studentsAndChairsDataset);
+  $: spacesAndEmptyChairsDataset = generateDatasetsOfSpacesAndEmptyChairs(dataForComponents.spacesAndEmptyChairsDataset);
+  
+  // sistema de ordenar e filtrar
+  let sort = {
+    absencesRanking: {
+      type: 'absolute',
+      direction: 'decrescent'
+    },
+    attendancesRanking: {
+      type: 'absolute',
+      direction: 'decrescent'
+    }
+  }
+
+  function sortData(data, sort) {
+    if (sort.type === 'percentage-ab') {
+      data = data.sort((a, b) => b.absences.percentage - a.absences.percentage);
+    } else if (sort.type === 'percentage-at') {
+      data = data.sort((a, b) => a.absences.percentage - b.absences.percentage);
+    } else if (sort.type === 'alphabetical') {
+      data = data.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    if (sort.direction === 'increscent') data.reverse();
+
+    return data;
+  }
+
+  $: absencesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.absencesRanking, student)).sort((a, b) => b.absences.number - a.absences.number), sort.absencesRanking);
+  $: attendancesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.attendancesRanking, student)).sort((a, b) => b.attendances.number - a.attendances.number), sort.attendancesRanking);
+  
+  let dataManipulation = {
+    absencesRanking: "",
+    attendancesRanking: "",
+    studentsAndChairsDataset: "",
+    spacesAndEmptyChairsDataset: "" 
+  }
+  
+  async function filterData(component, filter) {
+    let query = supabase.from("classroomMap").select();
+    const days = filter.day?.map(date => date?.toISODate());
+
+    if (days.length === 2) {
+      query = query.gte('day', days[0]).lte('day', days[1]).order('day');
+    }
+    
+    let { data } = await query;
+
+    if (filter.tags.length > 0) {
+      data = data.filter(({tags}) => !filter.tags.some(excludedTag => tags.includes(excludedTag.id)));
+      // .not("tags", "&&", `{${filter.tags.map(tag => `"${tag.id}"`).join(",")}}`)
+      // .overlaps("tags", filter.tags.map(tag => tag.id));
+    }
+
+    dataForComponents[component] = data;
+  }
 </script>
 
 <svelte:head>
@@ -21,15 +93,76 @@
   <meta name="description" content="Estatísticas bacanas com base nos dados coletados pelo site Mapa de Sala.">
 </svelte:head>
 
+<span class="text-sm text-neutral-500 block text-center mt-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
 <div class="container mx-auto max-w-7xl p-4 grid md:grid-cols-2 gap-4">
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Faltas</h5>
-    <span class="text-sm text-neutral-500 block text-center m-1">Estes dados não são precisos e não devem ser usados como parâmetro.</span>
+    <span class="text-sm text-neutral-500 block text-center m-1">Conheça os profissionais em matar em aula.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.absencesRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesRanking = dataManipulation.absencesRanking != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+        <Button moreClasses={dataManipulation.absencesRanking === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesRanking = dataManipulation.absencesRanking != 'sort' ? 'sort' : ''}>
+          <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
+        </Button>
+      </div>
+      {#if dataManipulation.absencesRanking === 'filter'}
+        <FilterController on:filterChanged={event => filterData('absencesRanking', event.detail.filter)}/>
+      {:else if dataManipulation.absencesRanking === 'sort'}
+        <SortController bind:sort={sort.absencesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Faltas'}, {'id': 'percentage-ab', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
+      {/if}
+    </div>
     <List data={absencesRanking} contentTemplate={absencesContentTemplate}/>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Presença</h5>
-    <span class="text-sm text-neutral-500 block text-center m-1">Estes dados não são precisos e não devem ser usados como parâmetro.</span>
+    <span class="text-sm text-neutral-500 block text-center m-1">Esses gostam de vir pra aula.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.attendancesRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.attendancesRanking = dataManipulation.attendancesRanking != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+        <Button moreClasses={dataManipulation.attendancesRanking === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.attendancesRanking = dataManipulation.attendancesRanking != 'sort' ? 'sort' : ''}>
+          <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
+        </Button>
+      </div>
+      {#if dataManipulation.attendancesRanking === 'filter'}
+        <FilterController on:filterChanged={event => filterData('attendancesRanking', event.detail.filter)}/>
+      {:else if dataManipulation.attendancesRanking === 'sort'}
+        <SortController bind:sort={sort.attendancesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Presenças'}, {'id': 'percentage-at', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
+      {/if}
+    </div>
     <List data={attendancesRanking} contentTemplate={attendancesContentTemplate}/>
+  </div>
+  <div class="bg-input-grey rounded-xl p-4">
+    <h5 class="text-center font-bold text-xl">Presenças e Cadeiras × Tempo</h5>
+    <span class="text-sm text-neutral-500 block text-center m-1">Veja a variação de cadeiras e presenças ao longo do tempo.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.studentsAndChairsDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.studentsAndChairsDataset = dataManipulation.studentsAndChairsDataset != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+      </div>
+      {#if dataManipulation.studentsAndChairsDataset === 'filter'}
+        <FilterController on:filterChanged={event => filterData('studentsAndChairsDataset', event.detail.filter)}/>
+      {/if}
+    </div>
+    <Chart data={studentsAndChairsDataset}/>
+  </div>
+  <div class="bg-input-grey rounded-xl p-4">
+    <h5 class="text-center font-bold text-xl">Buracos e Vazias × Tempo</h5>
+    <span class="text-sm text-neutral-500 block text-center m-1">Veja a variação de cadeiras vazias e buracos ao longo do tempo.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.spacesAndEmptyChairsDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.spacesAndEmptyChairsDataset = dataManipulation.spacesAndEmptyChairsDataset != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+      </div>
+      {#if dataManipulation.spacesAndEmptyChairsDataset === 'filter'}
+        <FilterController on:filterChanged={event => filterData('spacesAndEmptyChairsDataset', event.detail.filter)}/>
+      {/if}
+    </div>
+    <Chart data={spacesAndEmptyChairsDataset}/>
   </div>
 </div>

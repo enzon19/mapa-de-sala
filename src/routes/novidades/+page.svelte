@@ -5,6 +5,22 @@
 
 <h2 class="text-center text-3xl font-bold m-4">Novidades</h2>
 <div class="container mx-auto max-w-4xl">
+  <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
+  <!-- FUTURAS MELHORIAS: destacar alguém no mapa através da URL (destaque=id), para, por exemplo, quando você clica "nesta posição" lá na linha do tempo; excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
+  <!-- 0.5.0 -->
+  <h3 class="text-xl font-bold mt-2">Versão 0.5.0</h3>
+  <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Mais dados legais disponíveis na aba "Dados"!</li>
+        <li>"Sequência de Posição" e "Linha do Tempo" disponíveis no perfil de cada pessoa!</li>
+        <li>Filtrar, ordenar e visualizar finalmente totalmente disponíveis!</li>
+        <li>Melhorias de design nas listas;</li>
+        <li>Melhorias de design nos botões de filtrar, ordenar e visualizar;</li>
+        <li>Rodapé alterado e informações movidas para "Sobre";</li>
+        <li>Melhorias na navegação de datas: pular dias sem dados, novas cores pro calendário e aperfeiçoamentos no design.</li>
+      </ol>
+  </details>
   <!-- 0.4.2 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.4.2</h3>
   <details>
@@ -25,7 +41,7 @@
   </details>
   <!-- 0.4.0 -->
   <h3 class="text-xl font-bold mt-2">Versão 0.4.0</h3>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>Uma página dedicada à cada pessoa!</li>
@@ -35,7 +51,7 @@
         <li>Nova tag "Revolução das Cadeiras";</li>
       </ol>
   </details>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
       <li>[EDITOR] Não era possível remover tags por completo.</li>

@@ -1,3 +1,4 @@
+/// <reference types="svelte-multiselect/node_modules/svelte" />
 /** @typedef {typeof __propDef.props}  ClosedListProps */
 /** @typedef {typeof __propDef.events}  ClosedListEvents */
 /** @typedef {typeof __propDef.slots}  ClosedListSlots */

@@ -1,7 +1,10 @@
+<!-- Código meio porco, mas tá funcionando e o resultado tá legal! -->
 <script>
+  import { supabase } from "$lib/supabaseClient";
+  import { DateTime } from 'luxon';
+  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable } from '$lib/getStats.js';
+
   // icons
-  import LockClosed from 'svelte-ionicons/LockClosed.svelte';
-  import Time from 'svelte-ionicons/Time.svelte';
   import Sort from 'svelte-ionicons/Filter.svelte';
   import Filter from 'svelte-ionicons/Funnel.svelte';
   import ArrowUp from 'svelte-ionicons/ArrowUp.svelte';
@@ -9,16 +12,24 @@
 
   // components
   import Streak from '$lib/components/stats/Streak.svelte';
+  import PositionStreak from '$lib/components/stats/PositionStreak.svelte';
   import Heatmap from '$lib/components/stats/Heatmap.svelte';
+  import Timeline from '$lib/components/stats/Timeline.svelte';
   import ClosedList from '$lib/components/stats/ClosedList.svelte';
   import Button from '$lib/components/Button.svelte';
-
-  import { DateTime } from 'luxon';
-  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable } from '$lib/getStats.js';
+  import FilterController from '$lib/components/stats/controllers/FilterController.svelte';
+  import SortController from '$lib/components/stats/controllers/SortController.svelte';
+  import ViewController from '$lib/components/stats/controllers/ViewController.svelte';
 
   // dados vindo do page.server.js incluindo coisas do banco de dados
   export let data;
   let {student, allClassroomMapData, allDays} = data;
+  let dataForComponents = {
+    positionStreak: allClassroomMapData,
+    heatmap: allClassroomMapData,
+    timeline: allClassroomMapData,
+    positionRanking: allClassroomMapData
+  };
 
   // --------- Perfil; Visão Geral ---------
   let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student.id);
@@ -39,14 +50,56 @@
   }
 
   // --------- Estatísticas ---------
-  // variáveis para sistema de ordenar e filtrar
-  let invertDeskCounting = false;
-  let compensate = true;
+  let sort = {
+    positionRanking: {
+      type: 'days',
+      direction: 'decrescent'
+    },
+    timeline: {
+      type: 'chronology',
+      direction: 'increscent'
+    }
+  }
+	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(dataForComponents.positionRanking, student.id, invertDeskCounting.positionRanking, sort.positionRanking).filter(({position}) => !position.startsWith('0ª')); // esse 0ª são os dias com falta
 
-	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(allClassroomMapData, student.id, invertDeskCounting).filter(({position}) => !position.startsWith('0ª'));
+  // sistema de ordenar e filtrar
+  let dataManipulation = {
+    positionStreak: "",
+    heatmap: "",
+    timeline: "",
+    positionRanking: "" 
+  }
+  let invertDeskCounting = {
+    positionStreak: false,
+    heatmap: false,
+    timeline: false,
+    positionRanking: false
+  };
+  let compensate = true;
+  let background = false;
   
-  function changeDeskCountingOrder() {
-    invertDeskCounting = invertDeskCounting === true ? false : true;
+  async function filterData(component, filter) {
+    let query = supabase.from("classroomMap").select();
+    const days = filter.day?.map(date => date?.toISODate());
+
+    if (days.length === 2) {
+      query = query.gte('day', days[0]).lte('day', days[1]).order('day');
+    }
+    
+    let { data } = await query;
+
+    if (filter.tags.length > 0) {
+      data = data.filter(({tags}) => !filter.tags.some(excludedTag => tags.includes(excludedTag.id)));
+      // .not("tags", "&&", `{${filter.tags.map(tag => `"${tag.id}"`).join(",")}}`)
+      // .overlaps("tags", filter.tags.map(tag => tag.id));
+    }
+
+    dataForComponents[component] = data;
+  }
+
+  function changeDeskCountingOrder(component) {
+    invertDeskCounting[component] = invertDeskCounting[component] === true ? false : true;
+    dataManipulation[component] = '';
   }
 </script>
 
@@ -56,33 +109,31 @@
 </svelte:head>
 
 <div class="container mx-auto max-w-7xl px-4">
-  <!-- <div class="p-4 bg-input-grey my-4 rounded-xl"> -->
-    <!-- mb-4 -->
-    <h2 class="text-center text-3xl font-bold m-4">{data.student.name}</h2>
-    <!-- bg-back-grey -->
-    <div class="grid grid-cols-4 gap-4 items-center max-w-xl mx-auto p-4 rounded-xl bg-neutral-800">
-      <div class="flex flex-col items-center text-center">
-        <div class="text-xl font-semibold">{firstAttendanceAsDateTime.toFormat('dd/MM')}</div>
-        <div class="text-sm text-neutral-500">Primeira Aparição</div>
-      </div>
-      <div class="flex flex-col items-center text-center">
-        <div class="text-xl font-semibold">{lastAttendanceAsDateTime.toFormat('dd/MM')}</div>
-        <div class="text-sm text-neutral-500">Última Aparição</div>
-      </div>
-      <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
-        <div class="text-xl font-semibold">{count.attendances[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
-        <div class="text-sm text-neutral-500">Presenças</div>
-      </div>
-      <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
-        <div class="text-xl font-semibold">{count.absences[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
-        <div class="text-sm text-neutral-500">Faltas</div>
-      </div>
-    <!-- </div> -->
+  <!-- --------- Perfil; Visão Geral --------- -->
+  <h2 class="text-center text-3xl font-bold m-4">{data.student.name}</h2>
+  <div class="grid grid-cols-4 gap-4 items-center max-w-xl mx-auto p-4 rounded-xl bg-neutral-800">
+    <div class="flex flex-col items-center text-center">
+      <div class="text-xl font-semibold">{firstAttendanceAsDateTime.toFormat('dd/MM')}</div>
+      <div class="text-sm text-neutral-500">Primeira Aparição</div>
+    </div>
+    <div class="flex flex-col items-center text-center">
+      <div class="text-xl font-semibold">{lastAttendanceAsDateTime.toFormat('dd/MM')}</div>
+      <div class="text-sm text-neutral-500">Última Aparição</div>
+    </div>
+    <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
+      <div class="text-xl font-semibold">{count.attendances[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
+      <div class="text-sm text-neutral-500">Presenças</div>
+    </div>
+    <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
+      <div class="text-xl font-semibold">{count.absences[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
+      <div class="text-sm text-neutral-500">Faltas</div>
+    </div>
   </div>
   <span class="text-sm text-neutral-500 block text-center m-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+  <!-- Estatísticas -->
   <hr class="my-4 border-neutral-500">
   <div class="grid md:grid-cols-2 gap-4">
-    <div class="bg-input-grey rounded-xl p-4">
+    <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Sequência de Presença</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">Acompanhe e visualize sua sequência de presença ao longo do tempo.</span>
       <div class="overflow-x-auto">
@@ -91,61 +142,96 @@
         </div>
       </div>
     </div>
-    <div class="bg-input-grey rounded-xl p-4 grid grid-flow-row justify-items-center">
-      <h5 class="font-bold text-xl">Sequência de Posição</h5>
-      <div class="flex flex-col gap-1 items-center">
-        <LockClosed class="text-neutral-500 mx-auto focus:outline-none" tabindex="-1" size="2rem"/>
-        <span class="text-sm text-neutral-500 block text-center">Este dado é secreto até Dezembro.</span>
-        <span class="text-sm text-neutral-400 block text-center">Usuários do Mapa de Sala Premium terão acesso a este dado em Agosto.</span>
+    <div class="bg-neutral-800 rounded-xl p-4">
+      <div>
+        <h5 class="text-center font-bold text-xl">Sequência de Posição</h5>
+        <span class="text-sm text-neutral-500 block text-center m-1">Veja há quantos dias você está sentando no mesmo lugar.</span>
       </div>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.positionStreak === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionStreak = dataManipulation.positionStreak != 'filter' ? 'filter' : ''}>
+            <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+          </Button>
+          <Button on:click={() => changeDeskCountingOrder('positionStreak')}>
+            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting.positionStreak ? '' : 'rotate-180'}`} tabindex="-1"/> Direção da Fila
+          </Button>
+        </div>
+        {#if dataManipulation.positionStreak === 'filter'}
+          <FilterController on:filterChanged={event => filterData('positionStreak', event.detail.filter)}/>
+        {/if}
+      </div>
+      <PositionStreak allClassroomMapData={dataForComponents.positionStreak} studentID={student.id} invertDeskCounting={invertDeskCounting.positionStreak} compensate={false}/>
     </div>
-    <div class="bg-input-grey rounded-xl p-4">
+    <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por você.<br>Dias com mais ou menos de 5 filas são desconsiderados do mapa de calor.</span>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1 rounded-xl">
-        <span class="text-center text-sm text-neutral-600 block mb-1">Ferramentas</span>
-        <div class="flex sm:flex-row gap-1 justify-center flex-col">
-          <Button on:click={() => alert('não tá pronto ainda!')}>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
           </Button>
-          <Button on:click={() => alert('não tá pronto ainda!')}>
+          <Button moreClasses={dataManipulation.heatmap === 'view' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'view' ? 'view' : ''}>
             <Eye size="1.2rem" class="focus:outline-none" tabindex="-1"/> Visualizar
           </Button>
-          <Button on:click={() => alert('não tá pronto ainda!')}>
-            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting ? '' : ''}`} tabindex="-1"/> Direção da Fila
+          <Button on:click={() => changeDeskCountingOrder('heatmap')}>
+            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting.heatmap ? '' : 'rotate-180'}`} tabindex="-1"/> Direção da Fila
           </Button>
         </div>
+        {#if dataManipulation.heatmap === 'filter'}
+          <FilterController on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
+        {:else if dataManipulation.heatmap === 'view'}
+          <ViewController type="heatmap" bind:compensate bind:background on:sortChanged={event => filterData('heatmap', event.detail.sort)}/>
+        {/if}
       </div>
       <div class="flex justify-center">
-        <Heatmap allClassroomMapData={allClassroomMapData} studentID={student.id} {invertDeskCounting} {compensate}/>
+        <Heatmap allClassroomMapData={dataForComponents.heatmap} studentID={student.id} invertDeskCounting={invertDeskCounting.heatmap} {compensate} {background}/>
       </div>
     </div>
-    <div class="bg-input-grey rounded-xl p-4 grid grid-flow-row justify-items-center">
+    <div class="bg-neutral-800 rounded-xl p-4">
       <div>
-        <h5 class="text-center font-bold text-xl">Trajetória</h5>
-        <span class="text-sm text-neutral-500 block text-center m-1">Cada vez que você mudou de lugar.</span>
+        <h5 class="text-center font-bold text-xl">Linha do Tempo</h5>
+        <span class="text-sm text-neutral-500 block text-center m-1">Períodos em que você se manteve em um lugar.</span>
       </div>
-      <div class="flex flex-col gap-1 items-center">
-        <Time class="text-neutral-500 mx-auto focus:outline-none" tabindex="-1" size="2rem"/>
-        <span class="text-sm text-neutral-500 block text-center">Este dado será disponibilizado em breve... Preguiça.</span>
-      </div>
-    </div>
-    <div class="bg-input-grey rounded-xl p-4">
-      <h5 class="text-center font-bold text-xl">Ranking de Posição</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">Quantas vezes você sentou em diferentes lugares.</span>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1 rounded-xl">
-        <span class="text-center text-sm text-neutral-600 block mb-1">Ferramentas</span>
-        <div class="flex sm:flex-row gap-1 justify-center flex-col">
-          <Button on:click={() => alert('não tá pronto ainda!')}>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.timeline === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.timeline = dataManipulation.timeline != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
           </Button>
-          <Button on:click={() => alert('não tá pronto ainda!')}>
+          <Button moreClasses={dataManipulation.timeline === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.timeline = dataManipulation.timeline != 'sort' ? 'sort' : ''}>
             <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
           </Button>
-          <Button on:click={changeDeskCountingOrder}>
-            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting ? '' : 'rotate-180'}`} tabindex="-1"/> Direção da Fila
+          <Button on:click={() => changeDeskCountingOrder('timeline')}>
+            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting.timeline ? '' : 'rotate-180'}`} tabindex="-1"/> Direção da Fila
           </Button>
         </div>
+        {#if dataManipulation.timeline === 'filter'}
+          <FilterController on:filterChanged={event => filterData('timeline', event.detail.filter)}/>
+        {:else if dataManipulation.timeline === 'sort'}
+          <SortController bind:sort={sort.timeline} sortOptions={[{'id': 'chronology', 'label': 'Cronológica'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'rows', 'label': 'Fileiras'}, {'id': 'desks', 'label': 'Cadeiras'}]}/>
+        {/if}
+      </div>
+      <Timeline allClassroomMapData={dataForComponents.timeline} studentID={student.id} invertDeskCounting={invertDeskCounting.timeline} compensate={false} sort={sort.timeline}/>
+    </div>
+    <div class="bg-neutral-800 rounded-xl p-4">
+      <h5 class="text-center font-bold text-xl">Ranking de Posição</h5>
+      <span class="text-sm text-neutral-500 block text-center m-1">Quantas vezes você sentou em diferentes lugares.</span>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.positionRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionRanking = dataManipulation.positionRanking != 'filter' ? 'filter' : ''}>
+            <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+          </Button>
+          <Button moreClasses={dataManipulation.positionRanking === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionRanking = dataManipulation.positionRanking != 'sort' ? 'sort' : ''}>
+            <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
+          </Button>
+          <Button on:click={() => changeDeskCountingOrder('positionRanking')}>
+            <ArrowUp size="1.2rem" class={`focus:outline-none transition-all ${invertDeskCounting.positionRanking ? '' : 'rotate-180'}`} tabindex="-1"/> Direção da Fila
+          </Button>
+        </div>
+        {#if dataManipulation.positionRanking === 'filter'}
+          <FilterController on:filterChanged={event => filterData('positionRanking', event.detail.filter)}/>
+        {:else if dataManipulation.positionRanking === 'sort'}
+          <SortController bind:sort={sort.positionRanking}/>
+        {/if}
       </div>
       <ClosedList summaries={rankedGroupedPosition.map(({position}) => position)} content={rankedGroupedPosition.map(({days}) => days)}></ClosedList>
     </div>

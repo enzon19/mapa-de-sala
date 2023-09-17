@@ -25,7 +25,10 @@ module.exports = {
         'md': '0 0 10px',
       },
       maxWidth: {
-        '120': '120px',
+        '120': '120px'
+      },
+      maxHeight: {
+        '90': '23rem'
       },
       backdropBlur: {
         'little': '1.5px',

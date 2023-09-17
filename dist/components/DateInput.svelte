@@ -1,7 +1,8 @@
 <script>
+  import { supabase } from "../supabaseClient";
   import flatpickr from 'flatpickr';
-  import 'flatpickr/dist/themes/dark.css';
-  import { Portuguese } from "flatpickr/dist/l10n/pt.js"
+  import '$lib/themes/mapa-de-sala-flatpickr.css';
+  import { Portuguese } from "flatpickr/dist/l10n/pt.js";
   import { DateTime } from "luxon";
 
   import ChevronForward from 'svelte-ionicons/ChevronForward.svelte';
@@ -12,16 +13,43 @@
 
   export let requestedDate;
   export let route = "dia";
+  export let checkInDatabase = false;
 
-  $: yesterday = requestedDate.minus({ day: 1 });
-  $: tomorrow = requestedDate.plus({ day: 1 });
   $: requestedDateAsString = requestedDate.setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long' });
-  
-  // Date Picker de bosta
+
+  async function goToPreviousDay() {
+    let previousDate;
+
+    if (checkInDatabase) {
+      const {data} = await supabase.from("classroomMap").select('day').lt('day', requestedDate.toString()).order('day', { ascending: false }).limit(1);
+      previousDate = DateTime.fromISO(data[0]?.day);
+      if (!previousDate.isValid) previousDate = requestedDate.minus({ day: 1 });
+    } else {
+      previousDate = requestedDate.minus({ day: 1 });
+    }
+    
+    goto(`/${route}/` + previousDate.toFormat('dd-MM'));
+  }
+
+  async function goToNextDay() {
+    let previousDate;
+
+    if (checkInDatabase) {
+      const {data} = await supabase.from("classroomMap").select('day').gt('day', requestedDate.toString()).order('day', { ascending: true }).limit(1);
+      previousDate = DateTime.fromISO(data[0]?.day);
+      if (!previousDate.isValid) previousDate = requestedDate.plus({ day: 1 });
+    } else {
+      previousDate = requestedDate.plus({ day: 1 });
+    }
+
+    goto(`/${route}/` + previousDate.toFormat('dd-MM'));
+  }
+
+  // Date Picker
   let datePicker, datePickerElement;
 
   function openDatePicker() {
-    datePicker.open();
+    datePicker.toggle();
   }
 
   function initDatePicker(node) {
@@ -31,6 +59,8 @@
       minDate: "6-2-2023",
       maxDate: "8-12-2023",
       locale: Portuguese,
+      position: "auto center",
+      clickOpens: false,
       disableMobile: true,
       onChange: function (selectedDates) {
         const selectedDate = DateTime.fromJSDate(selectedDates[0]);
@@ -46,11 +76,10 @@
   afterUpdate(() => {
     initDatePicker(datePickerElement);
   });
-
 </script>
 
 <div class="flex items-center gap-2 m-4 justify-center">
-  <a class="inline-block cursor-pointer" href={`/${route}/` + yesterday.toFormat('dd-MM')}><ChevronBack size="2rem" class="focus:outline-none focus:text-neutral-400"/></a>
+  <button class="inline-block cursor-pointer" on:click={goToPreviousDay} on:keypress={goToPreviousDay}><ChevronBack size="2rem" class="focus:outline-none focus:text-neutral-400"/></button>
   <button class="text-center px-2 py-1 cursor-pointer w-72" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</button>
-  <a class="inline-block cursor-pointer" href={`/${route}/` + tomorrow.toFormat('dd-MM')}><ChevronForward size="2rem" class="focus:outline-none focus:text-neutral-400"/></a>
+  <button class="inline-block cursor-pointer" on:click={goToNextDay} on:keypress={goToNextDay}><ChevronForward size="2rem" class="focus:outline-none focus:text-neutral-400"/></button>
 </div>

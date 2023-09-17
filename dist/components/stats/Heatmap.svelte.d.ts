@@ -1,3 +1,4 @@
+/// <reference types="svelte-multiselect/node_modules/svelte" />
 /** @typedef {typeof __propDef.props}  HeatmapProps */
 /** @typedef {typeof __propDef.events}  HeatmapEvents */
 /** @typedef {typeof __propDef.slots}  HeatmapSlots */
@@ -6,6 +7,7 @@ export default class Heatmap extends SvelteComponentTyped<{
     studentID: any;
     invertDeskCounting: any;
     compensate: any;
+    background: any;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -20,6 +22,7 @@ declare const __propDef: {
         studentID: any;
         invertDeskCounting: any;
         compensate: any;
+        background: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -53,7 +53,7 @@
     <a href="/">
       <h1 class="text-2xl font-bold">Mapa de Sala</h1>
     </a>
-    <p class="text-sm"><a  class="hover:text-light-grey transition-colors" href="/novidades">v0.4.2</a> • Feito por enzon19</p>
+    <p class="text-sm"><a class="hover:text-neutral-400 transition-colors" href="/novidades">v0.5.0</a> • Feito por enzon19</p>
   </div>
   <p class="text-sm text-light-grey">{phrases[randomIndex]}</p>
   <nav class="grid grid-flow-col grid-cols-3 gap-3 text-center">
@@ -67,12 +67,13 @@
 </header>
 <div class="flex-grow"><slot/></div>
 <footer class="bg-darker-grey text-center text-sm p-4 mt-4">
-  <span>Agradecimentos: Antônio Pomarico, Davi Barcelos, Gabriel Moljo, Lívia Carnot e Lucas Castro.</span>
-  <br>
+  <span>
+    <a href="/sobre" class="underline hover:text-neutral-400 transition-colors">Sobre o projeto</a>
+    e
+    <a href="/sobre" class="underline hover:text-neutral-400 transition-colors">agradecimentos</a>.
+  </span>
   <span>
     Veja esse projeto no
-    <a target="blank" class="underline hover:text-light-grey transition-colors" href="https://github.com/enzon19/mapa-de-sala">GitHub</a>.
-    Faça uma doação
-    <a target="blank" class="underline hover:text-light-grey transition-colors" href="https://enzon19.com/#donate">aqui</a>.
+    <a target="blank" class="underline hover:text-neutral-400 transition-colors" href="https://github.com/enzon19/mapa-de-sala">GitHub</a>.
   </span>
 </footer>

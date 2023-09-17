@@ -16,13 +16,20 @@
   }
 </script>
 
-{#each summaries as summary, index}
-  <details>
-    <summary><span class="cursor-pointer"><strong>{index + 1}.</strong> {summary}</span></summary>
-    <ol class="list-disc list-inside pl-5">
-      {#each content[index] as item}
-        <li><a href={getDayURL(item.day)}>{getTooltipLabel(item.day)}</a></li>
-      {/each}
-    </ol>
-  </details>
-{/each}
+<div class="max-h-60 overflow-y-scroll">
+  <ol class="list-decimal list-inside">
+    {#each summaries as summary, index}
+      <div class="flex flex-row">
+        <li class="marker:font-bold text-right w-7"></li>
+        <details class="inline-block ml-2">
+          <summary><span class="cursor-pointer">{summary}</span></summary>
+          <ol class="list-disc list-inside pl-5">
+            {#each content[index] as item}
+              <li><a href={getDayURL(item.day)}>{getTooltipLabel(item.day)}</a></li>
+            {/each}
+          </ol>
+        </details>
+      </div>
+    {/each}
+  </ol>
+</div>

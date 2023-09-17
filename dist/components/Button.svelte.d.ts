@@ -1,8 +1,9 @@
+/// <reference types="svelte-multiselect/node_modules/svelte" />
 /** @typedef {typeof __propDef.props}  ButtonProps */
 /** @typedef {typeof __propDef.events}  ButtonEvents */
 /** @typedef {typeof __propDef.slots}  ButtonSlots */
 export default class Button extends SvelteComponentTyped<{
-    [x: string]: never;
+    moreClasses?: string;
 }, {
     click: MouseEvent;
 } & {
@@ -17,7 +18,7 @@ export type ButtonSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        [x: string]: never;
+        moreClasses?: string;
     };
     events: {
         click: MouseEvent;

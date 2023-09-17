@@ -17,13 +17,27 @@ export function countAttendancesAndAbsences(attendances: any, absences: any): {
         percentage: number;
     };
 };
+export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData: any, student: any): any;
 export function getPosition(layout: any, studentID: any, reverseOrder: boolean, fillSpaces: any): any[];
 export function getPositionDayByDay(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any): any;
 export function generateFrequencyOfPosition(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any): {
     position: any;
     frequency: any;
 }[];
-export function generateRankedGroupedPositionHumanReadable(allClassroomMapData: any, studentID: any, reverseOrder?: boolean): {
+export function generateRankedGroupedPositionHumanReadable(allClassroomMapData: any, studentID: any, reverseChairOrder: boolean, sort: any): {
     position: string;
     days: any;
 }[];
+export function generateDatasetsOfStudentsAttendanceAndChairs(allClassroomMapData: any): {
+    label: string;
+    data: any[];
+    borderColor: string[];
+    backgroundColor: string[];
+}[];
+export function generateDatasetsOfSpacesAndEmptyChairs(allClassroomMapData: any): {
+    label: string;
+    data: any[];
+    borderColor: string[];
+    backgroundColor: string[];
+}[];
+export function generatePositionTimeline(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any, sort?: {}): any[];

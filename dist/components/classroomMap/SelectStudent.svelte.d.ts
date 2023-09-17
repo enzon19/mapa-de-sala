@@ -1,3 +1,4 @@
+/// <reference types="svelte-multiselect/node_modules/svelte" />
 /** @typedef {typeof __propDef.props}  SelectStudentProps */
 /** @typedef {typeof __propDef.events}  SelectStudentEvents */
 /** @typedef {typeof __propDef.slots}  SelectStudentSlots */

@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div class="container mx-auto max-w-4xl">
-  <DateInput {requestedDate}/>
+  <DateInput {requestedDate} checkInDatabase/>
   {#each classroomMapData.tags || [] as tagType (tagType)}
     <Warning {tagType} />
   {/each}
