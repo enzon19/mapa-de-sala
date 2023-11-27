@@ -1,20 +1,27 @@
-const manifest = {
+const manifest = (() => {
+function __memo(fn) {
+	let value;
+	return () => value ??= (value = fn());
+}
+
+return {
 	appDir: "_app",
 	appPath: "_app",
 	assets: new Set(["apple-touch-icon.png","favicon-16x16.png","favicon-32x32.png","favicon.ico","favicon.png"]),
-	mimeTypes: {".png":"image/png",".ico":"image/vnd.microsoft.icon"},
+	mimeTypes: {".png":"image/png"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.cd9f5add.js","app":"_app/immutable/entry/app.a6b96e37.js","imports":["_app/immutable/entry/start.cd9f5add.js","_app/immutable/chunks/index.b87f7290.js","_app/immutable/chunks/singletons.968a7d31.js","_app/immutable/chunks/index.7e639390.js","_app/immutable/entry/app.a6b96e37.js","_app/immutable/chunks/preload-helper.41c905a7.js","_app/immutable/chunks/index.b87f7290.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.c31110c4.js","app":"_app/immutable/entry/app.e359192d.js","imports":["_app/immutable/entry/start.c31110c4.js","_app/immutable/chunks/index.b87f7290.js","_app/immutable/chunks/singletons.1ca8bc12.js","_app/immutable/chunks/index.7e639390.js","_app/immutable/entry/app.e359192d.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/index.b87f7290.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
-			() => import('./chunks/0-61c3ac6d.js'),
-			() => import('./chunks/1-003907ae.js'),
-			() => import('./chunks/2-23afdb99.js'),
-			() => import('./chunks/3-4cc03515.js'),
-			() => import('./chunks/4-00389a9b.js'),
-			() => import('./chunks/5-15e5c54d.js'),
-			() => import('./chunks/6-f6f10f81.js'),
-			() => import('./chunks/7-72a0a034.js'),
-			() => import('./chunks/8-cd8c364c.js')
+			__memo(() => import('./chunks/0-efe768a9.js')),
+			__memo(() => import('./chunks/1-97f34c28.js')),
+			__memo(() => import('./chunks/2-69717543.js')),
+			__memo(() => import('./chunks/3-2a3f998d.js')),
+			__memo(() => import('./chunks/4-0de10180.js')),
+			__memo(() => import('./chunks/5-febd7fcd.js')),
+			__memo(() => import('./chunks/6-b669a817.js')),
+			__memo(() => import('./chunks/7-7a6dd990.js')),
+			__memo(() => import('./chunks/8-142bf5fe.js')),
+			__memo(() => import('./chunks/9-5d73a7d0.js'))
 		],
 		routes: [
 			{
@@ -65,6 +72,13 @@ const manifest = {
 				params: [],
 				page: { layouts: [0,], errors: [1,], leaf: 8 },
 				endpoint: null
+			},
+			{
+				id: "/tags",
+				pattern: /^\/tags\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
+				endpoint: null
 			}
 		],
 		matchers: async () => {
@@ -73,7 +87,8 @@ const manifest = {
 			return { day, month };
 		}
 	}
-};
+}
+})();
 
 const prerendered = new Set([]);
 

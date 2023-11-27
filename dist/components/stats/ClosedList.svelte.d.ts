@@ -5,6 +5,7 @@
 export default class ClosedList extends SvelteComponentTyped<{
     summaries: any;
     content: any;
+    studentID: any;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -17,6 +18,7 @@ declare const __propDef: {
     props: {
         summaries: any;
         content: any;
+        studentID: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

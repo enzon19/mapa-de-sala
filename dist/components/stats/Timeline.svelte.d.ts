@@ -4,7 +4,7 @@
 /** @typedef {typeof __propDef.slots}  TimelineSlots */
 export default class Timeline extends SvelteComponentTyped<{
     allClassroomMapData: any;
-    studentID: any;
+    student: any;
     invertDeskCounting: any;
     compensate: any;
     sort: any;
@@ -19,7 +19,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         allClassroomMapData: any;
-        studentID: any;
+        student: any;
         invertDeskCounting: any;
         compensate: any;
         sort: any;

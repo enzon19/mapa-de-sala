@@ -4,12 +4,16 @@
   import { classroomMapLayoutWritable } from '../../data/classroomMapLayoutWritable.js';
   import Desk from "./Desk.svelte";
   import SelectStudent from "./SelectStudent.svelte";
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
 
   // --------- Dados ---------
   export let students = []; // cada elemento dessa array vira uma cadeira
   export let columnIndex; // necessário quando for editar
   $: columnsAmount = $classroomMapLayoutWritable.length === 0 ? 1 : $classroomMapLayoutWritable.length;
   let editable = getContext('editable');
+  let minimap = getContext('minimap');
+  let highlight = getContext('highlight');
 
   // --------- Ações ---------
   let indexOnInput = columnIndex + 1;
@@ -46,9 +50,11 @@
 
   <!-- cada elemento dessa array vira uma cadeira -->
   {#each students as student, studentIndex}
-    <Desk isNull={student.name == null && !editable}>
+    <Desk isNull={student.name == null && !editable} highlight={student.id == highlight}>
       {#if editable}
         <SelectStudent value={student.id} {columnIndex} {studentIndex}/>
+      {:else if minimap}
+        <button on:click={() => dispatch("selectedDesk", [columnIndex, studentIndex])} class="block w-full h-full">{columnIndex + 1}, {studentIndex + 1}</button>
       {:else}
         <a href="/aluno/{student.id}">{student.name}</a>
       {/if}

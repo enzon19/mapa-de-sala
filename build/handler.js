@@ -666,11 +666,7 @@ function sirv (dir, opts={}) {
 	};
 }
 
-var setCookieExports = {};
-var setCookie = {
-  get exports(){ return setCookieExports; },
-  set exports(v){ setCookieExports = v; },
-};
+var setCookie = {exports: {}};
 
 var defaultParseOptions = {
   decodeValues: true,
@@ -893,11 +889,11 @@ function splitCookiesString(cookiesString) {
 }
 
 setCookie.exports = parse;
-setCookieExports.parse = parse;
-setCookieExports.parseString = parseString;
-var splitCookiesString_1 = setCookieExports.splitCookiesString = splitCookiesString;
+setCookie.exports.parse = parse;
+setCookie.exports.parseString = parseString;
+var splitCookiesString_1 = setCookie.exports.splitCookiesString = splitCookiesString;
 
-let HttpError = class HttpError {
+class HttpError {
 	/**
 	 * @param {number} status
 	 * @param {{message: string} extends App.Error ? (App.Error | string | undefined) : App.Error} body
@@ -916,21 +912,36 @@ let HttpError = class HttpError {
 	toString() {
 		return JSON.stringify(this.body);
 	}
-};
+}
 
-// For some reason we need to type the params as well here,
-// JSdoc doesn't seem to like @type with function overloads
 /**
- * @type {import('@sveltejs/kit').error}
+ * @overload
  * @param {number} status
- * @param {any} message
+ * @param {App.Error} body
+ * @return {HttpError}
  */
-function error(status, message) {
+
+/**
+ * @overload
+ * @param {number} status
+ * @param {{ message: string } extends App.Error ? App.Error | string | undefined : never} [body]
+ * @return {HttpError}
+ */
+
+/**
+ * Creates an `HttpError` object with an HTTP status code and an optional message.
+ * This object, if thrown during request handling, will cause SvelteKit to
+ * return an error response without invoking `handleError`.
+ * Make sure you're not catching the thrown error, which would prevent SvelteKit from handling it.
+ * @param {number} status The [HTTP status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses). Must be in the range 400-599.
+ * @param {{ message: string } extends App.Error ? App.Error | string | undefined : never} body An object that conforms to the App.Error type. If a string is passed, it will be used as the message property.
+ */
+function error(status, body) {
 	if ((isNaN(status) || status < 400 || status > 599)) {
 		throw new Error(`HTTP error status codes must be between 400 and 599 — ${status} is invalid`);
 	}
 
-	return new HttpError(status, message);
+	return new HttpError(status, body);
 }
 
 new TextEncoder();
@@ -1026,7 +1037,14 @@ function get_raw_body(req, body_size_limit) {
 	});
 }
 
-/** @type {import('@sveltejs/kit/node').getRequest} */
+/**
+ * @param {{
+ *   request: import('http').IncomingMessage;
+ *   base: string;
+ *   bodySizeLimit?: number;
+ * }} options
+ * @returns {Promise<Request>}
+ */
 async function getRequest({ request, base, bodySizeLimit }) {
 	return new Request(base + request.url, {
 		// @ts-expect-error
@@ -1037,7 +1055,11 @@ async function getRequest({ request, base, bodySizeLimit }) {
 	});
 }
 
-/** @type {import('@sveltejs/kit/node').setResponse} */
+/**
+ * @param {import('http').ServerResponse} res
+ * @param {Response} response
+ * @returns {Promise<void>}
+ */
 async function setResponse(res, response) {
 	for (const [key, value] of response.headers) {
 		try {
@@ -1067,7 +1089,7 @@ async function setResponse(res, response) {
 	if (response.body.locked) {
 		res.end(
 			'Fatal error: Response body is locked. ' +
-				`This can happen when the response was already read (for example through 'response.json()' or 'response.text()').`
+				"This can happen when the response was already read (for example through 'response.json()' or 'response.text()')."
 		);
 		return;
 	}
@@ -1194,20 +1216,20 @@ const ssr = async (req, res) => {
 		return;
 	}
 
-	if (address_header && !(address_header in req.headers)) {
-		throw new Error(
-			`Address header was specified with ${
-				"" + 'ADDRESS_HEADER'
-			}=${address_header} but is absent from request`
-		);
-	}
-
 	setResponse(
 		res,
 		await server.respond(request, {
 			platform: { req },
 			getClientAddress: () => {
 				if (address_header) {
+					if (!(address_header in req.headers)) {
+						throw new Error(
+							`Address header was specified with ${
+								"" + 'ADDRESS_HEADER'
+							}=${address_header} but is absent from request`
+						);
+					}
+
 					const value = /** @type {string} */ (req.headers[address_header]) || '';
 
 					if (address_header === 'x-forwarded-for') {

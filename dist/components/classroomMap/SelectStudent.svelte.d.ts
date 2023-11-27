@@ -3,8 +3,8 @@
 /** @typedef {typeof __propDef.events}  SelectStudentEvents */
 /** @typedef {typeof __propDef.slots}  SelectStudentSlots */
 export default class SelectStudent extends SvelteComponentTyped<{
-    studentIndex: any;
     columnIndex: any;
+    studentIndex: any;
     value?: string;
     students?: any;
 }, {
@@ -17,8 +17,8 @@ export type SelectStudentSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        studentIndex: any;
         columnIndex: any;
+        studentIndex: any;
         value?: string;
         students?: any;
     };

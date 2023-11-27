@@ -63,8 +63,8 @@ export function countAttendancesAndAbsences (attendances, absences) {
   };
 }
 
-export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student) {
-	let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student.id);
+export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, includeAllData = false) {
+  let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student.id);
 
   const firstAttendance = attendances[0];
   const firstAttendanceAsDateTime = DateTime.fromISO(firstAttendance);
@@ -74,7 +74,8 @@ export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMap
   if (student.left) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
   if (student.late) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
 
-	return {...student, ...countAttendancesAndAbsences(attendances, absences)};
+  if (includeAllData) return {student, attendances, absences};
+  return {...student, ...countAttendancesAndAbsences(attendances, absences)};
 }
 
 export function getPosition(layout, studentID, reverseOrder = false, fillSpaces) {
@@ -127,7 +128,6 @@ export function generateRankedGroupedPositionHumanReadable(allClassroomMapData, 
     dataSorted = dataSorted.sort((a, b) => b.days[0].position[1] - a.days[0].position[1]).sort((a, b) => b.days[0].position[0] - a.days[0].position[0]);
   }
   if (sort.direction === 'increscent') dataSorted.reverse();
-  
   return dataSorted;
 }
 
@@ -136,14 +136,14 @@ export function generateDatasetsOfStudentsAttendanceAndChairs(allClassroomMapDat
     {
       label: 'Alunos',
       data: [],
-      borderColor: ['#94461b'],
-      backgroundColor: ['#94461b']
+      borderColor: ['#AD5934'],
+      backgroundColor: ['#AD5934']
     },
     {
       label: 'Cadeiras',
       data: [],
-      borderColor: ['#255ab2'],
-      backgroundColor: ['#255ab2']
+      borderColor: ['#2B77AD'],
+      backgroundColor: ['#2B77AD']
     }
   ];
 
@@ -225,6 +225,75 @@ export function generatePositionTimeline(allClassroomMapData, studentID, reverse
   if (sort.direction === 'decrescent') timeline.reverse();
 
   return timeline;
+}
+
+export function generateAbsencesPerDay(allClassroomMapData, student) {
+  const {absences} = getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, true);
+  const daysAccordingDayOfWeek = groupByProperty(absences.map(day => { 
+    const dayAsDateTime = DateTime.fromISO(day);
+    return { dayOfWeek: dayAsDateTime.weekdayLong, day, weekday: dayAsDateTime.weekday };
+  }), 'dayOfWeek');
+  return daysAccordingDayOfWeek;
+}
+
+export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student, sort) {
+  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student);
+
+  const data = Object.entries(daysAccordingDayOfWeek).map(([dayOfWeek, days]) => ({
+    dayOfWeek: `${dayOfWeek.replace(/"/g, '')} (${days.length} ${days.length === 1 ? 'dia' : 'dias'})`,
+    days: days.map(({day}) => ({day})),
+    weekday: days[0].weekday
+  }));
+
+  let dataSorted = data;
+  if (sort.type === 'days') {
+    dataSorted = dataSorted.sort((a, b) => b.days.length - a.days.length);
+  } else if (sort.type === 'weekday') {
+    dataSorted = dataSorted.sort((a, b) => b.weekday - a.weekday);
+  }
+  if (sort.direction === 'increscent') dataSorted.reverse();
+  return dataSorted;
+}
+
+export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsData) {
+  let dataset = {
+    labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+    datasets: [{
+      label: 'Faltas',
+      data: [0, 0, 0, 0, 0, 0, 0],
+      backgroundColor: [
+        '#ad2e2b',
+        '#6b44bc',
+        '#AD5934',
+        '#2B77AD',
+        '#378F4A',
+        '#AD9F3F'
+      ]
+    }]
+  }
+
+  for (const data of studentsData) {
+    for (const [weekday, days] of Object.entries(generateAbsencesPerDay(allClassroomMapData, data))) {
+      const daysIndexes = {
+        '"segunda-feira"': 0,
+        '"terça-feira"': 1,
+        '"quarta-feira"': 2,
+        '"quinta-feira"': 3,
+        '"sexta-feira"': 4,
+        '"sábado"': 5
+      };
+      const currentDayIndex = daysIndexes[weekday];
+      dataset.datasets[0].data[currentDayIndex] += days.length;
+    }
+  }
+
+  return dataset;
+}
+
+export function getDayURL(day, studentID) {
+  const dayAsDateTime = DateTime.fromISO(day);
+  const dayForURL = dayAsDateTime.toFormat('dd-MM');
+  return `/dia/${dayForURL}` + (studentID ? `?destacar=${studentID}` : '');
 }
 
 // esperando lançar ARRAY.group... enquanto isso, código roubado (e adaptado)

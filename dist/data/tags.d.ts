@@ -39,9 +39,21 @@ declare namespace _default {
         export { color_3 as color };
         export { Flag as icon };
     }
+    namespace room401 {
+        const title_4: string;
+        export { title_4 as title };
+        const id_4: string;
+        export { id_4 as id };
+        const text_4: string;
+        export { text_4 as text };
+        const color_4: string;
+        export { color_4 as color };
+        export { Snow as icon };
+    }
 }
 export default _default;
 import { Warning } from "svelte-ionicons";
 import { Document } from "svelte-ionicons";
 import { InformationCircle } from "svelte-ionicons";
 import { Flag } from "svelte-ionicons";
+import { Snow } from "svelte-ionicons";

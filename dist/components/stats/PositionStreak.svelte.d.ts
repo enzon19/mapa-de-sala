@@ -7,7 +7,6 @@ export default class PositionStreak extends SvelteComponentTyped<{
     studentID: any;
     invertDeskCounting: any;
     compensate: any;
-    blocked?: boolean;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -22,7 +21,6 @@ declare const __propDef: {
         studentID: any;
         invertDeskCounting: any;
         compensate: any;
-        blocked?: boolean;
     };
     events: {
         [evt: string]: CustomEvent<any>;

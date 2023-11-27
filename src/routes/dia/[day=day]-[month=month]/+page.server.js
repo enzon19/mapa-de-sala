@@ -1,7 +1,9 @@
 import { supabase } from "$lib/supabaseClient";
 import { DateTime } from "luxon";
 
-export async function load({ params }) {
+export async function load({ params, url }) {
+  const highlight = url.searchParams.get('destacar');
+
 	// os parâmetros (/07-06) fornecem o dia e o mês escolhidos pelo usuário e informados na URL
 	const requestedDate = DateTime.local(2023, Number(params.month), Number(params.day), 0, 0);
 
@@ -13,5 +15,5 @@ export async function load({ params }) {
 	const studentsData = (await supabase.from('students').select('id,name').in('id', studentsIDs)).data; // com base nos IDs, puxar o nome das pessoas
 	studentsData.push({"id": "clssrmmp_empty", "name": ""}, {"id": "clssrmmp_space", "name": null});
 	classroomMapData.layout = layout.map(column => column.map(id => studentsData.find(student => student.id === id))); // substituir cada ID da array com o layout pelo objeto com o nome e id das pessoas
-	return {params, classroomMapData};
+	return {params, classroomMapData, highlight};
 }

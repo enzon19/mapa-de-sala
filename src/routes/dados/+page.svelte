@@ -1,6 +1,7 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
-  import { generateDatasetsOfStudentsAttendanceAndChairs, generateDatasetsOfSpacesAndEmptyChairs, getAttendancesAndAbsencesFixedAndWithStudentData } from '$lib/getStats.js';
+  import { generateDatasetsOfStudentsAttendanceAndChairs, generateDatasetsOfSpacesAndEmptyChairs, getAttendancesAndAbsencesFixedAndWithStudentData, generateDatasetsOfAbsencesPerDay } from '$lib/getStats.js';
+  const hideData = ["e6d34ef4-babc-4223-a3e3-82002b1462da"];
 
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
@@ -9,6 +10,8 @@
   // components
   import List from '$lib/components/stats/List.svelte';
   import Chart from '$lib/components/stats/Chart.svelte';
+  import BarsChart from '$lib/components/stats/BarsChart.svelte';
+  import Minimap from '$lib/components/stats/Minimap.svelte';
   import Button from '$lib/components/Button.svelte';
   import FilterController from '$lib/components/stats/controllers/FilterController.svelte';
   import SortController from '$lib/components/stats/controllers/SortController.svelte';
@@ -18,20 +21,23 @@
   let dataForComponents = {
     absencesRanking: allClassroomMapData,
     attendancesRanking: allClassroomMapData,
+    absencesDaysDataset: allClassroomMapData,
+    positionDesks: allClassroomMapData,
     studentsAndChairsDataset: allClassroomMapData,
-    spacesAndEmptyChairsDataset: allClassroomMapData 
+    spacesAndEmptyChairsDataset: allClassroomMapData
   };
 
   function absencesContentTemplate(item) {
-    return `<a href="/aluno/${item.id}">${item.name}</a>: ${item.absences.number} ${item.absences.number < 2 ? 'falta' : 'faltas'} (${item.absences.percentage}%)`
+    return `<a href="/aluno/${item.id}">${item.name}</a>: ${hideData.includes(item.id) ? '?' : item.absences.number} ${item.absences.number < 2 ? 'falta' : 'faltas'} (${hideData.includes(item.id) ? '?' : item.absences.percentage}%)`
   }
 
   function attendancesContentTemplate(item) {
-    return `<a href="/aluno/${item.id}">${item.name}</a>: ${item.attendances.number} ${item.attendances.number < 2 ? 'presença' : 'presenças'} (${item.attendances.percentage}%)`
+    return `<a href="/aluno/${item.id}">${item.name}</a>: ${hideData.includes(item.id) ? '?' : item.attendances.number} ${item.attendances.number < 2 ? 'presença' : 'presenças'} (${hideData.includes(item.id) ? '?' : item.attendances.percentage}%)`
   }
 
   $: studentsAndChairsDataset = generateDatasetsOfStudentsAttendanceAndChairs(dataForComponents.studentsAndChairsDataset);
   $: spacesAndEmptyChairsDataset = generateDatasetsOfSpacesAndEmptyChairs(dataForComponents.spacesAndEmptyChairsDataset);
+  $: absencesPerDayDataset = generateDatasetsOfAbsencesPerDay(dataForComponents.absencesDaysDataset, studentsData);
   
   // sistema de ordenar e filtrar
   let sort = {
@@ -64,6 +70,8 @@
   let dataManipulation = {
     absencesRanking: "",
     attendancesRanking: "",
+    absencesDaysDataset: "",
+    positionDesks: "",
     studentsAndChairsDataset: "",
     spacesAndEmptyChairsDataset: "" 
   }
@@ -134,6 +142,38 @@
       {/if}
     </div>
     <List data={attendancesRanking} contentTemplate={attendancesContentTemplate}/>
+  </div>
+  <div class="bg-input-grey rounded-xl p-4">
+    <h5 class="text-center font-bold text-xl">Dias Mais Faltados</h5>
+    <span class="text-sm text-neutral-500 block text-center m-1">Os dias da semana com mais faltas registradas.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.absencesDaysDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesDaysDataset = dataManipulation.absencesDaysDataset != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+      </div>
+      {#if dataManipulation.absencesDaysDataset === 'filter'}
+        <FilterController on:filterChanged={event => filterData('absencesDaysDataset', event.detail.filter)}/>
+      {/if}
+    </div>
+    <BarsChart data={absencesPerDayDataset}/>
+  </div>
+  <div class="bg-input-grey rounded-xl p-4">
+    <h5 class="text-center font-bold text-xl">Ocupação de Território</h5>
+    <span class="text-sm text-neutral-500 block text-center m-1">Clique em uma cadeira pra ver quem já sentou naquela posição. Alguns dias foram excluídos.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionDesks = dataManipulation.positionDesks != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+      </div>
+      {#if dataManipulation.positionDesks === 'filter'}
+        <FilterController on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
+      {/if}
+    </div>
+    <div class="overflow-y-auto max-h-[35rem] p-2">
+      <Minimap allClassroomMapData={dataForComponents.positionDesks} {studentsData}/>
+    </div>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Presenças e Cadeiras × Tempo</h5>

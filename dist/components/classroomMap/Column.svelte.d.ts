@@ -6,6 +6,8 @@ export default class Column extends SvelteComponentTyped<{
     columnIndex: any;
     students?: any[];
 }, {
+    selectedDesk: CustomEvent<any>;
+} & {
     [evt: string]: CustomEvent<any>;
 }, {}> {
 }
@@ -19,6 +21,8 @@ declare const __propDef: {
         students?: any[];
     };
     events: {
+        selectedDesk: CustomEvent<any>;
+    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

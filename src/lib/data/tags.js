@@ -1,4 +1,4 @@
-import { Warning, Document, InformationCircle, Flag } from 'svelte-ionicons';
+import { Warning, Document, InformationCircle, Flag, Snow } from 'svelte-ionicons';
 
 export default {
   "inaccurate": {
@@ -25,8 +25,15 @@ export default {
   "chairRevolution": {
     title: "Revolução das Cadeiras",
     id: "chairRevolution",
-    text: "<b>Revolução das Cadeiras</b> O Davi e o Lucas inventaram de criar uma nova fileira e a galera apoiou.",
+    text: "<b>Revolução das Cadeiras.</b> O Davi e o Lucas inventaram de criar uma nova fileira e a galera apoiou.",
     color: "bg-information-warning-grey",
     icon: Flag
+  },
+  "room401": {
+    title: "Sala 401",
+    id: "room401",
+    text: "<b>Sala 401.</b> Como o ar condicionado da nossa sala quebrou, mudamos pra sala do primeiro ano.",
+    color: "bg-information-warning-grey",
+    icon: Snow
   }
 }

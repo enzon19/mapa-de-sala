@@ -17,7 +17,7 @@ export function countAttendancesAndAbsences(attendances: any, absences: any): {
         percentage: number;
     };
 };
-export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData: any, student: any): any;
+export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData: any, student: any, includeAllData?: boolean): any;
 export function getPosition(layout: any, studentID: any, reverseOrder: boolean, fillSpaces: any): any[];
 export function getPositionDayByDay(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any): any;
 export function generateFrequencyOfPosition(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any): {
@@ -41,3 +41,18 @@ export function generateDatasetsOfSpacesAndEmptyChairs(allClassroomMapData: any)
     backgroundColor: string[];
 }[];
 export function generatePositionTimeline(allClassroomMapData: any, studentID: any, reverseOrder: boolean, fillSpaces: any, sort?: {}): any[];
+export function generateAbsencesPerDay(allClassroomMapData: any, student: any): any;
+export function generateAbsencesPerDayHumanReadable(allClassroomMapData: any, student: any, sort: any): {
+    dayOfWeek: string;
+    days: any;
+    weekday: any;
+}[];
+export function generateDatasetsOfAbsencesPerDay(allClassroomMapData: any, studentsData: any): {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        backgroundColor: string[];
+    }[];
+};
+export function getDayURL(day: any, studentID: any): string;

@@ -6,11 +6,12 @@
   import Warning from "$lib/components/Tag.svelte";
 
   setContext('editable', false);
-
+  
   export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
   $: classroomMapData = data.classroomMapData; // do que veio do server, pegar só informações do mapa de sala requisitado pelo usuário
   $: classroomMapLayout = classroomMapData.layout || []; // pegar informações das fileiras e colunas
   $: requestedDate = DateTime.local(2023, Number(data.params.month), Number(data.params.day), 0, 0);
+  $: setContext('highlight', data.highlight);
 </script>
 
 <svelte:head>

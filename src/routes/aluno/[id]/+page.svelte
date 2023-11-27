@@ -2,7 +2,8 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import { DateTime } from 'luxon';
-  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable } from '$lib/getStats.js';
+  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable, generateAbsencesPerDayHumanReadable } from '$lib/getStats.js';
+  const hideData = ["e6d34ef4-babc-4223-a3e3-82002b1462da"];
 
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
@@ -28,7 +29,8 @@
     positionStreak: allClassroomMapData,
     heatmap: allClassroomMapData,
     timeline: allClassroomMapData,
-    positionRanking: allClassroomMapData
+    positionRanking: allClassroomMapData,
+    absencesPerDay: allClassroomMapData
   };
 
   // --------- Perfil; Visão Geral ---------
@@ -58,22 +60,29 @@
     timeline: {
       type: 'chronology',
       direction: 'increscent'
+    },
+    absencesPerDay: {
+      type: 'days',
+      direction: 'decrescent'
     }
   }
 	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(dataForComponents.positionRanking, student.id, invertDeskCounting.positionRanking, sort.positionRanking).filter(({position}) => !position.startsWith('0ª')); // esse 0ª são os dias com falta
+  $: absencesPerDay = generateAbsencesPerDayHumanReadable(dataForComponents.absencesPerDay, student, sort.absencesPerDay);
 
   // sistema de ordenar e filtrar
   let dataManipulation = {
     positionStreak: "",
     heatmap: "",
     timeline: "",
-    positionRanking: "" 
+    positionRanking: "",
+    absencesPerDay: ""
   }
   let invertDeskCounting = {
     positionStreak: false,
     heatmap: false,
     timeline: false,
-    positionRanking: false
+    positionRanking: false,
+    absencesPerDay: false
   };
   let compensate = true;
   let background = false;
@@ -121,11 +130,11 @@
       <div class="text-sm text-neutral-500">Última Aparição</div>
     </div>
     <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
-      <div class="text-xl font-semibold">{count.attendances[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
+      <div class="text-xl font-semibold">{hideData.includes(student.id) ? '?' : count.attendances[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
       <div class="text-sm text-neutral-500">Presenças</div>
     </div>
     <div class="flex flex-col items-center text-center cursor-pointer" on:click={changeDataTypeDisplay} on:keydown={changeDataTypeDisplay}>
-      <div class="text-xl font-semibold">{count.absences[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
+      <div class="text-xl font-semibold">{hideData.includes(student.id) ? '?' : count.absences[dataType] + `${dataType === 'percentage' ? '%' : ''}`}</div>
       <div class="text-sm text-neutral-500">Faltas</div>
     </div>
   </div>
@@ -135,7 +144,7 @@
   <div class="grid md:grid-cols-2 gap-4">
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Sequência de Presença</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">Acompanhe e visualize sua sequência de presença ao longo do tempo.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">Acompanhe e visualize a sequência de presença de {data.student.name} ao longo do tempo.</span>
       <div class="overflow-x-auto">
         <div class="container my-3 max-w-0">
           <Streak daysPossible={allDays} daysTracked={attendances}/>
@@ -145,7 +154,7 @@
     <div class="bg-neutral-800 rounded-xl p-4">
       <div>
         <h5 class="text-center font-bold text-xl">Sequência de Posição</h5>
-        <span class="text-sm text-neutral-500 block text-center m-1">Veja há quantos dias você está sentando no mesmo lugar.</span>
+        <span class="text-sm text-neutral-500 block text-center m-1">Veja há quantos dias {data.student.name} está sentando no mesmo lugar.</span>
       </div>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
@@ -164,7 +173,7 @@
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por você.<br>Dias com mais ou menos de 5 filas são desconsiderados do mapa de calor.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por {data.student.name}.<br>Dias com mais ou menos de 5 filas são desconsiderados do mapa de calor.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
@@ -190,7 +199,7 @@
     <div class="bg-neutral-800 rounded-xl p-4">
       <div>
         <h5 class="text-center font-bold text-xl">Linha do Tempo</h5>
-        <span class="text-sm text-neutral-500 block text-center m-1">Períodos em que você se manteve em um lugar.</span>
+        <span class="text-sm text-neutral-500 block text-center m-1">Períodos em que {data.student.name} se manteve em um lugar.</span>
       </div>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
@@ -210,11 +219,11 @@
           <SortController bind:sort={sort.timeline} sortOptions={[{'id': 'chronology', 'label': 'Cronológica'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'rows', 'label': 'Fileiras'}, {'id': 'desks', 'label': 'Cadeiras'}]}/>
         {/if}
       </div>
-      <Timeline allClassroomMapData={dataForComponents.timeline} studentID={student.id} invertDeskCounting={invertDeskCounting.timeline} compensate={false} sort={sort.timeline}/>
+      <Timeline allClassroomMapData={dataForComponents.timeline} student={student} invertDeskCounting={invertDeskCounting.timeline} compensate={false} sort={sort.timeline}/>
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Ranking de Posição</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">Quantas vezes você sentou em diferentes lugares.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">Quantas vezes {data.student.name} sentou em diferentes lugares no mapa de sala.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.positionRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionRanking = dataManipulation.positionRanking != 'filter' ? 'filter' : ''}>
@@ -233,7 +242,27 @@
           <SortController bind:sort={sort.positionRanking}/>
         {/if}
       </div>
-      <ClosedList summaries={rankedGroupedPosition.map(({position}) => position)} content={rankedGroupedPosition.map(({days}) => days)}></ClosedList>
+      <ClosedList studentID={student.id} summaries={rankedGroupedPosition.map(({position}) => position)} content={rankedGroupedPosition.map(({days}) => days)}></ClosedList>
+    </div>
+    <div class="bg-neutral-800 rounded-xl p-4">
+      <h5 class="text-center font-bold text-xl">Faltas por Dia</h5>
+      <span class="text-sm text-neutral-500 block text-center m-1">Os dias da semana em que {data.student.name} faltou mais.</span>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.absencesPerDay === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'filter' ? 'filter' : ''}>
+            <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+          </Button>
+          <Button moreClasses={dataManipulation.absencesPerDay === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'sort' ? 'sort' : ''}>
+            <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
+          </Button>
+        </div>
+        {#if dataManipulation.absencesPerDay === 'filter'}
+          <FilterController on:filterChanged={event => filterData('absencesPerDay', event.detail.filter)}/>
+        {:else if dataManipulation.absencesPerDay === 'sort'}
+          <SortController bind:sort={sort.absencesPerDay} sortOptions={[{'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'weekday', 'label': 'Dia da Semana'}]}/>
+        {/if}
+      </div>
+      <ClosedList summaries={absencesPerDay.map(({dayOfWeek}) => dayOfWeek)} content={absencesPerDay.map(({days}) => days)}></ClosedList>
     </div>
   </div>
 </div>

@@ -16,12 +16,18 @@
       responsive: true,
       cutout: '95%',
       spacing: 2,
+    elements: {
+      point: {
+        pointStyle: false
+      }
+    },
       plugins: {
         legend: {
           position: 'bottom',
           display: true,
           labels: {
             usePointStyle: true,
+            pointStyle: 'circle',
             padding: 20,
             font: {
               size: 14,

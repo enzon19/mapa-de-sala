@@ -4,7 +4,10 @@
 /** @typedef {typeof __propDef.slots}  ClassroomSlots */
 export default class Classroom extends SvelteComponentTyped<{
     data: any;
+    hideStats?: boolean;
 }, {
+    selectedDesk: CustomEvent<any>;
+} & {
     [evt: string]: CustomEvent<any>;
 }, {}> {
 }
@@ -15,8 +18,11 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         data: any;
+        hideStats?: boolean;
     };
     events: {
+        selectedDesk: CustomEvent<any>;
+    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

@@ -4,9 +4,11 @@
   import { classroomMapLayoutWritable } from '../../data/classroomMapLayoutWritable.js';
   import { countStudentsAttendance, countChairs, countSpaces, countEmptyChairs } from '../../getStats.js';
   import Column from "./Column.svelte";
+  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.0.0"'];
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas
+  export let hideStats = false;
   let editable = getContext('editable');
   $: columnsAmount = data.length == 0 ? 1 : data.length; // Quantidade de colunas no dia (isso é pra ajudar no CSS)
   $: studentsPerColumnAmount = data[0]?.length || 1;
@@ -48,7 +50,7 @@
 </script>
 
 <!-- Estatísticas -->
-{#if !editable}
+{#if !(hideStats || editable)}
   <div class="text-center text-sm m-4">Alunos: {studentsAmount} | Cadeiras: {chairsAmount} | Vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
 {/if}
 
@@ -71,9 +73,10 @@
   <div style="grid-template-columns: repeat({columnsAmount}, minmax(0, 1fr));" class="grid gap-4 grid-cols-5 grow">
     {#each data as column, columnIndex}
       <!-- cada array do JSON vai ser dada pro componente Column (ou seja, o Column recebe uma array que cada elemento vira cadeiras) -->
-      <Column students={column} {columnIndex} />
+      <Column students={column} {columnIndex} on:selectedDesk/>
     {:else}
       <span class="text-center p-4">Sem dados.</span>
+      <span class="text-center text-sm text-neutral-400 -mt-6"><span class="font-bold">Dica: </span>{tips[Math.floor(Math.random() * tips.length)]}</span>
     {/each}
   </div>
 </div>
