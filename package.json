@@ -22,7 +22,7 @@
 	},
 	"devDependencies": {
 		"@svelte-plugins/tooltips": "^0.1.6",
-		"@sveltejs/adapter-node": "^1.2.2",
+		"@sveltejs/adapter-auto": "^2.1.1",
 		"@sveltejs/kit": "^1.15.4",
 		"@sveltejs/package": "^2.0.0",
 		"autoprefixer": "^10.4.13",
