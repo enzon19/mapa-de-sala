@@ -9,13 +9,21 @@
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
   <!-- 1.0.0 -->
-  <h3 class="text-xl font-bold mt-2">Versão 1.0.0</h3>
+  <h3 class="text-xl font-bold mt-2">Versão 1.1.0</h3>
   <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Divisão entre 2023 e 2024;</li>
+        <li>Mudar os dias usando as setas do teclado.</li>
+      </ol>
+  </details>
+  <!-- 1.0.0 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.0.0</h3>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>Mais dados legais disponíveis na aba "Dados"!</li>
         <li>"Faltas por Dia" disponíveis no perfil de cada pessoa!</li>
-        <li>RECAP!!!</li>
         <li>Dicas de uso do site são exibidas quando não há mapas disponíveis;</li>
         <li>Quando você clica em uma posição no perfil de alguém, ela agora fica destacada no mapa;</li>
         <li>Ao clicar em uma tag, todas as outras tags serão exibidas com seus dias;</li>

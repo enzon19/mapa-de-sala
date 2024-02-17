@@ -6,10 +6,13 @@
   import ChevronBack from 'svelte-ionicons/ChevronBack.svelte';
   import { getDayURL } from '$lib/getStats.js';
   import { CustomAuthError } from '@supabase/supabase-js';
+
   export let allClassroomMapData;
   export let studentsData;
+  export let maxColumns = 5;
+  export let maxDeskPerColumn = 10;
 
-  $: daysWithJustFiveColumnsAndTenDesks = allClassroomMapData.filter(classroomMapData => classroomMapData.columns.length === 5 && classroomMapData.columns[0].length <= 10);
+  $: daysWithJustFiveColumnsAndTenDesks = allClassroomMapData.filter(classroomMapData => classroomMapData.columns.length === maxColumns && classroomMapData.columns[0].length <= maxDeskPerColumn);
   $: maxDesksByDay = daysWithJustFiveColumnsAndTenDesks.map(classroomMapData => classroomMapData.columns[0].length);
   $: maxDesksEver = maxDesksByDay.length == 0 ? 0 : Math.max(...maxDesksByDay);
   $: allClassroomMapData, handleSelect(currentPosition)
@@ -72,5 +75,5 @@
     </ol>
   </div>
 {:else}
-  <Classroom data={Array(5).fill('').map(column => Array(maxDesksEver).fill({id: 'a', name: 'b'}))} hideStats on:selectedDesk={(event) => handleSelect(event.detail)}/>
+  <Classroom data={Array(maxColumns).fill('').map(column => Array(maxDesksEver).fill({id: 'a', name: 'b'}))} hideStats on:selectedDesk={(event) => handleSelect(event.detail)}/>
 {/if}

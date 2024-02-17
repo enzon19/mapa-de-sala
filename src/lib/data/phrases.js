@@ -6,7 +6,7 @@ export default [
   "No final do ano vai ser mó legal ver a evolução.",
   `Já imaginou? Você formando na faculdade e bateu uma curiosidade de como estava o mapa de sala no dia ${today}?`,
   "🫵 Valorize sua posição no mapa de sala hoje!",
-  "Vai ter o Recap 2023 Mapa de Sala pra você compartilhar no seu Instagramzinho...",
+  "Vai ter o Recap 2024 Mapa de Sala pra você compartilhar no seu Instagramzinho...",
   "Cápsula do tempo de mapas de sala",
   "Volte no tempo e veja onde você sentava",
   "Se pergunte: por que será que nesse dia você mudou de lugar?",

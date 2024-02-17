@@ -1,9 +1,7 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import { generateDatasetsOfStudentsAttendanceAndChairs, generateDatasetsOfSpacesAndEmptyChairs, getAttendancesAndAbsencesFixedAndWithStudentData, generateDatasetsOfAbsencesPerDay } from '$lib/getStats.js';
-  import { DateTime } from 'luxon';
-  const hideData = [];
-  // "e6d34ef4-babc-4223-a3e3-82002b1462da"
+  const hideData = ["e6d34ef4-babc-4223-a3e3-82002b1462da"];
 
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
@@ -103,7 +101,7 @@
   <meta name="description" content="Estatísticas bacanas com base nos dados coletados pelo site Mapa de Sala.">
 </svelte:head>
 
-<span class="text-sm text-neutral-500 block text-center mt-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro. <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/dados/2023">Ver dados de 2023.</a></span>
+<span class="text-sm text-neutral-500 block text-center mt-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro. <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/dados">Ver dados de 2024.</a></span>
 <div class="container mx-auto max-w-7xl p-4 grid md:grid-cols-2 gap-4">
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Faltas</h5>
@@ -118,7 +116,7 @@
         </Button>
       </div>
       {#if dataManipulation.absencesRanking === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesRanking', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('absencesRanking', event.detail.filter)}/>
       {:else if dataManipulation.absencesRanking === 'sort'}
         <SortController bind:sort={sort.absencesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Faltas'}, {'id': 'percentage-ab', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
       {/if}
@@ -138,7 +136,7 @@
         </Button>
       </div>
       {#if dataManipulation.attendancesRanking === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('attendancesRanking', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('attendancesRanking', event.detail.filter)}/>
       {:else if dataManipulation.attendancesRanking === 'sort'}
         <SortController bind:sort={sort.attendancesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Presenças'}, {'id': 'percentage-at', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
       {/if}
@@ -155,10 +153,10 @@
         </Button>
       </div>
       {#if dataManipulation.absencesDaysDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesDaysDataset', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('absencesDaysDataset', event.detail.filter)}/>
       {/if}
     </div>
-    <BarsChart data={absencesPerDayDataset} height={168}/>
+    <BarsChart data={absencesPerDayDataset}/>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ocupação de Território</h5>
@@ -170,11 +168,11 @@
         </Button>
       </div>
       {#if dataManipulation.positionDesks === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
       {/if}
     </div>
     <div class="overflow-y-auto max-h-[35rem] p-2">
-      <Minimap allClassroomMapData={dataForComponents.positionDesks} {studentsData} maxColumns={9} maxDeskPerColumn={6}/>
+      <Minimap allClassroomMapData={dataForComponents.positionDesks} {studentsData}/>
     </div>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
@@ -187,7 +185,7 @@
         </Button>
       </div>
       {#if dataManipulation.studentsAndChairsDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('studentsAndChairsDataset', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('studentsAndChairsDataset', event.detail.filter)}/>
       {/if}
     </div>
     <Chart data={studentsAndChairsDataset}/>
@@ -202,7 +200,7 @@
         </Button>
       </div>
       {#if dataManipulation.spacesAndEmptyChairsDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('spacesAndEmptyChairsDataset', event.detail.filter)}/>
+        <FilterController on:filterChanged={event => filterData('spacesAndEmptyChairsDataset', event.detail.filter)}/>
       {/if}
     </div>
     <Chart data={spacesAndEmptyChairsDataset}/>

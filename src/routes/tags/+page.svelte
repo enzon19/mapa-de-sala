@@ -23,7 +23,7 @@
         <span class="text-sm text-neutral-400">{@html tag.text}</span>
         <div class="flex md:flex-wrap md:flex-row flex-col gap-1 mt-1">
           {#each data.tagDays.filter(({tags}) => tags.includes(tag.id)) as day}
-            <a href={getDayURL(day.day)} class="bg-neutral-800 py-2 px-2.5 rounded-xl">{DateTime.fromISO(day.day).setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long' })}</a>
+            <a href={getDayURL(day.day)} class="bg-neutral-800 py-2 px-2.5 rounded-xl">{DateTime.fromISO(day.day).setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' })}</a>
           {/each}
         </div>
       </div>

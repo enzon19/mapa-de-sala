@@ -32,7 +32,7 @@ export default {
   "room401": {
     title: "Sala 401",
     id: "room401",
-    text: "<b>Sala 401.</b> Como o ar condicionado da nossa sala quebrou, mudamos pra sala do primeiro ano.",
+    text: "<b>Sala 401.</b> Como o ar condicionado da nossa sala quebrou, mudamos pra sala do primeiro ano (de 2023).",
     color: "bg-information-warning-grey",
     icon: Snow
   }

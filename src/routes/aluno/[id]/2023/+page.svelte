@@ -3,8 +3,7 @@
   import { supabase } from "$lib/supabaseClient";
   import { DateTime } from 'luxon';
   import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable, generateAbsencesPerDayHumanReadable } from '$lib/getStats.js';
-  const hideData = [];
-  // "e6d34ef4-babc-4223-a3e3-82002b1462da"
+  const hideData = ["e6d34ef4-babc-4223-a3e3-82002b1462da"];
 
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
@@ -140,8 +139,8 @@
     </div>
   </div>
   <span class="text-sm text-neutral-500 block text-center m-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.
-    {#if student.year.includes(2023)}
-      <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/aluno/{student.id}/2023">Ver dados de 2023.</a>
+    {#if student.year.includes(2024)}
+      <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/aluno/{student.id}">Ver dados de 2024.</a>
     {/if}
   </span>
   <!-- Estatísticas -->
@@ -178,7 +177,7 @@
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por {data.student.name}.<br>Dias com mais ou menos de 9 filas são desconsiderados do mapa de calor.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por {data.student.name}.<br>Dias com mais ou menos de 5 filas são desconsiderados do mapa de calor.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
@@ -198,7 +197,7 @@
         {/if}
       </div>
       <div class="flex justify-center">
-        <Heatmap allClassroomMapData={dataForComponents.heatmap} studentID={student.id} invertDeskCounting={invertDeskCounting.heatmap} {compensate} {background} maxColumns={9} heightMultiplier={34}/>
+        <Heatmap allClassroomMapData={dataForComponents.heatmap} studentID={student.id} invertDeskCounting={invertDeskCounting.heatmap} {compensate} {background}/>
       </div>
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">

@@ -13,8 +13,8 @@
   export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
   $: classroomMapData = data.classroomMapData; // do que veio do server, pegar só informações do mapa de sala a ser editado
   $: classroomMapLayoutWritable.set(classroomMapData.layout || []); // pegar informações das fileiras e colunas e botar no writable
-  $: requestedDate = DateTime.local(2023, Number(data.params.month), Number(data.params.day), 0, 0);
-  $: setContext('allRegisteredStudents', data.studentsData); // receber todos estudantes cadastrados
+  $: requestedDate = DateTime.local(Number(data.params.year), Number(data.params.month), Number(data.params.day), 0, 0);
+  $: setContext('allRegisteredStudents', data.studentsData.filter(e => e.year.includes(Number(data.params.year)))); // receber todos estudantes cadastrados
   $: currentTags = classroomMapData.tags;
   $: requestedDate, syncTags();
   let updatedTags = [];
@@ -61,7 +61,7 @@
   <meta name="description" content="Mapa de Sala é um site que reúne dados sobre a posição de cada aluno na sala de aula. Projeto pessoal.">
 </svelte:head>
 
-<div class="container mx-auto max-w-4xl">
+<div class="container mx-auto {Number(data.params.year) == 2023 ? "max-w-4xl" : "max-w-7xl"}">
   <DateInput {requestedDate} route="editar"/>
   <div class="mx-2"><textarea on:change={(event) => classroomMapLayoutWritable.update(() => JSON.parse(event.currentTarget.value))} class="font-mono bg-input-grey p-4 w-full rounded-xl" rows="3">{JSON.stringify($classroomMapLayoutWritable, null, 2)}</textarea></div>
   <div class="flex flex-row justify-center gap-2 py-2">
@@ -79,7 +79,7 @@
     <CloseOutline size="24"/>
   </button>
   <form method="post">
-    <h3 class="text-xl font-semibold text-center mb-4">Salvar mapa de sala do dia {requestedDate.toFormat('dd/MM')}</h3>
+    <h3 class="text-xl font-semibold text-center mb-4">Salvar mapa de sala do dia {requestedDate.toFormat('dd/MM/yyyy')}</h3>
     <label for="password" class="inline-block mb-1.5">Senha</label>
     <input type="password" name="password" class="bg-input-grey p-2 mb-2 w-full rounded-xl">
     <input type="hidden" name="layout" value={classroomMapLayoutToSave}>

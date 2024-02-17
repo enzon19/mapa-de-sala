@@ -28,7 +28,7 @@
       previousDate = requestedDate.minus({ day: 1 });
     }
     
-    goto(`/${route}/` + previousDate.toFormat('dd-MM'));
+    goto(`/${route}/` + previousDate.toFormat('dd-MM-yyyy'));
   }
 
   async function goToNextDay() {
@@ -42,8 +42,13 @@
       previousDate = requestedDate.plus({ day: 1 });
     }
 
-    goto(`/${route}/` + previousDate.toFormat('dd-MM'));
+    goto(`/${route}/` + previousDate.toFormat('dd-MM-yyyy'));
   }
+
+  function changeDaysUsingKeyboard (event) {
+    if (event.key === 'ArrowLeft') goToPreviousDay();
+    if (event.key === 'ArrowRight') goToNextDay();
+  };
 
   // Date Picker
   let datePicker, datePickerElement;
@@ -57,14 +62,14 @@
       defaultDate: requestedDate.toJSDate(),
       dateFormat: 'd-m-Y',
       minDate: "6-2-2023",
-      maxDate: "8-12-2023",
+      maxDate: "9-12-2024",
       locale: Portuguese,
       position: "auto center",
       clickOpens: false,
       disableMobile: true,
       onChange: function (selectedDates) {
         const selectedDate = DateTime.fromJSDate(selectedDates[0]);
-        goto(`/${route}/` + selectedDate.toFormat('dd-MM'))
+        goto(`/${route}/` + selectedDate.toFormat('dd-MM-yyyy'))
       }
     });
   }
@@ -83,3 +88,5 @@
   <button class="text-center px-2 py-1 cursor-pointer w-72" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</button>
   <button class="inline-block cursor-pointer" on:click={goToNextDay} on:keypress={goToNextDay}><ChevronForward size="2rem" class="focus:outline-none focus:text-neutral-400"/></button>
 </div>
+
+<svelte:window on:keydown={changeDaysUsingKeyboard} />

@@ -8,8 +8,10 @@
   export let invertDeskCounting;
   export let compensate;
   export let background;
+  export let maxColumns = 5;
+  export let heightMultiplier = 32;
   
-  $: daysWithJustFiveColumns = allClassroomMapData.filter(classroomMapData => classroomMapData.columns.length === 5);
+  $: daysWithJustFiveColumns = allClassroomMapData.filter(classroomMapData => classroomMapData.columns.length === maxColumns);
   $: maxDesksByDay = daysWithJustFiveColumns.map(classroomMapData => classroomMapData.columns[0].length);
   $: maxDesksEver = Math.max(...maxDesksByDay);
 
@@ -31,4 +33,4 @@
   afterUpdate(generateHeatmap);
 </script>
 
-<canvas class={`border-neutral-400 border-2 ${background ? 'bg-neutral-200' : ''}`} id="heatmap" width="180" height={maxDesksEver * 32}></canvas>
+<canvas class={`border-neutral-400 border-2 ${background ? 'bg-neutral-200' : ''}`} id="heatmap" width={36 * maxColumns} height={maxDesksEver * heightMultiplier}></canvas>

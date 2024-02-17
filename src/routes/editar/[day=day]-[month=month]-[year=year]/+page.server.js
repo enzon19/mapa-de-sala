@@ -3,13 +3,13 @@ import { DateTime } from "luxon";
 
 export async function load({ params }) {
 	// os parâmetros (/07-06) fornecem o dia e o mês escolhidos pelo usuário e informados na URL
-	const requestedDate = DateTime.local(2023, Number(params.month), Number(params.day), 0, 0);
+	const requestedDate = DateTime.local(Number(params.year), Number(params.month), Number(params.day), 0, 0);
 
 	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toString()).limit(1)).data[0] || []; // day, layout, tags
 	const layout = classroomMapData.columns; // informações sobre as fileiras e colunas (mapa de sala em si)
 
-	const studentsData = (await supabase.from('students').select('id,name').order('name')).data; // puxar o nome de todo mundo em ordem alfabética
-	studentsData.push({"id": "clssrmmp_empty", "name": ""}, {"id": "clssrmmp_space", "name": null});
+	const studentsData = (await supabase.from('students').select('id,name,year').order('name')).data; // puxar o nome de todo mundo em ordem alfabética
+	studentsData.push({"id": "clssrmmp_empty", "name": "", "year": [2023, 2024]}, {"id": "clssrmmp_space", "name": null, "year": [2023, 2024]});
 	classroomMapData.layout = layout?.map(column => column.map(id => studentsData.find(student => student.id === id))); // se já tiver um layout salvo, substituir cada ID do layout pelo objeto com nome e ID
 	return {params, classroomMapData, studentsData};
 }

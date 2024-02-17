@@ -30,13 +30,13 @@ export function getAttendance(layout, studentID) {
   return attendance;
 }
 
-export function getAttendancesAndAbsences(allClassroomMapData, studentID) {
+export function getAttendancesAndAbsences(allClassroomMapData, student) {
   const allDays = allClassroomMapData.map(data => data.day);
 	let attendances = [];
 	
 	for (const classroomMapData of allClassroomMapData) {
     const layout = classroomMapData.columns;
-		if (getAttendance(layout, studentID)) attendances.push(classroomMapData.day);
+		if (getAttendance(layout, student?.id)) attendances.push(classroomMapData.day);
 	}
   
   const absences = allDays.filter(date => !attendances.includes(date));
@@ -64,7 +64,7 @@ export function countAttendancesAndAbsences (attendances, absences) {
 }
 
 export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, includeAllData = false) {
-  let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student.id);
+  let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student);
 
   const firstAttendance = attendances[0];
   const firstAttendanceAsDateTime = DateTime.fromISO(firstAttendance);
@@ -292,7 +292,7 @@ export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsDa
 
 export function getDayURL(day, studentID) {
   const dayAsDateTime = DateTime.fromISO(day);
-  const dayForURL = dayAsDateTime.toFormat('dd-MM');
+  const dayForURL = dayAsDateTime.toFormat('dd-MM-yyyy');
   return `/dia/${dayForURL}` + (studentID ? `?destacar=${studentID}` : '');
 }
 

@@ -11,9 +11,12 @@
   import Calendar from 'svelte-ionicons/Calendar.svelte';
   
   export let filter = {
-    day: ['2023-02-06', '2023-12-08'].map(date => DateTime.fromISO(date)),
+    day: ['2023-02-06', '2023-12-11'].map(date => DateTime.fromISO(date)),
     tags: []
   }
+  export let minDate = '6-2-2023';
+  export let maxDate = '11-12-2023';
+
   const dispatch = createEventDispatcher();
 
   // Date Picker
@@ -26,8 +29,8 @@
   function initDatePicker(node) {
     datePicker = flatpickr(node, {
       dateFormat: 'd-m-Y',
-      minDate: '6-2-2023',
-      maxDate: '8-12-2023',
+      minDate,
+      maxDate,
       locale: Portuguese,
       position: 'auto center',
       clickOpens: false,

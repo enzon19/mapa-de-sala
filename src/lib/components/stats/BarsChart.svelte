@@ -3,6 +3,8 @@
   import { afterUpdate, onMount } from 'svelte';
 
   export let data;
+  export let height = 200;
+
   let chartCanvasElement;
   let chart;
 
@@ -74,4 +76,4 @@
   })
 </script>
 
-<canvas bind:this={chartCanvasElement} width={200} height={200} />
+<canvas bind:this={chartCanvasElement} width={200} {height} />

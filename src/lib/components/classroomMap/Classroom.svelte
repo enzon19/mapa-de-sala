@@ -4,7 +4,7 @@
   import { classroomMapLayoutWritable } from '$lib/data/classroomMapLayoutWritable.js';
   import { countStudentsAttendance, countChairs, countSpaces, countEmptyChairs } from '$lib/getStats.js';
   import Column from "$lib/components/classroomMap/Column.svelte";
-  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.0.0"'];
+  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.1.0"'];
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas

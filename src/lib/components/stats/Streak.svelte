@@ -7,7 +7,7 @@
 
   function getDayURL(day) {
     const dayAsDateTime = DateTime.fromISO(day);
-    const dayForURL = dayAsDateTime.toFormat('dd-MM');
+    const dayForURL = dayAsDateTime.toFormat('dd-MM-yyyy');
     return `/dia/${dayForURL}`
   }
 

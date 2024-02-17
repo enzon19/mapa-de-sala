@@ -4,8 +4,8 @@ import { DateTime } from "luxon";
 export async function load({ params, url }) {
   const highlight = url.searchParams.get('destacar');
 
-	// os parâmetros (/07-06) fornecem o dia e o mês escolhidos pelo usuário e informados na URL
-	const requestedDate = DateTime.local(2023, Number(params.month), Number(params.day), 0, 0);
+	// os parâmetros (/07-06-2023) fornecem o dia e o mês escolhidos pelo usuário e informados na URL
+	const requestedDate = DateTime.local(Number(params.year), Number(params.month), Number(params.day), 0, 0);
 
 	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toString()).limit(1)).data[0] || []; // day, layout, tags
 	const layout = classroomMapData.columns; // informações sobre as fileiras e colunas (mapa de sala em si)
