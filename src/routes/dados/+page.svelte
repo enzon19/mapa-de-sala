@@ -103,6 +103,8 @@
   <meta name="description" content="Estatísticas bacanas com base nos dados coletados pelo site Mapa de Sala.">
 </svelte:head>
 
+<!-- Ranking de sequência e lugares diferentes -->
+
 <span class="text-sm text-neutral-500 block text-center mt-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro. <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/dados/2023">Ver dados de 2023.</a></span>
 <div class="container mx-auto max-w-7xl p-4 grid md:grid-cols-2 gap-4">
   <div class="bg-input-grey rounded-xl p-4">

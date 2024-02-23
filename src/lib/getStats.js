@@ -78,6 +78,20 @@ export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMap
   return {...student, ...countAttendancesAndAbsences(attendances, absences)};
 }
 
+export function getPeopleAttendancesAndAbsencesOnDay(data, studentsData) {
+  if (data.columns.length === 0 || !studentsData) return;
+
+  const layout = data.columns;
+  const studentsOnThatDay = layout.flat().filter(e => !['clssrmmp_space','clssrmmp_empty'].includes(e.id)).map(e => e.id);
+  const year = data.day.year;
+  const availableStudents = studentsData.filter(e => e?.year?.includes(year));
+  
+  return {
+    absences: availableStudents.filter(e => !studentsOnThatDay.includes(e.id)),
+    attendances: availableStudents.filter(e => studentsOnThatDay.includes(e.id))
+  };
+}
+
 export function getPosition(layout, studentID, reverseOrder = false, fillSpaces) {
   for (let i = 0; i < layout.length; i++) {
     let currentColumn = fillSpaces > 0 ? new Array(fillSpaces - layout[i].length).fill('clssrmmp_space').concat(layout[i]) : layout[i].filter(student => student !== 'clssrmmp_space');

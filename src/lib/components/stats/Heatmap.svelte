@@ -10,6 +10,7 @@
   export let background;
   export let maxColumns = 5;
   export let heightMultiplier = 32;
+  export let widthMultiplier = 36;
   
   $: daysWithJustFiveColumns = allClassroomMapData.filter(classroomMapData => classroomMapData.columns.length === maxColumns);
   $: maxDesksByDay = daysWithJustFiveColumns.map(classroomMapData => classroomMapData.columns[0].length);
@@ -33,4 +34,4 @@
   afterUpdate(generateHeatmap);
 </script>
 
-<canvas class={`border-neutral-400 border-2 ${background ? 'bg-neutral-200' : ''}`} id="heatmap" width={36 * maxColumns} height={maxDesksEver * heightMultiplier}></canvas>
+<canvas class={`border-neutral-400 border-2 ${background ? 'bg-neutral-200' : ''}`} id="heatmap" width={widthMultiplier * maxColumns} height={maxDesksEver * heightMultiplier}></canvas>

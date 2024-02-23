@@ -120,7 +120,7 @@
 
 <div class="container mx-auto max-w-7xl px-4">
   <!-- --------- Perfil; Visão Geral --------- -->
-  <h2 class="text-center text-3xl font-bold m-4">{data.student.name}</h2>
+  <h2 class="text-center text-3xl font-bold m-4">{data.student.hidden_name ? data.student.hidden_name + ' ' : ''}{data.student.name}</h2>
   <div class="grid grid-cols-4 gap-4 items-center max-w-xl mx-auto p-4 rounded-xl bg-neutral-800">
     <div class="flex flex-col items-center text-center">
       <div class="text-xl font-semibold">{firstAttendanceAsDateTime.toFormat('dd/MM')}</div>
@@ -198,7 +198,7 @@
         {/if}
       </div>
       <div class="flex justify-center">
-        <Heatmap allClassroomMapData={dataForComponents.heatmap} studentID={student.id} invertDeskCounting={invertDeskCounting.heatmap} {compensate} {background} maxColumns={9} heightMultiplier={34}/>
+        <Heatmap allClassroomMapData={dataForComponents.heatmap} studentID={student.id} invertDeskCounting={invertDeskCounting.heatmap} {compensate} {background} maxColumns={9} heightMultiplier={34} widthMultiplier={33}/>
       </div>
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
@@ -224,7 +224,7 @@
           <SortController bind:sort={sort.timeline} sortOptions={[{'id': 'chronology', 'label': 'Cronológica'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'rows', 'label': 'Fileiras'}, {'id': 'desks', 'label': 'Cadeiras'}]}/>
         {/if}
       </div>
-      <Timeline allClassroomMapData={dataForComponents.timeline} student={student} invertDeskCounting={invertDeskCounting.timeline} compensate={false} sort={sort.timeline}/>
+      <Timeline allClassroomMapData={dataForComponents.timeline} student={student} invertDeskCounting={invertDeskCounting.timeline} compensate={false} sort={sort.timeline} maxHeight="16.5rem"/>
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Ranking de Posição</h5>

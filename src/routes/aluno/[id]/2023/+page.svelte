@@ -119,7 +119,7 @@
 
 <div class="container mx-auto max-w-7xl px-4">
   <!-- --------- Perfil; Visão Geral --------- -->
-  <h2 class="text-center text-3xl font-bold m-4">{data.student.name}</h2>
+  <h2 class="text-center text-3xl font-bold m-4">{data.student.hidden_name ? data.student.hidden_name + ' ' : ''}{data.student.name}</h2>
   <div class="grid grid-cols-4 gap-4 items-center max-w-xl mx-auto p-4 rounded-xl bg-neutral-800">
     <div class="flex flex-col items-center text-center">
       <div class="text-xl font-semibold">{firstAttendanceAsDateTime.toFormat('dd/MM')}</div>

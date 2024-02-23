@@ -7,11 +7,12 @@
   export let invertDeskCounting;
   export let compensate;
   export let sort;
+  export let maxHeight = "28rem"
 
   $: data = generatePositionTimeline(allClassroomMapData, student.id, invertDeskCounting, compensate, sort);
 </script>
 
-<div class="max-h-[25rem] overflow-y-auto p-1">  
+<div class="overflow-y-auto p-1" style="max-height: {maxHeight}">  
   <ol class="relative border-l border-neutral-700 grid grid-flow-row gap-6">
     {#each data.filter(day => day.length > 0) as range}
       <li class="ml-4">
