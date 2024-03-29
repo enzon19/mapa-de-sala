@@ -8,9 +8,17 @@
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
+  <!-- 1.2.1 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.2.1</h3>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>Pessoas que já saíram da turma esse ano precisavam ser diferenciadas de pessoas que saíram ano passado.</li>
+    </ol>
+  </details>
   <!-- 1.2.0 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.2.0</h3>
-  <details open>
+  <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>Confira o primeiro nome das pessoas que só aparecem o sobrenome no mapa;</li>

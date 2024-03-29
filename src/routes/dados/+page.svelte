@@ -39,7 +39,7 @@
 
   $: studentsAndChairsDataset = generateDatasetsOfStudentsAttendanceAndChairs(dataForComponents.studentsAndChairsDataset);
   $: spacesAndEmptyChairsDataset = generateDatasetsOfSpacesAndEmptyChairs(dataForComponents.spacesAndEmptyChairsDataset);
-  $: absencesPerDayDataset = generateDatasetsOfAbsencesPerDay(dataForComponents.absencesDaysDataset, studentsData);
+  $: absencesPerDayDataset = generateDatasetsOfAbsencesPerDay(dataForComponents.absencesDaysDataset, studentsData, 2024);
   
   // sistema de ordenar e filtrar
   let sort = {
@@ -66,8 +66,8 @@
     return data;
   }
 
-  $: absencesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.absencesRanking, student)).sort((a, b) => b.absences.number - a.absences.number), sort.absencesRanking);
-  $: attendancesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.attendancesRanking, student)).sort((a, b) => b.attendances.number - a.attendances.number), sort.attendancesRanking);
+  $: absencesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.absencesRanking, student, null, 2024)).sort((a, b) => b.absences.number - a.absences.number), sort.absencesRanking);
+  $: attendancesRanking = sortData(studentsData.map(student => getAttendancesAndAbsencesFixedAndWithStudentData(dataForComponents.attendancesRanking, student, null, 2024)).sort((a, b) => b.attendances.number - a.attendances.number), sort.attendancesRanking);
   
   let dataManipulation = {
     absencesRanking: "",

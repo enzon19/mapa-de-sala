@@ -41,8 +41,8 @@
   const lastAttendance = attendances.at(-1);
   const lastAttendanceAsDateTime = DateTime.fromISO(lastAttendance);
 
-  if (student.left) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
-  if (student.late) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
+  if (student.left === 2023) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
+  if (student.late === 2023) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
 
   const count = countAttendancesAndAbsences(attendances, absences)
   let dataType = 'number';

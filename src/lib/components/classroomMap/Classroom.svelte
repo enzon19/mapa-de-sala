@@ -5,7 +5,7 @@
   import { countStudentsAttendance, countChairs, countSpaces, countEmptyChairs, getPeopleAttendancesAndAbsencesOnDay } from '$lib/getStats.js';
   import CloseOutline from 'svelte-ionicons/CloseOutline.svelte';
   import Column from "$lib/components/classroomMap/Column.svelte";
-  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.2.0"', "Clique nas estatísticas de alunos, cadeiras, vazias e buracos em um dia para ver os ausentes e presentes."];
+  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.2.1"', "Clique nas estatísticas de alunos, cadeiras, vazias e buracos em um dia para ver os ausentes e presentes."];
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas

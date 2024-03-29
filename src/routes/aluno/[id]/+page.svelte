@@ -42,8 +42,8 @@
   const lastAttendance = attendances.at(-1);
   const lastAttendanceAsDateTime = DateTime.fromISO(lastAttendance);
 
-  if (student.left) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
-  if (student.late) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
+  if (student.left === 2024) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
+  if (student.late === 2024) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
 
   const count = countAttendancesAndAbsences(attendances, absences)
   let dataType = 'number';
@@ -68,7 +68,7 @@
     }
   }
 	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(dataForComponents.positionRanking, student.id, invertDeskCounting.positionRanking, sort.positionRanking).filter(({position}) => !position.startsWith('0ª')); // esse 0ª são os dias com falta
-  $: absencesPerDay = generateAbsencesPerDayHumanReadable(dataForComponents.absencesPerDay, student, sort.absencesPerDay);
+  $: absencesPerDay = generateAbsencesPerDayHumanReadable(dataForComponents.absencesPerDay, student, sort.absencesPerDay, 2024);
 
   // sistema de ordenar e filtrar
   let dataManipulation = {

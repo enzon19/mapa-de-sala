@@ -63,16 +63,16 @@ export function countAttendancesAndAbsences (attendances, absences) {
   };
 }
 
-export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, includeAllData = false) {
+export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, includeAllData = false, currentYear = 2023) {
   let { attendances, absences } = getAttendancesAndAbsences(allClassroomMapData, student);
-
+// console.log(student.name, student.left === currentYear)
   const firstAttendance = attendances[0];
   const firstAttendanceAsDateTime = DateTime.fromISO(firstAttendance);
   const lastAttendance = attendances.at(-1);
   const lastAttendanceAsDateTime = DateTime.fromISO(lastAttendance);
-
-  if (student.left) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
-  if (student.late) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
+  
+  if (student.left === currentYear) absences = absences.filter(date => DateTime.fromISO(date) <= lastAttendanceAsDateTime);
+  if (student.late === currentYear) absences = absences.filter(date => DateTime.fromISO(date) >= firstAttendanceAsDateTime);
 
   if (includeAllData) return {student, attendances, absences};
   return {...student, ...countAttendancesAndAbsences(attendances, absences)};
@@ -241,8 +241,8 @@ export function generatePositionTimeline(allClassroomMapData, studentID, reverse
   return timeline;
 }
 
-export function generateAbsencesPerDay(allClassroomMapData, student) {
-  const {absences} = getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, true);
+export function generateAbsencesPerDay(allClassroomMapData, student, currentYear) {
+  const {absences} = getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, true, currentYear);
   const daysAccordingDayOfWeek = groupByProperty(absences.map(day => { 
     const dayAsDateTime = DateTime.fromISO(day);
     return { dayOfWeek: dayAsDateTime.weekdayLong, day, weekday: dayAsDateTime.weekday };
@@ -250,8 +250,8 @@ export function generateAbsencesPerDay(allClassroomMapData, student) {
   return daysAccordingDayOfWeek;
 }
 
-export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student, sort) {
-  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student);
+export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student, sort, currentYear) {
+  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear);
 
   const data = Object.entries(daysAccordingDayOfWeek).map(([dayOfWeek, days]) => ({
     dayOfWeek: `${dayOfWeek.replace(/"/g, '')} (${days.length} ${days.length === 1 ? 'dia' : 'dias'})`,
@@ -269,7 +269,7 @@ export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student
   return dataSorted;
 }
 
-export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsData) {
+export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsData, currentYear) {
   let dataset = {
     labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
     datasets: [{
@@ -287,7 +287,7 @@ export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsDa
   }
 
   for (const data of studentsData) {
-    for (const [weekday, days] of Object.entries(generateAbsencesPerDay(allClassroomMapData, data))) {
+    for (const [weekday, days] of Object.entries(generateAbsencesPerDay(allClassroomMapData, data, currentYear))) {
       const daysIndexes = {
         '"segunda-feira"': 0,
         '"terça-feira"': 1,
