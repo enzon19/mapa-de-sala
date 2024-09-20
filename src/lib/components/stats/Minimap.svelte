@@ -16,6 +16,7 @@
   $: maxDesksByDay = daysWithJustFiveColumnsAndTenDesks.map(classroomMapData => classroomMapData.columns[0].length);
   $: maxDesksEver = maxDesksByDay.length == 0 ? 0 : Math.max(...maxDesksByDay);
   $: allClassroomMapData, handleSelect(currentPosition)
+  $: console.log(maxColumns, maxDeskPerColumn, daysWithJustFiveColumnsAndTenDesks)
   // $: console.log(Array(5).fill('').map(column => Array(maxDesksEver).fill({id: 'a', name: 'b'})))
   // $: dayWithMaxDesks = daysWithJustFiveColumns.reduce((max, obj) => obj.columns[0].length > (max ? max.columns[0].length : 0) ? obj : max, null);
   // $: dayWithMaxDesks = daysWithJustFiveColumnsAndTenDesks.reduce((max, obj) => obj.columns[0].length > (max ? max.columns[0].length : 0) ? obj : max, null);
@@ -27,6 +28,7 @@
     currentPosition = position;
     const allTimePeople = allClassroomMapData.map(({columns, day}) => columns[position[0]] ? {id: columns[position[0]][position[1]], day} : {id: undefined});
     studentsList = Object.entries(groupByProperty(allTimePeople.filter(({id}) => !['clssrmmp_empty', 'clssrmmp_space', undefined].includes(id)), 'id')).sort((a, b) => b[1].length - a[1].length);
+    console.log()
     // const peopleHasEverSeat = [...new Set(allTimePeople)].filter(student => !['clssrmmp_empty', 'clssrmmp_space', undefined].includes(student));
   }
 
