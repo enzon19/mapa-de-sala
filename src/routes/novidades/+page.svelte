@@ -14,6 +14,9 @@
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>Acompanhe suas matérias com mais faltas em 2024!</li>
+        <li>Mapa de Calor da Sala e Calendário de Dados na aba "Dados";</li>
+        <li>Melhor exibição dos recursos desse site;</li>
+        <li>Página de boas-vindas.</li>
       </ol>
   </details>
   <details>
