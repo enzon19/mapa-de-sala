@@ -96,6 +96,9 @@
 
     dataForComponents[component] = data;
   }
+
+  // exibir iniciais no minimapa
+  // let showLettersOnMinimap = false;
 </script>
 
 <svelte:head>
@@ -170,9 +173,9 @@
         <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionDesks = dataManipulation.positionDesks != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
         </Button>
-        <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => }>
+        <!-- <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => showLettersOnMinimap = !showLettersOnMinimap}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Exibir iniciais
-        </Button>
+        </Button> -->
       </div>
       {#if dataManipulation.positionDesks === 'filter'}
         <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>

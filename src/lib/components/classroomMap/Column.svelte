@@ -13,6 +13,7 @@
   $: columnsAmount = $classroomMapLayoutWritable.length === 0 ? 1 : $classroomMapLayoutWritable.length;
   let editable = getContext('editable');
   let minimap = getContext('minimap');
+  // let showLettersOnMinimap = getContext('showLettersOnMinimap'); //minimap stuff
   let highlight = getContext('highlight');
 
   // --------- Ações ---------
