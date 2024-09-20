@@ -19,7 +19,7 @@
       label: "Mapas",
       icon: Map,
       href: "/",
-      pattern: /\/dia\/[0-9][0-9]?-[0-9][0-9]?$|\/$/
+      pattern: /\/dia\/[0-9][0-9]?-[0-9][0-9]?-202[3-4]$|\/$/
     },
     { 
       label: "Sobre",
@@ -28,6 +28,8 @@
       pattern: /\/sobre$/
     }
   ]
+
+  $:console.log(currentURL.match(pages[1].pattern))
   
   // frases aleatórias
   import phrases from "$lib/data/phrases";
