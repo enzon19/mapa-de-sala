@@ -332,7 +332,7 @@ export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student
       '"sexta-feira"': ['Biologia 2', 'Matemática 1', 'Física 2', 'Matemática 1', 'Redação', 'Matemática 2'],
     }
   }
-  const minimumClassesPerSubject = {
+  const classesPerSubject = {
     "Biologia 1": 74,
     "Biologia 2": 78,
     "Educação Física": 37,
@@ -386,7 +386,7 @@ export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student
 
   const data = Object.entries(absencesPerSubject).map(([subject, days]) => {
     const subjectName = subject.replace(/"/g, '');
-    const percentage = days.length/minimumClassesPerSubject[subject];
+    const percentage = days.length/classesPerSubject[subject];
     return {
       subject: `${subjectName}: ${days.length} ${days.length === 1 ? 'aula' : 'aulas'} (${Math.trunc(percentage * 100)}%)`,
       days: days.map(({day}) => ({day})),
