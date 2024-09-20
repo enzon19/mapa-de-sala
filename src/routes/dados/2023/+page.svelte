@@ -1,7 +1,7 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import { generateDatasetsOfStudentsAttendanceAndChairs, generateDatasetsOfSpacesAndEmptyChairs, getAttendancesAndAbsencesFixedAndWithStudentData, generateDatasetsOfAbsencesPerDay } from '$lib/getStats.js';
-  const hideData = ["e6d34ef4-babc-4223-a3e3-82002b1462da"];
+  const hideData = []; //"e6d34ef4-babc-4223-a3e3-82002b1462da"
 
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
