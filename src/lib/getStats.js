@@ -320,6 +320,93 @@ export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsDa
   return dataset;
 }
 
+export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student, sort, currentYear) {
+  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear);
+
+  const calendar = {
+    2024: {
+      '"segunda-feira"': ['Inglês', 'Matemática 2', 'Química 1', 'Química 1', 'Geografia', 'História 1'],
+      '"terça-feira"': ['História 1', 'Física 1', 'Português', 'Sociologia', 'Matemática 1', 'História 2'],
+      '"quarta-feira"': ['Física 1', 'Física 2', 'Filosofia', 'Português', 'Redação', 'Geografia', 'Biologia 2'],
+      '"quinta-feira"': ['Biologia 1', 'Química 2', 'Química 2', 'Biologia 1', 'Educação Física', 'Literatura'],
+      '"sexta-feira"': ['Biologia 2', 'Matemática 1', 'Física 2', 'Matemática 1', 'Redação', 'Matemática 2'],
+    }
+  }
+  const minimumClassesPerSubject = {
+    "Biologia 1": 74,
+    "Biologia 2": 78,
+    "Educação Física": 37,
+    "Filosofia": 40,
+    "Física 1": 79,
+    "Física 2": 78,
+    "Geografia": 78,
+    "História 1": 77,
+    "História 2": 39,
+    "Inglês": 38,
+    "Literatura": 37,
+    "Matemática 1": 115,
+    "Matemática 2": 76,
+    "Português": 79,
+    "Química 1": 76,
+    "Química 2": 74,
+    "Redação": 78,
+    "Sociologia": 39
+  };
+  // const classes = {
+  //   "segunda-feira": 38,
+  //   "terça-feira": 39,
+  //   "quarta-feira": 40,
+  //   "quinta-feira": 37,
+  //   "sexta-feira": 38,
+  // }
+
+  //   for (const [dayOfWeek, days] of Object.entries(daysAccordingDayOfWeek)) {
+  //     // Get the subjects corresponding to the day in the calendar
+  //     const subjectsOfTheDay = calendar['2024'][dayOfWeek];
+  //     // para cada matéria, vou adicionar os dias com base na lista de dias da semana
+  //     for (const subject of subjectsOfTheDay) {
+  //       minimumClassesPerSubject[subject] += classes[dayOfWeek.replace(/"/g, '')]
+  //     }
+  //   }
+  // console.log(minimumClassesPerSubject)
+
+  const absencesPerSubject = {};
+
+  for (const [dayOfWeek, days] of Object.entries(daysAccordingDayOfWeek)) {
+    // Get the subjects corresponding to the day in the calendar
+    const subjectsOfTheDay = calendar['2024'][dayOfWeek];
+    if (subjectsOfTheDay) {
+      // para cada matéria, vou adicionar os dias com base na lista de dias da semana
+      for (const subject of subjectsOfTheDay) {
+        if (!absencesPerSubject[subject]) absencesPerSubject[subject] = [];
+        absencesPerSubject[subject].push(...days);
+      }
+    }
+  }
+
+  const data = Object.entries(absencesPerSubject).map(([subject, days]) => {
+    const subjectName = subject.replace(/"/g, '');
+    const percentage = days.length/minimumClassesPerSubject[subject];
+    return {
+      subject: `${subjectName}: ${days.length} ${days.length === 1 ? 'dia' : 'dias'} (${Math.trunc(percentage * 100)}%)`,
+      days: days.map(({day}) => ({day})),
+      percentage
+    };
+  });
+
+  let dataSorted = data;
+  if (sort.type === 'days') {
+    dataSorted = dataSorted.sort((a, b) => b.days.length - a.days.length);
+  } else if (sort.type === 'alphabetical') {
+    dataSorted = dataSorted.sort((a, b) => b.subject.localeCompare(a.subject));
+  } else if (sort.type === 'percentage') {
+    dataSorted = dataSorted.sort((a, b) => b.percentage - a.percentage);
+  }
+  if (sort.direction === 'increscent') dataSorted.reverse();
+  
+  return dataSorted;
+}
+
 export function getDayURL(day, studentID) {
   const dayAsDateTime = DateTime.fromISO(day);
   const dayForURL = dayAsDateTime.toFormat('dd-MM-yyyy');

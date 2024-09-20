@@ -2,7 +2,7 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import { DateTime } from 'luxon';
-  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable, generateAbsencesPerDayHumanReadable } from '$lib/getStats.js';
+  import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable, generateAbsencesPerDayHumanReadable, generateSubjectsPerDayHumanReadable } from '$lib/getStats.js';
   const hideData = [];
   // "e6d34ef4-babc-4223-a3e3-82002b1462da"
 
@@ -31,7 +31,8 @@
     heatmap: allClassroomMapData,
     timeline: allClassroomMapData,
     positionRanking: allClassroomMapData,
-    absencesPerDay: allClassroomMapData
+    absencesPerDay: allClassroomMapData,
+    absencesPerSubject: allClassroomMapData
   };
 
   // --------- Perfil; Visão Geral ---------
@@ -65,10 +66,15 @@
     absencesPerDay: {
       type: 'days',
       direction: 'decrescent'
+    },
+    absencesPerSubject: {
+      type: 'percentage',
+      direction: 'decrescent'
     }
   }
 	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(dataForComponents.positionRanking, student.id, invertDeskCounting.positionRanking, sort.positionRanking).filter(({position}) => !position.startsWith('0ª')); // esse 0ª são os dias com falta
   $: absencesPerDay = generateAbsencesPerDayHumanReadable(dataForComponents.absencesPerDay, student, sort.absencesPerDay, 2024);
+  $: absencesPerSubject = generateSubjectsPerDayHumanReadable(dataForComponents.absencesPerSubject, student, sort.absencesPerSubject, 2024);
 
   // sistema de ordenar e filtrar
   let dataManipulation = {
@@ -76,14 +82,16 @@
     heatmap: "",
     timeline: "",
     positionRanking: "",
-    absencesPerDay: ""
+    absencesPerDay: "",
+    absencesPerSubject: ""
   }
   let invertDeskCounting = {
     positionStreak: false,
     heatmap: false,
     timeline: false,
     positionRanking: false,
-    absencesPerDay: false
+    absencesPerDay: false,
+    absencesPerSubject: false
   };
   let compensate = true;
   let background = false;
@@ -271,23 +279,23 @@
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Faltas por Matéria</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">As faltas na escola são contabilizadas por aula e {data.student.name} só pode faltar 25% da carga horária de cada matéria, não importando o semestre. As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas por esse site.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
         <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
-          <Button moreClasses={dataManipulation.absencesPerDay === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'filter' ? 'filter' : ''}>
+          <Button moreClasses={dataManipulation.absencesPerSubject === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
           </Button>
-          <Button moreClasses={dataManipulation.absencesPerDay === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'sort' ? 'sort' : ''}>
+          <Button moreClasses={dataManipulation.absencesPerSubject === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'sort' ? 'sort' : ''}>
             <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
           </Button>
         </div>
-        {#if dataManipulation.absencesPerDay === 'filter'}
-          <FilterController on:filterChanged={event => filterData('absencesPerDay', event.detail.filter)}/>
-        {:else if dataManipulation.absencesPerDay === 'sort'}
-          <SortController bind:sort={sort.absencesPerDay} sortOptions={[{'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'weekday', 'label': 'Dia da Semana'}]}/>
+        {#if dataManipulation.absencesPerSubject === 'filter'}
+          <FilterController on:filterChanged={event => filterData('absencesPerSubject', event.detail.filter)}/>
+        {:else if dataManipulation.absencesPerSubject === 'sort'}
+          <SortController bind:sort={sort.absencesPerSubject} sortOptions={[{'id': 'percentage', 'label': 'Porcentagem'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
         {/if}
       </div>
-      <ClosedList summaries={absencesPerDay.map(({dayOfWeek}) => dayOfWeek)} content={absencesPerDay.map(({days}) => days)}></ClosedList>
+      <ClosedList summaries={absencesPerSubject.map(({subject}) => subject)} content={absencesPerSubject.map(({days}) => days)}></ClosedList>
     </div>
   </div>
 </div>
