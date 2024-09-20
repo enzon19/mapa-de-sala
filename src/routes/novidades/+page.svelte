@@ -8,12 +8,26 @@
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
+  <!-- 1.3.0 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.3.0</h3>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Acompanhe suas matérias com mais faltas em 2024!</li>
+      </ol>
+  </details>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>Pessoas que já saíram da sala continuaram aparecendo na lista de presença.</li>
+    </ol>
+  </details>
   <!-- 1.2.2 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.2.2</h3>
   <details>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
-        <li>Aba para tags.</li>
+        <li>Aba para tags;</li>
         <li>Indicação de quantidade de dias para uma tag.</li>
       </ol>
   </details>
