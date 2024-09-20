@@ -388,7 +388,7 @@ export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student
     const subjectName = subject.replace(/"/g, '');
     const percentage = days.length/minimumClassesPerSubject[subject];
     return {
-      subject: `${subjectName}: ${days.length} ${days.length === 1 ? 'dia' : 'dias'} (${Math.trunc(percentage * 100)}%)`,
+      subject: `${subjectName}: ${days.length} ${days.length === 1 ? 'aula' : 'aulas'} (${Math.trunc(percentage * 100)}%)`,
       days: days.map(({day}) => ({day})),
       percentage
     };

@@ -292,7 +292,7 @@
         {#if dataManipulation.absencesPerSubject === 'filter'}
           <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesPerSubject', event.detail.filter)}/>
         {:else if dataManipulation.absencesPerSubject === 'sort'}
-          <SortController bind:sort={sort.absencesPerSubject} sortOptions={[{'id': 'percentage', 'label': 'Porcentagem'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
+          <SortController bind:sort={sort.absencesPerSubject} sortOptions={[{'id': 'percentage', 'label': 'Porcentagem'}, {'id': 'days', 'label': 'Quantidade de Aulas'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
         {/if}
       </div>
       <ClosedList summaries={absencesPerSubject.map(({subject}) => subject)} content={absencesPerSubject.map(({days}) => days)}></ClosedList>
