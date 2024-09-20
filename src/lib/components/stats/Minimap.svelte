@@ -28,7 +28,7 @@
   let studentsList = [];
   function handleSelect(position) {
     currentPosition = position;
-    const allTimePeople = allClassroomMapData.map(({columns, day}) => columns[position[0]] ? {id: columns[position[0]][position[1]], day} : {id: undefined});
+    const allTimePeople = daysWithJustFiveColumnsAndTenDesks.map(({columns, day}) => columns[position[0]] ? {id: columns[position[0]][position[1]], day} : {id: undefined});
     studentsList = Object.entries(groupByProperty(allTimePeople.filter(({id}) => !['clssrmmp_empty', 'clssrmmp_space', undefined].includes(id)), 'id')).sort((a, b) => b[1].length - a[1].length);
     // const peopleHasEverSeat = [...new Set(allTimePeople)].filter(student => !['clssrmmp_empty', 'clssrmmp_space', undefined].includes(student));
   }

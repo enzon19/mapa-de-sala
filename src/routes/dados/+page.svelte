@@ -169,7 +169,7 @@
     <h5 class="text-center font-bold text-xl">Ocupação de Território</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Clique em uma cadeira pra ver quem já sentou naquela posição. Alguns dias foram excluídos.</span>
     <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
-      <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+      <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionDesks = dataManipulation.positionDesks != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
         </Button>
