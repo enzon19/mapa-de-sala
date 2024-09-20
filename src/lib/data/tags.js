@@ -1,4 +1,4 @@
-import { Warning, Document, InformationCircle, Flag, Snow } from 'svelte-ionicons';
+import { Warning, Document, InformationCircle, Flag, Snow, HandLeft } from 'svelte-ionicons';
 
 export default {
   "inaccurate": {
@@ -35,5 +35,12 @@ export default {
     text: "<b>Sala 401.</b> Como o ar condicionado da nossa sala quebrou, mudamos pra sala do primeiro ano (de 2023).",
     color: "bg-information-warning-grey",
     icon: Snow
+  },
+  "stoppage": {
+    title: "Apoio Total ao Sindicato",
+    id: "stoppage",
+    text: "<b>Paralisação dos Professores.</b> Embora tenha tido a paralisação, ainda tivemos algumas aulas — só duas pessoas compareceram.",
+    color: "bg-information-warning-grey",
+    icon: HandLeft
   }
 }

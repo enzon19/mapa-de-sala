@@ -269,5 +269,25 @@
       </div>
       <ClosedList summaries={absencesPerDay.map(({dayOfWeek}) => dayOfWeek)} content={absencesPerDay.map(({days}) => days)}></ClosedList>
     </div>
+    <div class="bg-neutral-800 rounded-xl p-4">
+      <h5 class="text-center font-bold text-xl">Faltas por Matéria</h5>
+      <span class="text-sm text-neutral-500 block text-center m-1">As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas.</span>
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+        <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+          <Button moreClasses={dataManipulation.absencesPerDay === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'filter' ? 'filter' : ''}>
+            <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+          </Button>
+          <Button moreClasses={dataManipulation.absencesPerDay === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'sort' ? 'sort' : ''}>
+            <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
+          </Button>
+        </div>
+        {#if dataManipulation.absencesPerDay === 'filter'}
+          <FilterController on:filterChanged={event => filterData('absencesPerDay', event.detail.filter)}/>
+        {:else if dataManipulation.absencesPerDay === 'sort'}
+          <SortController bind:sort={sort.absencesPerDay} sortOptions={[{'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'weekday', 'label': 'Dia da Semana'}]}/>
+        {/if}
+      </div>
+      <ClosedList summaries={absencesPerDay.map(({dayOfWeek}) => dayOfWeek)} content={absencesPerDay.map(({days}) => days)}></ClosedList>
+    </div>
   </div>
 </div>

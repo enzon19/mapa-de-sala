@@ -51,37 +51,48 @@
   $: chairsAmount = countChairs(data);
   $: spacesAmount = countSpaces(data);
   $: emptyChairsAmount = countEmptyChairs(data);
-  $: peopleAttendancesAndAbsences = getPeopleAttendancesAndAbsencesOnDay({columns: data, day}, students);
   let statsModal;
 </script>
 
 <!-- Estatísticas -->
 {#if !(hideStats || editable)}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="text-center text-sm m-4" class:cursor-pointer={students} on:click={() => {if (students) statsModal.showModal()}}>Alunos: {studentsAmount} | Cadeiras: {chairsAmount} | Vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
+  <div class="text-center text-sm m-4" class:cursor-pointer={students} on:click={() => {if (students) statsModal.showModal();}}>Alunos: {studentsAmount} | Cadeiras: {chairsAmount} | Vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
   {#if students}
     <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-little transition-all p-4 rounded-xl bg-back-grey shadow-2xl text-white w-72 max-h-[26rem]" bind:this={statsModal}>
       <button class="absolute top-2 right-2 hover:text-light-grey transition-colors" on:click={() => statsModal.close()}>
         <CloseOutline size="24" class="outline-none"/>
       </button>
-      <div>
-        <h3 class="text-xl font-semibold">Ausentes ({peopleAttendancesAndAbsences.absences.length})</h3>
-        <ul class="mb-2 list-disc list-inside">
-          {#each peopleAttendancesAndAbsences.absences as student}
-            <li><a href="/aluno/{student.id}">{student.name}</a></li>
-          {:else}
-            <span class="text-neutral-400">Ninguém faltou :O</span>
-          {/each}
-        </ul>
-        <h3 class="text-xl font-semibold">Presentes ({peopleAttendancesAndAbsences.attendances.length})</h3>
-        <ul class="list-disc list-inside">
-          {#each peopleAttendancesAndAbsences.attendances as student}
-            <li><a href="/aluno/{student.id}">{student.name}</a></li>
-          {:else}
-            <span class="text-neutral-400">Ninguém foi na aula 😨😨😨</span>
-          {/each}
-        </ul>
-      </div>
+      {#await getPeopleAttendancesAndAbsencesOnDay({columns: data, day}, students, day)}
+        <span class="text-neutral-400">Obtendo dados...</span>
+      {:then peopleAttendancesAndAbsencesData}
+        <div>
+          <h3 class="text-xl font-semibold">Ausentes ({peopleAttendancesAndAbsencesData.absences.length})</h3>
+          <ul class="mb-2 list-disc list-inside">
+            {#each peopleAttendancesAndAbsencesData.absences.sort((a, b) => {
+              const nameA = (a.hidden_name || '') + (a.name || '');
+              const nameB = (b.hidden_name || '') + (b.name || '');
+              return nameA.localeCompare(nameB, 'pt-BR', { sensitivity: 'base' });
+            }) as student}
+              <li><a href="/aluno/{student.id}">{student.hidden_name ? student.hidden_name + ' ' : ''}{student.name}</a></li>
+            {:else}
+              <span class="text-neutral-400">Ninguém faltou :O</span>
+            {/each}
+          </ul>
+          <h3 class="text-xl font-semibold">Presentes ({peopleAttendancesAndAbsencesData.attendances.length})</h3>
+          <ul class="list-disc list-inside">
+            {#each peopleAttendancesAndAbsencesData.attendances.sort((a, b) => {
+              const nameA = (a.hidden_name || '') + (a.name || '');
+              const nameB = (b.hidden_name || '') + (b.name || '');
+              return nameA.localeCompare(nameB, 'pt-BR', { sensitivity: 'base' });
+            }) as student}
+              <li><a href="/aluno/{student.id}">{student.hidden_name ? student.hidden_name + ' ' : ''}{student.name}</a></li>
+            {:else}
+              <span class="text-neutral-400">Ninguém foi na aula 😨😨😨</span>
+            {/each}
+          </ul>
+        </div>
+      {/await}
     </dialog>
   {/if}
 {/if}
@@ -113,6 +124,7 @@
     {:else}
       <span class="text-center p-4">Sem dados.</span>
       <span class="text-center text-sm text-neutral-400 -mt-6"><span class="font-bold">Dica: </span>{tips[Math.floor(Math.random() * tips.length)]}</span>
+      <!-- ADICIONAR MENUZINHO COM RECOMENDAÇÕES DE AÇÕES + FAZER UMA PAGINA CHAMADA "?" QUE INCLUI ELAS -->
     {/each}
   </div>
 </div>

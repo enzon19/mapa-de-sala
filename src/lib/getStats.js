@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { supabase } from "$lib/supabaseClient";
 
 export function countStudentsAttendance (layout) {
   const students = layout.flat();
@@ -78,7 +79,7 @@ export function getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMap
   return {...student, ...countAttendancesAndAbsences(attendances, absences)};
 }
 
-export function getPeopleAttendancesAndAbsencesOnDay(data, studentsData) {
+export async function getPeopleAttendancesAndAbsencesOnDay(data, studentsData, date) {
   if (data.columns.length === 0 || !studentsData) return;
 
   const layout = data.columns;
@@ -86,10 +87,25 @@ export function getPeopleAttendancesAndAbsencesOnDay(data, studentsData) {
   const year = data.day.year;
   const availableStudents = studentsData.filter(e => e?.year?.includes(year));
   
-  return {
-    absences: availableStudents.filter(e => !studentsOnThatDay.includes(e.id)),
-    attendances: availableStudents.filter(e => studentsOnThatDay.includes(e.id))
-  };
+  let absences = availableStudents.filter(e => !studentsOnThatDay.includes(e.id));
+  let attendances = availableStudents.filter(e => studentsOnThatDay.includes(e.id));
+  
+  if (absences.length > 0) { // verificar se não há pessoas que já saíram
+    const {data:allClassroomMapData} = await supabase.from('classroomMap').select('*').order('day');
+    for (const student of absences) {
+      let { attendances: studentAttendances } = getAttendancesAndAbsences(allClassroomMapData, student);
+      
+      const firstAttendance = studentAttendances[0];
+      const firstAttendanceAsDateTime = DateTime.fromISO(firstAttendance);
+      const lastAttendance = studentAttendances.at(-1);
+      const lastAttendanceAsDateTime = DateTime.fromISO(lastAttendance);
+
+      if (student.left === year && DateTime.fromISO(date) >= lastAttendanceAsDateTime) absences = absences.filter(e => e.id !== student.id);
+      if (student.late === year && DateTime.fromISO(date) <= firstAttendanceAsDateTime) absences = absences.filter(e => e.id !== student.id);
+    }
+  }
+
+  return {absences, attendances};
 }
 
 export function getPosition(layout, studentID, reverseOrder = false, fillSpaces) {

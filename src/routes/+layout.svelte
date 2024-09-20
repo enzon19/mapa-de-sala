@@ -34,8 +34,6 @@
       pattern: /\/tags$/
     }
   ]
-
-  $:console.log(currentURL.match(pages[1].pattern))
   
   // frases aleatórias
   import phrases from "$lib/data/phrases";
@@ -83,5 +81,9 @@
   <span>
     Veja esse projeto no
     <a target="blank" class="underline hover:text-neutral-400 transition-colors" href="https://github.com/enzon19/mapa-de-sala">GitHub</a>.
+  </span>
+  <br>
+  <span class="text-neutral-500">
+    Esse projeto não tem filiação com qualquer escola e nem faz referência a alguma.
   </span>
 </footer>
