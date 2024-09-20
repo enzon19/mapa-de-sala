@@ -16,7 +16,8 @@
         <li>Acompanhe suas matérias com mais faltas em 2024!</li>
         <li>Mapa de Calor da Sala e Calendário de Dados na aba "Dados";</li>
         <li>Melhor exibição dos recursos desse site;</li>
-        <li>Página de boas-vindas.</li>
+        <li>Página de boas-vindas;</li>
+        <li>A timeline agora mostra quantas vezes alguém mudou de lugar.</li>
       </ol>
   </details>
   <details>
