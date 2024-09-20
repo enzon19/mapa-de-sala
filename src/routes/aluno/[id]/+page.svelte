@@ -179,7 +179,7 @@
           </Button>
         </div>
         {#if dataManipulation.positionStreak === 'filter'}
-          <FilterController on:filterChanged={event => filterData('positionStreak', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionStreak', event.detail.filter)}/>
         {/if}
       </div>
       <PositionStreak allClassroomMapData={dataForComponents.positionStreak} studentID={student.id} invertDeskCounting={invertDeskCounting.positionStreak} compensate={false}/>
@@ -200,7 +200,7 @@
           </Button>
         </div>
         {#if dataManipulation.heatmap === 'filter'}
-          <FilterController on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
         {:else if dataManipulation.heatmap === 'view'}
           <ViewController type="heatmap" bind:compensate bind:background on:sortChanged={event => filterData('heatmap', event.detail.sort)}/>
         {/if}
@@ -227,7 +227,7 @@
           </Button>
         </div>
         {#if dataManipulation.timeline === 'filter'}
-          <FilterController on:filterChanged={event => filterData('timeline', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('timeline', event.detail.filter)}/>
         {:else if dataManipulation.timeline === 'sort'}
           <SortController bind:sort={sort.timeline} sortOptions={[{'id': 'chronology', 'label': 'Cronológica'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'rows', 'label': 'Fileiras'}, {'id': 'desks', 'label': 'Cadeiras'}]}/>
         {/if}
@@ -250,7 +250,7 @@
           </Button>
         </div>
         {#if dataManipulation.positionRanking === 'filter'}
-          <FilterController on:filterChanged={event => filterData('positionRanking', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionRanking', event.detail.filter)}/>
         {:else if dataManipulation.positionRanking === 'sort'}
           <SortController bind:sort={sort.positionRanking}/>
         {/if}
@@ -270,7 +270,7 @@
           </Button>
         </div>
         {#if dataManipulation.absencesPerDay === 'filter'}
-          <FilterController on:filterChanged={event => filterData('absencesPerDay', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesPerDay', event.detail.filter)}/>
         {:else if dataManipulation.absencesPerDay === 'sort'}
           <SortController bind:sort={sort.absencesPerDay} sortOptions={[{'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'weekday', 'label': 'Dia da Semana'}]}/>
         {/if}
@@ -290,7 +290,7 @@
           </Button>
         </div>
         {#if dataManipulation.absencesPerSubject === 'filter'}
-          <FilterController on:filterChanged={event => filterData('absencesPerSubject', event.detail.filter)}/>
+          <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesPerSubject', event.detail.filter)}/>
         {:else if dataManipulation.absencesPerSubject === 'sort'}
           <SortController bind:sort={sort.absencesPerSubject} sortOptions={[{'id': 'percentage', 'label': 'Porcentagem'}, {'id': 'days', 'label': 'Quantidade de Dias'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
         {/if}
