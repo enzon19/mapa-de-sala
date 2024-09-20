@@ -8,6 +8,22 @@
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
+  <!-- 1.2.2 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.2.2</h3>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Aba para tags.</li>
+        <li>Indicação de quantidade de dias para uma tag.</li>
+      </ol>
+  </details>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>Minimap exibindo dias errados;</li>
+      <li>Dias do calendário não faziam indicar que você estava na aba de mapas.</li>
+    </ol>
+  </details>
   <!-- 1.2.1 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.2.1</h3>
   <details>
