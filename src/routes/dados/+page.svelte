@@ -108,7 +108,13 @@
 
 <!-- Ranking de sequência e lugares diferentes -->
 
-<span class="text-sm text-neutral-500 block text-center mt-4">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro. <a class="text-sm text-neutral-300 hover:text-neutral-200" href="/dados/2023">Ver dados de 2023.</a></span>
+<div class="container mx-auto max-w-7xl px-4 flex flex-row justify-between items-center mt-2 -mb-2">
+  <span class="text-sm text-neutral-500 block text-center">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+  <div class="p-0.5 flex flex-row gap-0.5 bg-input-grey rounded-lg items-center">
+    <div class="text-sm px-2 py-1 rounded-lg text-neutral-200 bg-neutral-700">2024</div>
+    <a href="/dados/2023" class="text-sm px-2 py-1 rounded-lg text-neutral-200">2023</a>
+  </div>
+</div>
 <div class="container mx-auto max-w-7xl p-4 grid md:grid-cols-2 gap-4">
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Faltas</h5>
