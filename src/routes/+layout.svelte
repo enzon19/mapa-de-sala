@@ -5,7 +5,7 @@
   // navegação
   import StatsChart from 'svelte-ionicons/StatsChart.svelte';
   import Map from 'svelte-ionicons/Map.svelte';
-  import InformationCircle from 'svelte-ionicons/InformationCircle.svelte';
+  import Pricetag from 'svelte-ionicons/Pricetag.svelte';
   let currentURL = $page.url.pathname;
   $: currentURL = $page.url.pathname;
   const pages = [
@@ -21,11 +21,17 @@
       href: "/",
       pattern: /\/dia\/[0-9][0-9]?-[0-9][0-9]?-202[3-4]$|\/$/
     },
+    // { 
+    //   label: "Sobre",
+    //   icon: InformationCircle,
+    //   href: "/sobre",
+    //   pattern: /\/sobre$/
+    // },
     { 
-      label: "Sobre",
-      icon: InformationCircle,
-      href: "/sobre",
-      pattern: /\/sobre$/
+      label: "Tags",
+      icon: Pricetag,
+      href: "/tags",
+      pattern: /\/tags$/
     }
   ]
 
