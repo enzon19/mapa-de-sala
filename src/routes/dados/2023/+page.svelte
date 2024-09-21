@@ -102,7 +102,7 @@
 </svelte:head>
 
 <div class="container mx-auto max-w-7xl px-4 flex flex-row justify-between items-center mt-2 -mb-2">
-  <span class="text-sm text-neutral-500 block text-center">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+  <span class="text-sm text-neutral-500 block text-left">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
   <div class="p-0.5 flex flex-row gap-0.5 bg-input-grey rounded-lg items-center">
     <a href="/dados" class="text-sm px-2 py-1 rounded-lg text-neutral-200">2024</a>
     <div class="text-sm px-2 py-1 rounded-lg text-neutral-200 bg-neutral-700">2023</div>

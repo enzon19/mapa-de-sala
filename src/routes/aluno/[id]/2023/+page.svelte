@@ -142,7 +142,7 @@
   <!-- Estatísticas -->
   <hr class="my-4 border-neutral-500">
   <div class="container mx-auto max-w-7xl flex flex-row justify-between items-center mb-4">
-    <span class="text-sm text-neutral-500 block text-center">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+    <span class="text-sm text-neutral-500 block text-left">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
     <div class="p-0.5 flex flex-row gap-0.5 bg-input-grey rounded-lg items-center">
       <a href={student.year.includes(2024) ? `/aluno/${student.id}` : `/aluno/${student.id}/2023`} class="text-sm px-2 py-1 rounded-lg {student.year.includes(2024) ? 'text-neutral-200' : 'text-neutral-600 cursor-not-allowed'}">2024</a>
       <div class="text-sm px-2 py-1 rounded-lg text-neutral-200 bg-neutral-700">2023</div>

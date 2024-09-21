@@ -109,7 +109,7 @@
 <!-- Ranking de sequência e lugares diferentes -->
 
 <div class="container mx-auto max-w-7xl px-4 flex flex-row justify-between items-center mt-2 -mb-2">
-  <span class="text-sm text-neutral-500 block text-center">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+  <span class="text-sm text-neutral-500 block text-left">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
   <div class="p-0.5 flex flex-row gap-0.5 bg-input-grey rounded-lg items-center">
     <div class="text-sm px-2 py-1 rounded-lg text-neutral-200 bg-neutral-700">2024</div>
     <a href="/dados/2023" class="text-sm px-2 py-1 rounded-lg text-neutral-200">2023</a>
@@ -179,9 +179,6 @@
         <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionDesks = dataManipulation.positionDesks != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
         </Button>
-        <!-- <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => showLettersOnMinimap = !showLettersOnMinimap}>
-          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Exibir iniciais
-        </Button> -->
       </div>
       {#if dataManipulation.positionDesks === 'filter'}
         <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
