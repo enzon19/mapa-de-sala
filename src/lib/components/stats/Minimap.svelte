@@ -78,5 +78,5 @@
     </ol>
   </div>
 {:else}
-  <Classroom data={Array(maxColumns).fill('').map(column => Array(maxDesksEver).fill({id: 'a', name: 'b'}))} hideStats on:selectedDesk={(event) => handleSelect(event.detail)}/>
+  <Classroom data={Array(maxColumns).fill('').map(column => Array(maxDesksEver).fill({id: 'a', name: 'b'}))} hideStats on:selectedDesk={(event) => handleSelect(event.detail)} viewWithScroll={false}/>
 {/if}

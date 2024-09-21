@@ -5,9 +5,13 @@
   import DateInput from "$lib/components/DateInput.svelte";
   import Warning from "$lib/components/Tag.svelte";
 
+  import Expand from 'svelte-ionicons/Expand.svelte';
+  import Contract from 'svelte-ionicons/Contract.svelte';
+
   setContext('editable', false);
 
   export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
+  let viewWithScroll = true;
   $: classroomMapData = data.classroomMapData; // do que veio do server, pegar só informações do mapa de sala requisitado pelo usuário
   $: classroomMapLayout = classroomMapData.layout || []; // pegar informações das fileiras e colunas
   $: studentsData = data.studentsData; // do que veio do server, pegar os alunos para informar os ausentes e presentes
@@ -24,5 +28,8 @@
   {#each classroomMapData.tags || [] as tagType (tagType)}
     <Warning {tagType} />
   {/each}
-  <Classroom data={classroomMapLayout} students={studentsData} day={requestedDate}/>
+  <Classroom data={classroomMapLayout} students={studentsData} day={requestedDate} bind:viewWithScroll/>
+  {#if classroomMapLayout.length > 0}
+    <div class="text-right pt-1 pr-2 lg:hidden"><button on:click={() => viewWithScroll = !viewWithScroll}><svelte:component this={viewWithScroll ? Contract : Expand} class="outline-none"/></button></div>
+  {/if}
 </div>

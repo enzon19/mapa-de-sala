@@ -12,6 +12,9 @@
   export let hideStats = false;
   export let students;
   export let day;
+  export let viewWithScroll = true;
+  $: if (data.length === 0) viewWithScroll = false // se não tiver dados, viewWithScroll deve ser falso
+
   let editable = getContext('editable');
   $: columnsAmount = data.length == 0 ? 1 : data.length; // Quantidade de colunas no dia (isso é pra ajudar no CSS)
   $: studentsPerColumnAmount = data[0]?.length || 1;
@@ -101,30 +104,32 @@
   <div class="my-2 p-2 text-center">⚠️ Duplicatas: {duplicates.map(e => e.name).join(', ')}</div>
 {/if}
 
-<div class="flex flex-row">
-  <!-- [EDITAR] Botão de remover linha -->
-  {#if editable}
-    <div class="flex-initial">
-      <div class="flex flex-col items-center justify-items-center mt-12">
-        {#each data[0] || [] as line, lineIndex}
-          <div class="flex flex-row mr-1.5 py-4 my-2 h-[60px]">
-            <input on:change={() => reorderLine(lineIndex)} type="text" class="w-4 mr-0 md:w-5 md:mr-1 text-white text-center bg-inherit" bind:value={inputsValue[lineIndex]}>
-            <button class="w-7 inline-block text-light-grey" on:click={() => removeLine(lineIndex)}><CloseCircle size="1.7rem" class="text-light-grey"/></button>
-          </div>
-        {/each}
+<div class={viewWithScroll ? 'overflow-y-auto' : ''}>
+  <div class="flex flex-row {viewWithScroll ? 'w-max px-4 pb-2 mx-auto md:p-0 md:m-0 md:w-full': ''}">
+    <!-- [EDITAR] Botão de remover linha -->
+    {#if editable}
+      <div class="flex-initial">
+        <div class="flex flex-col items-center justify-items-center mt-12">
+          {#each data[0] || [] as line, lineIndex}
+            <div class="flex flex-row mr-1.5 py-4 my-2 h-[60px]">
+              <input on:change={() => reorderLine(lineIndex)} type="text" class="w-4 mr-0 md:w-5 md:mr-1 text-white text-center bg-inherit" bind:value={inputsValue[lineIndex]}>
+              <button class="w-7 inline-block text-light-grey" on:click={() => removeLine(lineIndex)}><CloseCircle size="1.7rem" class="text-light-grey"/></button>
+            </div>
+          {/each}
+        </div>
       </div>
+    {/if}
+  
+    <!-- Renderizar mapa de sala com base no JSON -->
+    <div style="grid-template-columns: repeat({columnsAmount}, minmax(0, 1fr));" class="grid gap-4 grid-cols-5 grow">
+      {#each data as column, columnIndex}
+        <!-- cada array do JSON vai ser dada pro componente Column (ou seja, o Column recebe uma array que cada elemento vira cadeiras) -->
+        <Column students={column} {columnIndex} on:selectedDesk/>
+      {:else}
+        <span class="text-center p-4">Sem dados.</span>
+        <span class="text-center text-sm text-neutral-400 -mt-6"><span class="font-bold">Dica: </span>{tips[Math.floor(Math.random() * tips.length)]}</span>
+        <!-- ADICIONAR MENUZINHO COM RECOMENDAÇÕES DE AÇÕES + FAZER UMA PAGINA CHAMADA "?" QUE INCLUI ELAS -->
+      {/each}
     </div>
-  {/if}
-
-  <!-- Renderizar mapa de sala com base no JSON -->
-  <div style="grid-template-columns: repeat({columnsAmount}, minmax(0, 1fr));" class="grid gap-4 grid-cols-5 grow">
-    {#each data as column, columnIndex}
-      <!-- cada array do JSON vai ser dada pro componente Column (ou seja, o Column recebe uma array que cada elemento vira cadeiras) -->
-      <Column students={column} {columnIndex} on:selectedDesk/>
-    {:else}
-      <span class="text-center p-4">Sem dados.</span>
-      <span class="text-center text-sm text-neutral-400 -mt-6"><span class="font-bold">Dica: </span>{tips[Math.floor(Math.random() * tips.length)]}</span>
-      <!-- ADICIONAR MENUZINHO COM RECOMENDAÇÕES DE AÇÕES + FAZER UMA PAGINA CHAMADA "?" QUE INCLUI ELAS -->
-    {/each}
   </div>
 </div>
