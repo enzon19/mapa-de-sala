@@ -257,24 +257,33 @@ export function generatePositionTimeline(allClassroomMapData, studentID, reverse
   return timeline;
 }
 
-export function generateAbsencesPerDay(allClassroomMapData, student, currentYear) {
+export function generateAbsencesPerDay(allClassroomMapData, student, currentYear, fullObject = false) {
   const {absences} = getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, true, currentYear);
   const daysAccordingDayOfWeek = groupByProperty(absences.map(day => { 
     const dayAsDateTime = DateTime.fromISO(day);
     return { dayOfWeek: dayAsDateTime.weekdayLong, day, weekday: dayAsDateTime.weekday };
   }), 'dayOfWeek');
-  return daysAccordingDayOfWeek;
+  
+  return !fullObject ? daysAccordingDayOfWeek : {
+    '"segunda-feira"': [],
+    '"terça-feira"': [],
+    '"quarta-feira"': [],
+    '"quinta-feira"': [],
+    '"sexta-feira"': [],
+    '"sábado"': [], 
+    ...daysAccordingDayOfWeek
+  };
 }
 
 export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student, sort, currentYear) {
   const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear);
 
+  console.log(daysAccordingDayOfWeek)
   const data = Object.entries(daysAccordingDayOfWeek).map(([dayOfWeek, days]) => ({
     dayOfWeek: `${dayOfWeek.replace(/"/g, '')} (${days.length} ${days.length === 1 ? 'dia' : 'dias'})`,
     days: days.map(({day}) => ({day})),
     weekday: days[0].weekday
   }));
-
   let dataSorted = data;
   if (sort.type === 'days') {
     dataSorted = dataSorted.sort((a, b) => b.days.length - a.days.length);
@@ -320,8 +329,8 @@ export function generateDatasetsOfAbsencesPerDay(allClassroomMapData, studentsDa
   return dataset;
 }
 
-export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student, sort, currentYear) {
-  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear);
+export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student, sort, currentYear, simulate) {
+  const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear, true);
 
   const calendar = {
     2024: {
@@ -380,6 +389,15 @@ export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student
       for (const subject of subjectsOfTheDay) {
         if (!absencesPerSubject[subject]) absencesPerSubject[subject] = [];
         absencesPerSubject[subject].push(...days);
+        
+        const dayOfWeekSimulateNumber = simulate[dayOfWeek];
+        if (dayOfWeekSimulateNumber > 0) {
+          const today = DateTime.now().setZone('America/Sao_Paulo');
+          const todayDayAsObject = {"dayOfWeek": today.weekdayLong, "day": today.toFormat('yyyy-MM-dd'), "weekday": today.weekday};
+          absencesPerSubject[subject].push(...Array(dayOfWeekSimulateNumber).fill(todayDayAsObject))
+        } else if (dayOfWeekSimulateNumber < 0) {
+          absencesPerSubject[subject].splice(dayOfWeekSimulateNumber)
+        }
       }
     }
   }

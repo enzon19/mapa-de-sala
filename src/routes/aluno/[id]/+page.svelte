@@ -1,5 +1,6 @@
 <!-- Código meio porco, mas tá funcionando e o resultado tá legal! -->
 <script>
+  import { slide } from 'svelte/transition';
   import { supabase } from "$lib/supabaseClient";
   import { DateTime } from 'luxon';
   import { countAttendancesAndAbsences, getAttendancesAndAbsences, generateRankedGroupedPositionHumanReadable, generateAbsencesPerDayHumanReadable, generateSubjectsPerDayHumanReadable } from '$lib/getStats.js';
@@ -11,6 +12,7 @@
   import Filter from 'svelte-ionicons/Funnel.svelte';
   import ArrowUp from 'svelte-ionicons/ArrowUp.svelte';
   import Eye from 'svelte-ionicons/Eye.svelte';
+  import Calculator from 'svelte-ionicons/Calculator.svelte';
 
   // components
   import Streak from '$lib/components/stats/Streak.svelte';
@@ -74,7 +76,7 @@
   }
 	$: rankedGroupedPosition = generateRankedGroupedPositionHumanReadable(dataForComponents.positionRanking, student.id, invertDeskCounting.positionRanking, sort.positionRanking).filter(({position}) => !position.startsWith('0ª')); // esse 0ª são os dias com falta
   $: absencesPerDay = generateAbsencesPerDayHumanReadable(dataForComponents.absencesPerDay, student, sort.absencesPerDay, 2024);
-  $: absencesPerSubject = generateSubjectsPerDayHumanReadable(dataForComponents.absencesPerSubject, student, sort.absencesPerSubject, 2024);
+  $: absencesPerSubject = generateSubjectsPerDayHumanReadable(dataForComponents.absencesPerSubject, student, sort.absencesPerSubject, 2024, simulateDays);
 
   // sistema de ordenar e filtrar
   let dataManipulation = {
@@ -119,6 +121,14 @@
     invertDeskCounting[component] = invertDeskCounting[component] === true ? false : true;
     dataManipulation[component] = '';
   }
+
+  let simulateDays = {
+    '"segunda-feira"': 0,
+    '"terça-feira"': 0,
+    '"quarta-feira"': 0,
+    '"quinta-feira"': 0,
+    '"sexta-feira"': 0
+  }
 </script>
 
 <svelte:head>
@@ -151,7 +161,7 @@
   <!-- Estatísticas -->
   <hr class="my-4 border-neutral-500">
   <div class="container mx-auto max-w-7xl flex flex-row justify-between items-center mb-4">
-    <span class="text-sm text-neutral-500 block text-center">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
+    <span class="text-sm text-neutral-500 block text-left">Nenhum dos dados desta página são precisos e não devem ser usados como parâmetro.</span>
     <div class="p-0.5 flex flex-row gap-0.5 bg-input-grey rounded-lg items-center">
       <div class="text-sm px-2 py-1 rounded-lg text-neutral-200 bg-neutral-700">2024</div>
       <a href={student.year.includes(2023) ? `/aluno/${student.id}/2023` : `/aluno/${student.id}`} class="text-sm px-2 py-1 rounded-lg {student.year.includes(2023) ? 'text-neutral-200' : 'text-neutral-600 cursor-not-allowed'}">2023</a>
@@ -284,18 +294,33 @@
       <h5 class="text-center font-bold text-xl">Faltas por Matéria</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">As faltas na escola são contabilizadas por aula e {data.student.name} só pode faltar 25% da carga horária de cada matéria, não importando o semestre. As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas por esse site.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
-        <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+        <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.absencesPerSubject === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
           </Button>
           <Button moreClasses={dataManipulation.absencesPerSubject === 'sort' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'sort' ? 'sort' : ''}>
             <Sort size="1.2rem" class="focus:outline-none" tabindex="-1"/> Ordenar
           </Button>
+          <Button moreClasses={dataManipulation.absencesPerSubject === 'calculate' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'calculate' ? 'calculate' : ''}>
+            <Calculator size="1.2rem" class="focus:outline-none" tabindex="-1"/> Simular
+          </Button>
         </div>
         {#if dataManipulation.absencesPerSubject === 'filter'}
           <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesPerSubject', event.detail.filter)}/>
         {:else if dataManipulation.absencesPerSubject === 'sort'}
           <SortController bind:sort={sort.absencesPerSubject} sortOptions={[{'id': 'percentage', 'label': 'Porcentagem'}, {'id': 'days', 'label': 'Quantidade de Aulas'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
+        {:else if dataManipulation.absencesPerSubject === 'calculate'}
+          <div class="flex flex-col mt-1" transition:slide={{ axis: 'y', duration: 300 }}>
+            <!-- <span class="text-sm text-neutral-300 text-center">Adicione ou remova dias para simular faltas</span> -->
+            <div class="grid grid-cols-5 gap-1">
+              {#each [{label: "Segunda", id: '"segunda-feira"'}, {label: "Terça", id: '"terça-feira"'}, {label: "Quarta", id: '"quarta-feira"'}, {label: "Quinta", id: '"quinta-feira"'}, {label: "Sexta", id: '"sexta-feira"'}] as weekday}
+                <div class="flex flex-col gap-0.5">
+                  <label for={weekday.id} class="text-sm text-neutral-300">{weekday.label}</label>
+                  <input type="number" name={weekday.id} id={weekday.id} class="bg-input-grey px-2 py-1 rounded-xl outline-none" bind:value={simulateDays[weekday.id]}>
+                </div>
+              {/each}
+            </div>
+          </div>
         {/if}
       </div>
       <ClosedList summaries={absencesPerSubject.map(({subject}) => subject)} content={absencesPerSubject.map(({days}) => days)}></ClosedList>
