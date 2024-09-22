@@ -6,15 +6,18 @@
   // icons
   import Sort from 'svelte-ionicons/Filter.svelte';
   import Filter from 'svelte-ionicons/Funnel.svelte';
+  import Eye from 'svelte-ionicons/Eye.svelte';
 
   // components
   import List from '$lib/components/stats/List.svelte';
   import Chart from '$lib/components/stats/Chart.svelte';
   import BarsChart from '$lib/components/stats/BarsChart.svelte';
   import Minimap from '$lib/components/stats/Minimap.svelte';
+  import Heatmap from '$lib/components/stats/Heatmap.svelte';
   import Button from '$lib/components/Button.svelte';
   import FilterController from '$lib/components/stats/controllers/FilterController.svelte';
   import SortController from '$lib/components/stats/controllers/SortController.svelte';
+  import ViewController from '$lib/components/stats/controllers/ViewController.svelte';
 
   export let data; // dados vindo do page.server.js incluindo parâmetros da URL e coisas do banco de dados
   let {studentsData, allClassroomMapData} = data;
@@ -24,7 +27,8 @@
     absencesDaysDataset: allClassroomMapData,
     positionDesks: allClassroomMapData,
     studentsAndChairsDataset: allClassroomMapData,
-    spacesAndEmptyChairsDataset: allClassroomMapData
+    spacesAndEmptyChairsDataset: allClassroomMapData,
+    heatmap: allClassroomMapData
   };
 
   function absencesContentTemplate(item) {
@@ -73,7 +77,8 @@
     absencesDaysDataset: "",
     positionDesks: "",
     studentsAndChairsDataset: "",
-    spacesAndEmptyChairsDataset: "" 
+    spacesAndEmptyChairsDataset: "",
+    heatmap: ""
   }
   
   async function filterData(component, filter) {
@@ -94,6 +99,8 @@
 
     dataForComponents[component] = data;
   }
+
+  let background = false;
 </script>
 
 <svelte:head>
@@ -148,6 +155,28 @@
       {/if}
     </div>
     <List data={attendancesRanking} contentTemplate={attendancesContentTemplate}/>
+  </div>
+  <div class="bg-neutral-800 rounded-xl p-4">
+    <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
+    <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais ocupadas da sala.<br>Dias com mais ou menos de 9 filas são desconsiderados do mapa de calor.</span>
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
+        <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
+          <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
+        </Button>
+        <Button moreClasses={dataManipulation.heatmap === 'view' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'view' ? 'view' : ''}>
+          <Eye size="1.2rem" class="focus:outline-none" tabindex="-1"/> Visualizar
+        </Button>
+      </div>
+      {#if dataManipulation.heatmap === 'filter'}
+        <FilterController on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
+      {:else if dataManipulation.heatmap === 'view'}
+        <ViewController type="heatmap" hideCompensate bind:background on:sortChanged={event => filterData('heatmap', event.detail.sort)}/>
+      {/if}
+    </div>
+    <div class="!mt-4">
+      <Heatmap allClassroomMapData={dataForComponents.heatmap} otherClasses="w-[50%] mx-auto" isWholeClass maxColumns={5} maxDesks={10} {background}/>
+    </div>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Dias Mais Faltados</h5>

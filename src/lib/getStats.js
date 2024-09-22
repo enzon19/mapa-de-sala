@@ -140,6 +140,22 @@ export function generateFrequencyOfPosition(allClassroomMapData, studentID, reve
   }));
 }
 
+export function generateFrequencyOfClassPosition(allClassroomMapData, maxColumns, maxDesks) {
+  let positionFrequency = [];
+
+  for (let i = 0; i < maxColumns; i++) { // cada coluna
+    for (let j = 0; j < maxDesks; j++) { // cada cadeira
+      const position = [i, j]; // coordenada da cadeira
+      const allTimePeople = allClassroomMapData.map(({columns, day}) => columns[position[0]] ? {id: columns[position[0]][position[1]], day} : {id: undefined});
+      const eachTimeSomeoneSitHere = allTimePeople.filter(({id}) => !['clssrmmp_empty', 'clssrmmp_space', undefined].includes(id));
+
+      if (eachTimeSomeoneSitHere.length > 0) positionFrequency.push({position, frequency: eachTimeSomeoneSitHere.length});
+    }
+  }
+
+  return positionFrequency;
+}
+
 export function generateRankedGroupedPositionHumanReadable(allClassroomMapData, studentID, reverseChairOrder = false, sort) {
   const positionDayByDay = getPositionDayByDay(allClassroomMapData, studentID, reverseChairOrder);
   const daysAccordingPosition = groupByProperty(positionDayByDay, 'position', true);
@@ -278,7 +294,7 @@ export function generateAbsencesPerDay(allClassroomMapData, student, currentYear
 export function generateAbsencesPerDayHumanReadable(allClassroomMapData, student, sort, currentYear) {
   const daysAccordingDayOfWeek = generateAbsencesPerDay(allClassroomMapData, student, currentYear);
 
-  console.log(daysAccordingDayOfWeek)
+  // console.log(daysAccordingDayOfWeek)
   const data = Object.entries(daysAccordingDayOfWeek).map(([dayOfWeek, days]) => ({
     dayOfWeek: `${dayOfWeek.replace(/"/g, '')} (${days.length} ${days.length === 1 ? 'dia' : 'dias'})`,
     days: days.map(({day}) => ({day})),
