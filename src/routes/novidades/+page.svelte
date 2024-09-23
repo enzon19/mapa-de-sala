@@ -4,26 +4,30 @@
 </svelte:head>
 
 <h2 class="text-center text-3xl font-bold m-4">Novidades</h2>
-<div class="container mx-auto max-w-4xl">
+<div class="container mx-auto max-w-4xl px-4">
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
   <!-- 1.3.0 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.3.0</h3>
-  <details>
+  <details open>
     <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
       <ol class="text-base text-gray-300 list-disc list-inside">
         <li>Acompanhe suas matérias com mais faltas em 2024!</li>
-        <li>Mapa de Calor da Sala e Calendário de Dados na aba "Dados";</li>
+        <li>Mapa de Calor da sala e Calendário de dias cadastrados na aba "Dados";</li>
+        <li>Nos celulares, altere a visualização do mapa entre modo expandido ou contraído;</li>
         <li>Melhor exibição dos recursos desse site;</li>
-        <li>Página de boas-vindas;</li>
-        <li>A timeline agora mostra quantas vezes alguém mudou de lugar.</li>
+        <li>A timeline agora mostra quantas vezes alguém mudou de lugar;</li>
+        <li>Indicar se o ano é 2023 no seletor de datas;</li>
+        <li>Design do seletor de anos (2023 ou 2024) melhorado;</li>
+        <li>Melhorias gerais no arredondamento de bordas de alguns elementos.</li>
       </ol>
   </details>
   <details>
     <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
     <ol class="text-base text-gray-300 list-disc list-inside">
-      <li>Pessoas que já saíram da sala continuaram aparecendo na lista de presença.</li>
+      <li>Pessoas que já saíram da sala continuaram aparecendo na lista de presença;</li>
+      <li>Filtro de datas apresentavam datas e valor padrão incorretos para perfis de 2024.</li>
     </ol>
   </details>
   <!-- 1.2.2 -->
