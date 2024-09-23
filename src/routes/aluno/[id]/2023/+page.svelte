@@ -163,7 +163,7 @@
         <h5 class="text-center font-bold text-xl">Sequência de Posição</h5>
         <span class="text-sm text-neutral-500 block text-center m-1">Veja há quantos dias {data.student.name} está sentando no mesmo lugar.</span>
       </div>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.positionStreak === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionStreak = dataManipulation.positionStreak != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -181,7 +181,7 @@
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais frequentemente ocupadas por {data.student.name}.<br>Dias com mais ou menos de 5 filas são desconsiderados do mapa de calor.</span>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -208,7 +208,7 @@
         <h5 class="text-center font-bold text-xl">Linha do Tempo</h5>
         <span class="text-sm text-neutral-500 block text-center m-1">Períodos em que {data.student.name} se manteve em um lugar.</span>
       </div>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.timeline === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.timeline = dataManipulation.timeline != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -231,7 +231,7 @@
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Ranking de Posição</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">Quantas vezes {data.student.name} sentou em diferentes lugares no mapa de sala.</span>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.positionRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionRanking = dataManipulation.positionRanking != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -254,7 +254,7 @@
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Faltas por Dia</h5>
       <span class="text-sm text-neutral-500 block text-center m-1">Os dias da semana em que {data.student.name} faltou mais.</span>
-      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+      <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.absencesPerDay === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerDay = dataManipulation.absencesPerDay != 'filter' ? 'filter' : ''}>
             <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar

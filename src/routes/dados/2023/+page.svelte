@@ -121,7 +121,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Faltas</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Conheça os profissionais em matar em aula.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.absencesRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesRanking = dataManipulation.absencesRanking != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -141,7 +141,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ranking de Presença</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Esses gostam de vir pra aula.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.attendancesRanking === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.attendancesRanking = dataManipulation.attendancesRanking != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -161,7 +161,7 @@
   <div class="bg-neutral-800 rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Mapa de Calor</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Observe visualmente as áreas mais ocupadas da sala.<br>Dias com mais ou menos de 9 filas são desconsiderados do mapa de calor.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.heatmap === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.heatmap = dataManipulation.heatmap != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -183,7 +183,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Ocupação de Território</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Clique em uma cadeira pra ver quem já sentou naquela posição. Alguns dias foram excluídos.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.positionDesks === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.positionDesks = dataManipulation.positionDesks != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -200,7 +200,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Dias Mais Faltados</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Os dias da semana com mais faltas registradas.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.absencesDaysDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesDaysDataset = dataManipulation.absencesDaysDataset != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -221,7 +221,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Presenças e Cadeiras × Tempo</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Veja a variação de cadeiras e presenças ao longo do tempo.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.studentsAndChairsDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.studentsAndChairsDataset = dataManipulation.studentsAndChairsDataset != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
@@ -236,7 +236,7 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Buracos e Vazias × Tempo</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Veja a variação de cadeiras vazias e buracos ao longo do tempo.</span>
-    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-xl">
+    <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
       <div class="grid grid-rows-1 grid-cols-1 sm:grid-cols-1 sm:grid-rows-1 gap-1.5">
         <Button moreClasses={dataManipulation.spacesAndEmptyChairsDataset === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.spacesAndEmptyChairsDataset = dataManipulation.spacesAndEmptyChairsDataset != 'filter' ? 'filter' : ''}>
           <Filter size="1.2rem" class="focus:outline-none" tabindex="-1"/> Filtrar
