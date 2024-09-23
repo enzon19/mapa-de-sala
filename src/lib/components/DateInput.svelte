@@ -15,7 +15,7 @@
   export let route = "dia";
   export let checkInDatabase = false;
 
-  $: requestedDateAsString = requestedDate.setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long' });
+  $: requestedDateAsString = requestedDate.setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long', year: requestedDate.year == 2023 ? 'numeric' : undefined });
 
   async function goToPreviousDay() {
     let previousDate;
@@ -85,7 +85,7 @@
 
 <div class="flex items-center gap-2 m-4 justify-center">
   <button class="inline-block cursor-pointer" on:click={goToPreviousDay} on:keypress={goToPreviousDay}><ChevronBack size="2rem" class="focus:outline-none focus:text-neutral-400"/></button>
-  <button class="text-center px-2 py-1 cursor-pointer w-72" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</button>
+  <button class="text-center px-2 py-1 cursor-pointer min-w-[18rem] w-max" on:click={openDatePicker} on:keydown={(e) => e.key === 'Enter' && openDatePicker()} bind:this={datePickerElement}>{requestedDateAsString}</button>
   <button class="inline-block cursor-pointer" on:click={goToNextDay} on:keypress={goToNextDay}><ChevronForward size="2rem" class="focus:outline-none focus:text-neutral-400"/></button>
 </div>
 
