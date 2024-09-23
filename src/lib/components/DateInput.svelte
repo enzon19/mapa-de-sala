@@ -53,7 +53,7 @@
   // Date Picker
   let datePicker, datePickerElement;
 
-  function openDatePicker() {
+  export function openDatePicker() {
     datePicker.toggle();
   }
 

@@ -5,7 +5,7 @@
   import { countStudentsAttendance, countChairs, countSpaces, countEmptyChairs, getPeopleAttendancesAndAbsencesOnDay } from '$lib/getStats.js';
   import CloseOutline from 'svelte-ionicons/CloseOutline.svelte';
   import Column from "$lib/components/classroomMap/Column.svelte";
-  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.3.0"', "Clique nas estatísticas de alunos, cadeiras, vazias e buracos em um dia para ver os ausentes e presentes."];
+  import Recommendations from "$lib/components/Recommendations.svelte";
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas
@@ -60,8 +60,8 @@
 <!-- Estatísticas -->
 {#if !(hideStats || editable)}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="text-center text-sm m-4" class:cursor-pointer={students} on:click={() => {if (students) statsModal.showModal();}}>Alunos: {studentsAmount} | Cadeiras: {chairsAmount} | Vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
-  {#if students}
+  <div class="text-center text-sm m-4 w-max mx-auto" class:cursor-pointer={data.length !== 0} on:click={() => {if (data.length !== 0) statsModal.showModal();}}>Alunos: {studentsAmount} | Cadeiras: {chairsAmount} | Vazias: {emptyChairsAmount} | Buracos: {spacesAmount}</div>
+  {#if data.length !== 0}
     <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-little transition-all p-4 rounded-xl bg-back-grey shadow-2xl text-white w-72 max-h-[26rem]" bind:this={statsModal}>
       <button class="absolute top-2 right-2 hover:text-light-grey transition-colors" on:click={() => statsModal.close()}>
         <CloseOutline size="24" class="outline-none"/>
@@ -127,8 +127,8 @@
         <Column students={column} {columnIndex} on:selectedDesk/>
       {:else}
         <span class="text-center p-4">Sem dados.</span>
-        <span class="text-center text-sm text-neutral-400 -mt-6"><span class="font-bold">Dica: </span>{tips[Math.floor(Math.random() * tips.length)]}</span>
-        <!-- ADICIONAR MENUZINHO COM RECOMENDAÇÕES DE AÇÕES + FAZER UMA PAGINA CHAMADA "?" QUE INCLUI ELAS -->
+        <span class="text-center text-sm text-neutral-400 -mb-5">RECOMENDAÇÕES</span>
+        <Recommendations {students} on:openDatePicker/>
       {/each}
     </div>
   </div>
