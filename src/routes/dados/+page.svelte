@@ -16,6 +16,7 @@
   import BarsChart from '$lib/components/stats/BarsChart.svelte';
   import Minimap from '$lib/components/stats/Minimap.svelte';
   import Heatmap from '$lib/components/stats/Heatmap.svelte';
+  import Calendar from '$lib/components/stats/Calendar.svelte';
   import Button from '$lib/components/Button.svelte';
   import FilterController from '$lib/components/stats/controllers/FilterController.svelte';
   import SortController from '$lib/components/stats/controllers/SortController.svelte';
@@ -219,6 +220,8 @@
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Calendário</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Tenha uma visão geral dos dias cadastrados no site.</span>
+    <span class="block text-center text-neutral-300 mb-1">{allClassroomMapData.length} dias cadastrados com, aproximadamente, {Math.trunc((allClassroomMapData.length-(allClassroomMapData.filter(({tags}) => tags.includes('inaccurate')).length+10))/allClassroomMapData.length*100)}% de precisão.</span>
+    <Calendar value1={allClassroomMapData.map(e => e.day)}/>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Presenças e Cadeiras × Tempo</h5>
