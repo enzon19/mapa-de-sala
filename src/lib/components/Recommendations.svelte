@@ -27,7 +27,7 @@
     <ArrowForwardCircleOutline class="outline-none text-red-500 w-8 h-8 flex-shrink-0"/>
     <div class="flex flex-col w-full">
       <span class="text-red-500 font-bold">Dia específico</span>
-      <span class="text-neutral-200 text-sm">Clique aqui para escolher um dia específico</span>
+      <span class="text-neutral-200 text-sm">Clique aqui para escolher um dia específico.</span>
     </div>
   </button>
   <div class="bg-blue-800/20 rounded-lg p-3 gap-3 flex flex-row items-start">
@@ -55,7 +55,7 @@
     <Shuffle class="outline-none text-purple-500 w-8 h-8 flex-shrink-0"/>
     <div class="flex flex-col w-full">
       <span class="text-purple-500 font-bold">Dia aleatório</span>
-      <span class="text-neutral-200 text-sm">Clique aqui para ir visitar o mapa de um dia aleatório</span>
+      <span class="text-neutral-200 text-sm">Clique aqui para visitar o mapa de um dia aleatório.</span>
     </div>
   </button>
   <div class="bg-yellow-700/20 rounded-lg p-3 gap-3 flex flex-row items-start">
