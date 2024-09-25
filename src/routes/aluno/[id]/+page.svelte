@@ -129,7 +129,7 @@
     '"quinta-feira"': 0,
     '"sexta-feira"': 0
   }
-  $: absencesWithSimulateDays = count.absences.number+Object.values((simulateDays)).reduce((previous, current) => previous + current, 0)
+  $: absencesWithSimulateDays = count.absences.number+Object.values((simulateDays)).reduce((previous, current) => previous + Math.round(current), 0)
 </script>
 
 <svelte:head>

@@ -406,7 +406,7 @@ export function generateSubjectsPerDayHumanReadable(allClassroomMapData, student
         if (!absencesPerSubject[subject]) absencesPerSubject[subject] = [];
         absencesPerSubject[subject].push(...days);
         
-        const dayOfWeekSimulateNumber = simulate[dayOfWeek];
+        const dayOfWeekSimulateNumber = Math.round(simulate[dayOfWeek]);
         if (dayOfWeekSimulateNumber > 0) {
           const today = DateTime.now().setZone('America/Sao_Paulo');
           const todayDayAsObject = {"dayOfWeek": today.weekdayLong, "day": today.toFormat('yyyy-MM-dd'), "weekday": today.weekday};
