@@ -127,8 +127,10 @@
         <Column students={column} {columnIndex} on:selectedDesk/>
       {:else}
         <span class="text-center p-4">Sem dados.</span>
-        <span class="text-center text-sm text-neutral-400 -mb-5">RECOMENDAÇÕES</span>
-        <Recommendations {students} on:openDatePicker/>
+        {#if !(editable)}
+          <span class="text-center text-sm text-neutral-400 -mb-5">RECOMENDAÇÕES</span>
+          <Recommendations {students} on:openDatePicker/>
+        {/if}
       {/each}
     </div>
   </div>
