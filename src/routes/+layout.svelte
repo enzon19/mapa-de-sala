@@ -59,7 +59,7 @@
     <a href="/">
       <h1 class="text-2xl font-bold">Mapa de Sala</h1>
     </a>
-    <p class="text-sm"><a class="hover:text-neutral-400 transition-colors" href="/novidades">v1.3.1</a> • Feito por <a class="hover:text-neutral-400 transition-colors" href="https://enzon19.com">enzon19</a></p>
+    <p class="text-sm"><a class="hover:text-neutral-400 transition-colors" href="/novidades">v1.3.2</a> • Feito por <a class="hover:text-neutral-400 transition-colors" href="https://enzon19.com">enzon19</a></p>
   </div>
   <p class="text-sm text-light-grey">{phrases[randomIndex]}</p>
   <nav class="grid grid-flow-col grid-cols-3 gap-3 text-center">

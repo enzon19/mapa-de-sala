@@ -12,7 +12,7 @@
   
   export let students;
   
-  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.3.1"', "Clique nas estatísticas de alunos, cadeiras, vazias e buracos em um dia para ver os ausentes e presentes."];
+  const tips = ["Clique no nome de alguém para ver dados sobre ela.", "Utilize as setas acima para navegar entre os dias.", "Clique no dia entre as setas acima para ver o calendário.", "Clique em uma tag para ver todas as tags e seus dias.", 'Você pode ver todas as novidades e mudanças do site clicando ali em cima no "v1.3.2"', "Clique nas estatísticas de alunos, cadeiras, vazias e buracos em um dia para ver os ausentes e presentes."];
   let goToStudent = students.map(e => e.id)[Math.floor(Math.random() * students.length)];
 
   async function goToRandomDay() {

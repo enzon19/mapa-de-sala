@@ -8,6 +8,14 @@
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
+  <!-- 1.3.2 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.3.2</h3>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>Texto atualizado para a "Faltas por Matéria".</li>
+    </ol>
+  </details>
   <!-- 1.3.1 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.3.1</h3>
   <details>

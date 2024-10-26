@@ -293,7 +293,7 @@
     </div>
     <div class="bg-neutral-800 rounded-xl p-4">
       <h5 class="text-center font-bold text-xl">Faltas por Matéria</h5>
-      <span class="text-sm text-neutral-500 block text-center m-1">As faltas na escola são, supostamente, contabilizadas por aula e {data.student.name} só pode faltar 25% da carga horária de cada matéria, não importando o semestre. As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas por esse site.</span>
+      <span class="text-sm text-neutral-500 block text-center m-1">As vezes que {data.student.name} saiu mais cedo ou chegou atrasado não são calculadas por esse site. Porcentagem calculada com base na quantidade de aulas da matéria durante o ano, considerando feriados e sábados letivos.</span>
       <div class="my-2 md:mx-auto bg-neutral-850 p-1.5 rounded-2xl">
         <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1 gap-1.5">
           <Button moreClasses={dataManipulation.absencesPerSubject === 'filter' ? '!bg-neutral-700' : ''} on:click={() => dataManipulation.absencesPerSubject = dataManipulation.absencesPerSubject != 'filter' ? 'filter' : ''}>
@@ -324,7 +324,7 @@
           </div>
         {/if}
       </div>
-      <span class="block text-center text-neutral-300 mb-1">No geral, {data.student.name} faltou {Math.trunc((absencesWithSimulateDays)/200*100)}% ({absencesWithSimulateDays} dias) dos 200 dias letivos.</span>
+      <span class="block text-center text-neutral-300 mb-1">No geral, {data.student.name} faltou {Math.trunc((absencesWithSimulateDays)/200*100)}% ({absencesWithSimulateDays} dias) dos 200 dias letivos.<br>Precisa de 25% de faltas para reprovar de ano.</span>
       <ClosedList summaries={absencesPerSubject.map(({subject}) => subject)} content={absencesPerSubject.map(({days}) => days)}></ClosedList>
     </div>
   </div>
