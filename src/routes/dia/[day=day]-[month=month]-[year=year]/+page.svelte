@@ -32,7 +32,7 @@
   <meta name="description" content="Mapa de Sala é um site que reúne dados sobre a posição de cada aluno na sala de aula. Projeto pessoal.">
 </svelte:head>
 
-<div class="container mx-auto {Number(data.params.year) == 2023 ? "max-w-4xl" : "max-w-7xl"}">
+<div class="container mx-auto max-w-4xl">
   <DateInput {requestedDate} checkInDatabase bind:this={dateInputComponent}/>
   {#each classroomMapData.tags || [] as tagType (tagType)}
     <Warning {tagType} />

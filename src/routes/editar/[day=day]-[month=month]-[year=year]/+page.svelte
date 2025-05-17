@@ -7,6 +7,7 @@
   import DateInput from "$lib/components/DateInput.svelte";
   import Button from "$lib/components/Button.svelte";
   import CloseOutline from 'svelte-ionicons/CloseOutline.svelte';
+  import Tag from '$lib/components/Tag.svelte'
 
   // --------- Dados ---------
   setContext('editable', true);
@@ -61,8 +62,11 @@
   <meta name="description" content="Mapa de Sala é um site que reúne dados sobre a posição de cada aluno na sala de aula. Projeto pessoal.">
 </svelte:head>
 
-<div class="container mx-auto {Number(data.params.year) == 2023 ? "max-w-4xl" : "max-w-7xl"}">
+<div class="container mx-auto max-w-4xl">
   <DateInput {requestedDate} route="editar"/>
+  <div class="px-2">
+    <Tag tagType="readonly" href={null}/>
+  </div>
   <div class="mx-2"><textarea on:change={(event) => classroomMapLayoutWritable.update(() => JSON.parse(event.currentTarget.value))} class="font-mono bg-input-grey p-4 w-full rounded-xl" rows="3">{JSON.stringify($classroomMapLayoutWritable, null, 2)}</textarea></div>
   <div class="flex flex-row justify-center gap-2 py-2">
     <Button on:click={save}>Salvar</Button>

@@ -6,6 +6,7 @@
   import CloseOutline from 'svelte-ionicons/CloseOutline.svelte';
   import Column from "$lib/components/classroomMap/Column.svelte";
   import Recommendations from "$lib/components/Recommendations.svelte";
+  import Tag from '$lib/components/Tag.svelte'
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas
@@ -126,7 +127,15 @@
         <!-- cada array do JSON vai ser dada pro componente Column (ou seja, o Column recebe uma array que cada elemento vira cadeiras) -->
         <Column students={column} {columnIndex} on:selectedDesk/>
       {:else}
-        <span class="text-center p-4">Sem dados.</span>
+          {#if day && !editable}
+            <div class="max-w-fit w-full mx-auto">
+              <Tag href={null} tagType="readonly"/>
+            </div>
+          {:else}
+            <span class="text-center p-4">
+              Sem dados.
+            </span>
+          {/if}
         {#if !(editable)}
           <span class="text-center text-sm text-neutral-400 -mb-5">RECOMENDAÇÕES</span>
           <Recommendations {students} on:openDatePicker/>

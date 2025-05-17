@@ -3,10 +3,10 @@
   import { DateTime } from "luxon";
   import Classroom from "$lib/components/classroomMap/Classroom.svelte";
   import DateInput from "$lib/components/DateInput.svelte";
-  import Warning from "$lib/components/Tag.svelte";
+  // import Warning from "$lib/components/Tag.svelte";
 
-  import Expand from 'svelte-ionicons/Expand.svelte';
-  import Contract from 'svelte-ionicons/Contract.svelte';
+  // import Expand from 'svelte-ionicons/Expand.svelte';
+  // import Contract from 'svelte-ionicons/Contract.svelte';
 
   setContext('editable', false);
 
@@ -31,13 +31,13 @@
   <meta name="description" content="Mapa de Sala é um site que reúne dados sobre a posição de cada aluno na sala de aula. Projeto pessoal.">
 </svelte:head>
 
-<div class="container mx-auto {Number(data.params.year) == 2023 ? "max-w-4xl" : "max-w-7xl"}">
+<div class="container mx-auto max-w-4xl">
   <DateInput {requestedDate} checkInDatabase bind:this={dateInputComponent}/>
-  {#each classroomMapData.tags || [] as tagType (tagType)}
+  <!-- {#each classroomMapData.tags || [] as tagType (tagType)}
     <Warning {tagType} />
-  {/each}
-  <Classroom data={classroomMapLayout} students={studentsData} day={requestedDate} bind:viewWithScroll on:openDatePicker={() => openDatePicker()}/>
-  {#if classroomMapLayout.length > 0}
+  {/each} -->
+  <Classroom data={classroomMapLayout} students={studentsData} day={requestedDate} hideStats bind:viewWithScroll on:openDatePicker={() => openDatePicker()}/>
+  <!-- {#if classroomMapLayout.length > 0}
     <div class="text-right pt-1 pr-2 lg:hidden"><button on:click={() => viewWithScroll = !viewWithScroll}><svelte:component this={viewWithScroll ? Contract : Expand} class="outline-none"/></button></div>
-  {/if}
+  {/if}' -->
 </div>
