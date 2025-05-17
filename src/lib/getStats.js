@@ -276,7 +276,7 @@ export function generatePositionTimeline(allClassroomMapData, studentID, reverse
 export function generateAbsencesPerDay(allClassroomMapData, student, currentYear, fullObject = false) {
   const {absences} = getAttendancesAndAbsencesFixedAndWithStudentData(allClassroomMapData, student, true, currentYear);
   const daysAccordingDayOfWeek = groupByProperty(absences.map(day => { 
-    const dayAsDateTime = DateTime.fromISO(day);
+    const dayAsDateTime = DateTime.fromISO(day, { locale: 'pt-BR' });
     return { dayOfWeek: dayAsDateTime.weekdayLong, day, weekday: dayAsDateTime.weekday };
   }), 'dayOfWeek');
   
