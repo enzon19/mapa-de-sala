@@ -8,6 +8,23 @@
   <!-- BUGS CONHECIDOS: filtros são esquecidos depois que a caixinha é fechada, falta um botão de limpar filtros, quando dois filtros tão abertos, as labels são confundidas, código no geral tá bem porco -->
   <!-- FUTURAS MELHORIAS: excluir novatos e pessoas que saíram da turma dos rankings na página /dados -->
   
+  <!-- 1.4.0 -->
+  <h3 class="text-xl font-bold mt-2">Versão 1.4.0</h3>
+  <details open>
+    <summary><span class="text-lg font-medium cursor-pointer">Novidades e Mudanças</span></summary>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Site no estado de apenas leitura: mais rápido e consumindo menos dados;</li>
+      </ol>
+      <ol class="text-base text-gray-300 list-disc list-inside">
+        <li>Novas informações na homepage.</li>
+      </ol>
+  </details>
+  <details>
+    <summary><span class="text-lg font-medium cursor-pointer">Correções de Bugs</span></summary>
+    <ol class="text-base text-gray-300 list-disc list-inside">
+      <li>O site ainda estava com alguns problemas por conta da mudança de ano.</li>
+    </ol>
+  </details>
   <!-- 1.3.2 -->
   <h3 class="text-xl font-bold mt-2">Versão 1.3.2</h3>
   <details>
