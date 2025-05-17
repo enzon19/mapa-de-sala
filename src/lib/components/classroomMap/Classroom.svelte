@@ -7,6 +7,7 @@
   import Column from "$lib/components/classroomMap/Column.svelte";
   import Recommendations from "$lib/components/Recommendations.svelte";
   import Tag from '$lib/components/Tag.svelte'
+  import { DateTime } from 'luxon';
 
   // --------- Dados ---------
   export let data; // informações das fileiras e colunas
@@ -127,7 +128,7 @@
         <!-- cada array do JSON vai ser dada pro componente Column (ou seja, o Column recebe uma array que cada elemento vira cadeiras) -->
         <Column students={column} {columnIndex} on:selectedDesk/>
       {:else}
-          {#if day && !editable}
+          {#if day > DateTime.fromISO('2024-11-14') && !editable}
             <div class="max-w-fit w-full mx-auto">
               <Tag href={null} tagType="readonly"/>
             </div>
