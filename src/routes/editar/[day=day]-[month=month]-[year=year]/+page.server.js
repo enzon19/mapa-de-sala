@@ -5,7 +5,7 @@ export async function load({ params }) {
 	// os parâmetros (/07-06) fornecem o dia e o mês escolhidos pelo usuário e informados na URL
 	const requestedDate = DateTime.local(Number(params.year), Number(params.month), Number(params.day), 0, 0);
 
-	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toString()).limit(1)).data[0] || []; // day, layout, tags
+	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toISODate()).limit(1)).data[0] || []; // day, layout, tags
 	const layout = classroomMapData.columns; // informações sobre as fileiras e colunas (mapa de sala em si)
 
 	const studentsData = (await supabase.from('students').select('id,name,year').order('name')).data; // puxar o nome de todo mundo em ordem alfabética

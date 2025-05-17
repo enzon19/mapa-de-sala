@@ -15,13 +15,13 @@
   export let route = "dia";
   export let checkInDatabase = false;
 
-  $: requestedDateAsString = requestedDate.setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long', year: requestedDate.year == 2023 ? 'numeric' : undefined });
+  $: requestedDateAsString = requestedDate.setLocale('pt-BR').toLocaleString({day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' });
 
   async function goToPreviousDay() {
     let previousDate;
 
     if (checkInDatabase) {
-      const {data} = await supabase.from("classroomMap").select('day').lt('day', requestedDate.toString()).order('day', { ascending: false }).limit(1);
+      const {data} = await supabase.from("classroomMap").select('day').lt('day', requestedDate.toISODate()).order('day', { ascending: false }).limit(1);
       previousDate = DateTime.fromISO(data[0]?.day);
       if (!previousDate.isValid) previousDate = requestedDate.minus({ day: 1 });
     } else {
@@ -35,7 +35,7 @@
     let previousDate;
 
     if (checkInDatabase) {
-      const {data} = await supabase.from("classroomMap").select('day').gt('day', requestedDate.toString()).order('day', { ascending: true }).limit(1);
+      const {data} = await supabase.from("classroomMap").select('day').gt('day', requestedDate.toISODate()).order('day', { ascending: true }).limit(1);
       previousDate = DateTime.fromISO(data[0]?.day);
       if (!previousDate.isValid) previousDate = requestedDate.plus({ day: 1 });
     } else {
@@ -62,7 +62,7 @@
       defaultDate: requestedDate.toJSDate(),
       dateFormat: 'd-m-Y',
       minDate: "6-2-2023",
-      maxDate: "9-12-2024",
+      maxDate: "14-11-2024",
       locale: Portuguese,
       position: "auto center",
       clickOpens: false,

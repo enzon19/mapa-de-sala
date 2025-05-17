@@ -6,7 +6,7 @@ export async function load() {
 	const requestedDate = DateTime.now().setZone('America/Sao_Paulo').startOf('day');
 	const params = {day: requestedDate.day, month: requestedDate.month, year: requestedDate.year};
 	
-	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toString()).limit(1)).data[0] || []; // day, layout, tags
+	let classroomMapData = (await supabase.from("classroomMap").select('*').eq('day', requestedDate.toISODate()).limit(1)).data[0] || []; // day, layout, tags
 	const layout = classroomMapData.columns; // informações sobre as fileiras e colunas (mapa de sala em si)
 	
 	const studentsData = (await supabase.from('students').select('*')).data; // puxar as pessoas

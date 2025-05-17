@@ -136,7 +136,7 @@
         </Button>
       </div>
       {#if dataManipulation.absencesRanking === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesRanking', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesRanking', event.detail.filter)}/>
       {:else if dataManipulation.absencesRanking === 'sort'}
         <SortController bind:sort={sort.absencesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Faltas'}, {'id': 'percentage-ab', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
       {/if}
@@ -156,7 +156,7 @@
         </Button>
       </div>
       {#if dataManipulation.attendancesRanking === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('attendancesRanking', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('attendancesRanking', event.detail.filter)}/>
       {:else if dataManipulation.attendancesRanking === 'sort'}
         <SortController bind:sort={sort.attendancesRanking} sortOptions={[{'id': 'absolute', 'label': 'Quantidade de Presenças'}, {'id': 'percentage-at', 'label': 'Porcentagem'}, {'id': 'alphabetical', 'label': 'Alfabética'}]}/>
       {/if}
@@ -176,7 +176,7 @@
         </Button>
       </div>
       {#if dataManipulation.heatmap === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('heatmap', event.detail.filter)}/>
       {:else if dataManipulation.heatmap === 'view'}
         <ViewController type="heatmap" hideCompensate bind:background on:sortChanged={event => filterData('heatmap', event.detail.sort)}/>
       {/if}
@@ -195,7 +195,7 @@
         </Button>
       </div>
       {#if dataManipulation.positionDesks === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('positionDesks', event.detail.filter)}/>
       {/if}
     </div>
     <div class="overflow-y-auto max-h-[35rem] p-2">
@@ -212,7 +212,7 @@
         </Button>
       </div>
       {#if dataManipulation.absencesDaysDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesDaysDataset', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('absencesDaysDataset', event.detail.filter)}/>
       {/if}
     </div>
     <BarsChart data={absencesPerDayDataset} height={168}/>
@@ -221,7 +221,7 @@
     <h5 class="text-center font-bold text-xl">Calendário</h5>
     <span class="text-sm text-neutral-500 block text-center m-1">Tenha uma visão geral dos dias cadastrados no site.</span>
     <span class="block text-center text-neutral-300 mb-1">{allClassroomMapData.length} dias cadastrados com, aproximadamente, {Math.trunc((allClassroomMapData.length-(allClassroomMapData.filter(({tags}) => tags.includes('inaccurate')).length+10))/allClassroomMapData.length*100)}% de precisão.</span>
-    <Calendar value1={allClassroomMapData.map(e => e.day)}/>
+    <Calendar value1={allClassroomMapData.map(e => e.day)} initialDate={DateTime.fromISO('2024-02-01')}/>
   </div>
   <div class="bg-input-grey rounded-xl p-4">
     <h5 class="text-center font-bold text-xl">Presenças e Cadeiras × Tempo</h5>
@@ -233,7 +233,7 @@
         </Button>
       </div>
       {#if dataManipulation.studentsAndChairsDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('studentsAndChairsDataset', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('studentsAndChairsDataset', event.detail.filter)}/>
       {/if}
     </div>
     <Chart data={studentsAndChairsDataset}/>
@@ -248,7 +248,7 @@
         </Button>
       </div>
       {#if dataManipulation.spacesAndEmptyChairsDataset === 'filter'}
-        <FilterController minDate="5-2-2024" maxDate="9-12-2024" filter={{day: ['2024-02-05', '2024-12-09'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('spacesAndEmptyChairsDataset', event.detail.filter)}/>
+        <FilterController minDate="5-2-2024" maxDate="14-11-2024" filter={{day: ['2024-02-05', '2024-11-14'].map(date => DateTime.fromISO(date)),tags: []}} on:filterChanged={event => filterData('spacesAndEmptyChairsDataset', event.detail.filter)}/>
       {/if}
     </div>
     <Chart data={spacesAndEmptyChairsDataset}/>
