@@ -13,6 +13,8 @@
 
 </p>
 
+## Screenshots
+
 ## Why?
 
 **This is my first Svelte project shipped to production!** And I don't think the code is good enough...
@@ -20,3 +22,27 @@
 A friend and I had this cool idea to track where each person sits in class every day. The main goal was to visualize how seating positions change over time — especially by the end of the year. People usually sit near their friends, but friendships evolve: some fade, new ones form, and that often leads to people changing where they sit.
 
 As we collected more data, I realized I could also track attendance — absences and presences — and display that info to help students avoid reaching attendance limits imposed by the school. From there, I added even more features: heatmaps, rankings and position streaks.
+
+## Database definition
+Before reproducing this repo, change the `supabaseClient.js` and do that on your db:
+
+```sql
+create table public."classroomMap" (
+  day date not null,
+  columns jsonb null default '[]'::jsonb,
+  tags text[] null default '{}'::text[],
+  constraint classroomMap_pkey primary key (day),
+  constraint classroomMap_day_key unique (day)
+) TABLESPACE pg_default;
+
+create table public.students (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  created_at timestamp with time zone null default now(),
+  name text null,
+  year smallint[] null default '{2023,2024}'::smallint[],
+  hidden_name text null,
+  left smallint null,
+  late smallint null,
+  constraint students_pkey primary key (id)
+) TABLESPACE pg_default;
+``` 
