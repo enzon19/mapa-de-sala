@@ -17,7 +17,7 @@
 Click an image to view full size.
 <div align="center">
   <img src="https://github.com/user-attachments/assets/33a92acc-b1a2-4e56-ba8f-dbc40a7fa601" height="220" style="vertical-align: middle; margin: 5px;" />
-  <img src="https://github.com/user-attachments/assets/9cb972d3-43c2-42ad-bcde-fc96dd9d2fdb" height="220" style="vertical-align: middle; margin: 5px;" />
+  <img src="https://github.com/user-attachments/assets/aebd3121-aeb4-419f-87cb-6d4e144ac366" height="220" style="vertical-align: middle; margin: 5px;" />
   <img src="https://github.com/user-attachments/assets/6a30e3d1-086f-412d-a8ad-f0bff2e93f1e" height="220" style="vertical-align: middle; margin: 5px;" />
   <img src="https://github.com/user-attachments/assets/d7ed766f-a80b-4d36-9346-392b19f41815" height="220" style="vertical-align: middle; margin: 5px;" />
 </div>
